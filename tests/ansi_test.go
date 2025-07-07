@@ -6,7 +6,7 @@ import (
 	"typotestcolor"
 )
 
-func validate(t *testing.T, res string, expected string) {
+func validateTestColorANSI(t *testing.T, res string, expected string) {
 	res = strconv.QuoteToASCII(res)
 	expected = strconv.QuoteToASCII(expected)
 
@@ -25,7 +25,7 @@ func TestColorANSI(t *testing.T) {
 			}),
 		)
 		expected := "\033[1;36m"
-		validate(t, res, expected)
+		validateTestColorANSI(t, res, expected)
 	})
 
 	t.Run("fail default color", func(t *testing.T) {
@@ -37,7 +37,7 @@ func TestColorANSI(t *testing.T) {
 			}),
 		)
 		expected := "\033[22;31m"
-		validate(t, res, expected)
+		validateTestColorANSI(t, res, expected)
 	})
 
 	t.Run("pass default color", func(t *testing.T) {
@@ -49,7 +49,7 @@ func TestColorANSI(t *testing.T) {
 			}),
 		)
 		expected := "\033[22;32m"
-		validate(t, res, expected)
+		validateTestColorANSI(t, res, expected)
 	})
 
 	t.Run("skip default color", func(t *testing.T) {
@@ -61,7 +61,7 @@ func TestColorANSI(t *testing.T) {
 			}),
 		)
 		expected := "\033[22;33m"
-		validate(t, res, expected)
+		validateTestColorANSI(t, res, expected)
 	})
 
 	t.Run("failed default color", func(t *testing.T) {
@@ -73,7 +73,7 @@ func TestColorANSI(t *testing.T) {
 			}),
 		)
 		expected := "\033[1;30;41m"
-		validate(t, res, expected)
+		validateTestColorANSI(t, res, expected)
 	})
 
 	t.Run("ok default color", func(t *testing.T) {
@@ -85,7 +85,7 @@ func TestColorANSI(t *testing.T) {
 			}),
 		)
 		expected := "\033[1;30;42m"
-		validate(t, res, expected)
+		validateTestColorANSI(t, res, expected)
 	})
 
 	t.Run("error thrown default color", func(t *testing.T) {
@@ -97,6 +97,6 @@ func TestColorANSI(t *testing.T) {
 			}),
 		)
 		expected := "\033[22;37m"
-		validate(t, res, expected)
+		validateTestColorANSI(t, res, expected)
 	})
 }

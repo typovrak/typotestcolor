@@ -23,7 +23,7 @@ func NewDefaultOpts() Opts {
 				Foreground: ColorANSIForeground[ANSIForegroundCyan],
 				Background: ColorANSIBackground[ANSIBackgroundNone],
 			},
-			Title: "\t=== RUN  ",
+			Title: "\t=== RUN:",
 		},
 		Fail: LineType{
 			Colors: ANSIConfig{
