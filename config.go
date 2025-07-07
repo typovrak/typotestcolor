@@ -1,4 +1,4 @@
-package main
+package typotestcolor
 
 type Opts struct {
 	Run         LineType
