@@ -2,10 +2,11 @@ package typotestcolor
 
 import (
 	"bytes"
+	"io"
 	"os"
 )
 
-func addLineFeedBetweenErrorThrown(w *os.File, errorBefore *bool, isError bool) {
+func AddLineFeedBetweenErrorThrown(w io.Writer, errorBefore *bool, isError bool) {
 	if (!isError && *errorBefore) || (isError && !*errorBefore) {
 		w.Write([]byte("\n"))
 	}
@@ -13,7 +14,7 @@ func addLineFeedBetweenErrorThrown(w *os.File, errorBefore *bool, isError bool) 
 	*errorBefore = isError
 }
 
-func handleLineType(
+func HandleLineType(
 	line *[]byte,
 	lineType LineType,
 	defaultTitleType []byte,
@@ -23,6 +24,6 @@ func handleLineType(
 	isError bool,
 ) {
 	*color = ColorANSI(lineType.Colors)
-	addLineFeedBetweenErrorThrown(w, errorBefore, isError)
+	AddLineFeedBetweenErrorThrown(w, errorBefore, isError)
 	*line = bytes.Replace(*line, defaultTitleType, []byte(lineType.Title), 1)
 }
