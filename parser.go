@@ -3,7 +3,6 @@ package typotestcolor
 import (
 	"bytes"
 	"io"
-	"os"
 )
 
 func AddLineFeedBetweenErrorThrown(w io.Writer, errorBefore *bool, isError bool) {
@@ -19,7 +18,7 @@ func HandleLineType(
 	lineType LineType,
 	defaultTitleType []byte,
 	color *[]byte,
-	w *os.File,
+	w io.Writer,
 	errorBefore *bool,
 	isError bool,
 ) {

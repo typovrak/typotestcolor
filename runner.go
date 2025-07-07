@@ -7,6 +7,24 @@ import (
 	"testing"
 )
 
+var DefaultTitle = struct {
+	Run         []byte
+	Fail        []byte
+	Pass        []byte
+	Skip        []byte
+	Failed      []byte
+	Ok          []byte
+	ErrorThrown []byte
+}{
+	Run:         []byte("=== RUN  "),
+	Fail:        []byte("--- FAIL:"),
+	Pass:        []byte("--- PASS:"),
+	Skip:        []byte("--- SKIP:"),
+	Failed:      []byte("FAIL"),
+	Ok:          []byte("PASS"),
+	ErrorThrown: []byte(""),
+}
+
 // return exitCode
 func RunTestColor(m *testing.M, opts Opts) int {
 	// create a pipe
@@ -30,24 +48,6 @@ func RunTestColor(m *testing.M, opts Opts) int {
 
 	errorBefore := false
 
-	defaultTitle := struct {
-		Run         []byte
-		Fail        []byte
-		Pass        []byte
-		Skip        []byte
-		Failed      []byte
-		Ok          []byte
-		ErrorThrown []byte
-	}{
-		Run:         []byte("=== RUN  "),
-		Fail:        []byte("--- FAIL:"),
-		Pass:        []byte("--- PASS:"),
-		Skip:        []byte("--- SKIP:"),
-		Failed:      []byte("FAIL"),
-		Ok:          []byte("PASS"),
-		ErrorThrown: []byte(""),
-	}
-
 	// read line by line
 	for {
 		line, err := reader.ReadBytes('\n')
@@ -60,34 +60,34 @@ func RunTestColor(m *testing.M, opts Opts) int {
 
 			// manage color and style line depending on the content
 			// === RUN
-			if bytes.Contains(line, defaultTitle.Run) {
-				HandleLineType(&line, opts.Run, defaultTitle.Run, &color, stdout, &errorBefore, false)
+			if bytes.Contains(line, DefaultTitle.Run) {
+				HandleLineType(&line, opts.Run, DefaultTitle.Run, &color, stdout, &errorBefore, false)
 
 				// --- FAIL:
-			} else if bytes.Contains(line, defaultTitle.Fail) {
-				HandleLineType(&line, opts.Fail, defaultTitle.Fail, &color, stdout, &errorBefore, false)
+			} else if bytes.Contains(line, DefaultTitle.Fail) {
+				HandleLineType(&line, opts.Fail, DefaultTitle.Fail, &color, stdout, &errorBefore, false)
 
 				// --- PASS:
-			} else if bytes.Contains(line, defaultTitle.Pass) {
-				HandleLineType(&line, opts.Pass, defaultTitle.Pass, &color, stdout, &errorBefore, false)
+			} else if bytes.Contains(line, DefaultTitle.Pass) {
+				HandleLineType(&line, opts.Pass, DefaultTitle.Pass, &color, stdout, &errorBefore, false)
 
 				// --- SKIP:
-			} else if bytes.Contains(line, defaultTitle.Skip) {
-				HandleLineType(&line, opts.Skip, defaultTitle.Skip, &color, stdout, &errorBefore, false)
+			} else if bytes.Contains(line, DefaultTitle.Skip) {
+				HandleLineType(&line, opts.Skip, DefaultTitle.Skip, &color, stdout, &errorBefore, false)
 
 				// FAIL
-			} else if bytes.Equal(line, defaultTitle.Failed) {
-				HandleLineType(&line, opts.Failed, defaultTitle.Failed, &color, stdout, &errorBefore, false)
+			} else if bytes.Equal(line, DefaultTitle.Failed) {
+				HandleLineType(&line, opts.Failed, DefaultTitle.Failed, &color, stdout, &errorBefore, false)
 				stdout.Write([]byte("\n"))
 
 				// ok
-			} else if bytes.Equal(line, defaultTitle.Ok) {
-				HandleLineType(&line, opts.Ok, defaultTitle.Ok, &color, stdout, &errorBefore, false)
+			} else if bytes.Equal(line, DefaultTitle.Ok) {
+				HandleLineType(&line, opts.Ok, DefaultTitle.Ok, &color, stdout, &errorBefore, false)
 				stdout.Write([]byte("\n"))
 
 				// error thrown
 			} else {
-				HandleLineType(&line, opts.ErrorThrown, defaultTitle.ErrorThrown, &color, stdout, &errorBefore, true)
+				HandleLineType(&line, opts.ErrorThrown, DefaultTitle.ErrorThrown, &color, stdout, &errorBefore, true)
 			}
 
 			stdout.Write(color)
