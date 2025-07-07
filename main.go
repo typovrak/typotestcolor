@@ -16,6 +16,20 @@ func addLineFeedBetweenErrorThrown(w *os.File, errorBefore *bool, isError bool) 
 	*errorBefore = isError
 }
 
+func handleLineType(
+	line *[]byte,
+	lineType LineType,
+	defaultTitleType []byte,
+	color *[]byte,
+	w *os.File,
+	errorBefore *bool,
+	isError bool,
+) {
+	*color = ColorANSI(lineType.Colors)
+	addLineFeedBetweenErrorThrown(w, errorBefore, isError)
+	*line = bytes.Replace(*line, defaultTitleType, []byte(lineType.Title), 1)
+}
+
 // ansi
 type ANSIStyle int
 
@@ -99,17 +113,18 @@ type ANSIConfig struct {
 
 // global
 type Opts struct {
-	Color ColorOpts
+	Run         LineType
+	Fail        LineType
+	Pass        LineType
+	Skip        LineType
+	Failed      LineType
+	Ok          LineType
+	ErrorThrown LineType
 }
 
-type ColorOpts struct {
-	Run         ANSIConfig
-	Fail        ANSIConfig
-	Pass        ANSIConfig
-	Skip        ANSIConfig
-	Failed      ANSIConfig
-	Ok          ANSIConfig
-	ErrorThrown ANSIConfig
+type LineType struct {
+	Colors ANSIConfig
+	Title  string
 }
 
 func ColorANSI(config ANSIConfig) []byte {
@@ -131,47 +146,68 @@ func ColorANSI(config ANSIConfig) []byte {
 
 func NewDefaultOpts() Opts {
 	return Opts{
-		Color: ColorOpts{
-			Run: ANSIConfig{
+		Run: LineType{
+			Colors: ANSIConfig{
 				Style:      ColorANSISTyle[ANSIStyleBold],
 				Foreground: ColorANSIForeground[ANSIForegroundCyan],
 				Background: ColorANSIBackground[ANSIBackgroundNone],
 			},
-			Fail: ANSIConfig{
+			Title: "\t=== RUN  ",
+		},
+		Fail: LineType{
+			Colors: ANSIConfig{
 				Style:      ColorANSISTyle[ANSIStyleNormal],
 				Foreground: ColorANSIForeground[ANSIForegroundRed],
 				Background: ColorANSIBackground[ANSIBackgroundNone],
 			},
-			Pass: ANSIConfig{
+			Title: "\t--- FAIL:",
+		},
+		Pass: LineType{
+			Colors: ANSIConfig{
 				Style:      ColorANSISTyle[ANSIStyleNormal],
 				Foreground: ColorANSIForeground[ANSIForegroundGreen],
 				Background: ColorANSIBackground[ANSIBackgroundNone],
 			},
-			Skip: ANSIConfig{
+			Title: "\t--- PASS:",
+		},
+		Skip: LineType{
+			Colors: ANSIConfig{
 				Style:      ColorANSISTyle[ANSIStyleNormal],
 				Foreground: ColorANSIForeground[ANSIForegroundYellow],
 				Background: ColorANSIBackground[ANSIBackgroundNone],
 			},
-			Failed: ANSIConfig{
+			Title: "\t--- SKIP:",
+		},
+		Failed: LineType{
+			Colors: ANSIConfig{
 				Style:      ColorANSISTyle[ANSIStyleBold],
 				Foreground: ColorANSIForeground[ANSIForegroundBlack],
 				Background: ColorANSIBackground[ANSIBackgroundRed],
 			},
-			Ok: ANSIConfig{
+			Title: "FAIL",
+		},
+		Ok: LineType{
+			Colors: ANSIConfig{
 				Style:      ColorANSISTyle[ANSIStyleBold],
 				Foreground: ColorANSIForeground[ANSIForegroundBlack],
 				Background: ColorANSIBackground[ANSIBackgroundGreen],
 			},
-			ErrorThrown: ANSIConfig{
+			Title: "PASS",
+		},
+
+		ErrorThrown: LineType{
+			Colors: ANSIConfig{
 				Style:      ColorANSISTyle[ANSIStyleNormal],
 				Foreground: ColorANSIForeground[ANSIForegroundWhite],
 				Background: ColorANSIBackground[ANSIBackgroundNone],
 			},
+			Title: "",
 		},
 	}
 }
 
-func ColorizeTests(m *testing.M, opts Opts) {
+// return exitCode
+func RunTestColor(m *testing.M, opts Opts) int {
 	// create a pipe
 	r, w, _ := os.Pipe()
 
@@ -183,7 +219,6 @@ func ColorizeTests(m *testing.M, opts Opts) {
 	os.Stdout = w
 	os.Stderr = w
 
-	// Run tests
 	exitCode := m.Run()
 
 	// close the writer end of the pipe so the reader stops at EOF
@@ -194,6 +229,24 @@ func ColorizeTests(m *testing.M, opts Opts) {
 
 	errorBefore := false
 
+	defaultTitle := struct {
+		Run         []byte
+		Fail        []byte
+		Pass        []byte
+		Skip        []byte
+		Failed      []byte
+		Ok          []byte
+		ErrorThrown []byte
+	}{
+		Run:         []byte("=== RUN  "),
+		Fail:        []byte("--- FAIL:"),
+		Pass:        []byte("--- PASS:"),
+		Skip:        []byte("--- SKIP:"),
+		Failed:      []byte("FAIL"),
+		Ok:          []byte("PASS"),
+		ErrorThrown: []byte(""),
+	}
+
 	// read line by line
 	for {
 		line, err := reader.ReadBytes('\n')
@@ -203,53 +256,37 @@ func ColorizeTests(m *testing.M, opts Opts) {
 			line = bytes.TrimLeft(line, " ")
 
 			var color []byte
-			tabs := false
 
 			// manage color and style line depending on the content
 			// === RUN
-			if bytes.Contains(line, []byte("=== RUN")) {
-				color = ColorANSI(opts.Color.Run)
-				tabs = true
-				addLineFeedBetweenErrorThrown(stdout, &errorBefore, false)
+			if bytes.Contains(line, defaultTitle.Run) {
+				handleLineType(&line, opts.Run, defaultTitle.Run, &color, stdout, &errorBefore, false)
 
 				// --- FAIL:
-			} else if bytes.Contains(line, []byte("--- FAIL:")) {
-				color = ColorANSI(opts.Color.Fail)
-				tabs = true
-				addLineFeedBetweenErrorThrown(stdout, &errorBefore, false)
+			} else if bytes.Contains(line, defaultTitle.Fail) {
+				handleLineType(&line, opts.Fail, defaultTitle.Fail, &color, stdout, &errorBefore, false)
 
 				// --- PASS:
-			} else if bytes.Contains(line, []byte("--- PASS:")) {
-				color = ColorANSI(opts.Color.Pass)
-				tabs = true
-				addLineFeedBetweenErrorThrown(stdout, &errorBefore, false)
+			} else if bytes.Contains(line, defaultTitle.Pass) {
+				handleLineType(&line, opts.Pass, defaultTitle.Pass, &color, stdout, &errorBefore, false)
 
 				// --- SKIP:
-			} else if bytes.Contains(line, []byte("--- SKIP:")) {
-				color = ColorANSI(opts.Color.Skip)
-				tabs = true
-				addLineFeedBetweenErrorThrown(stdout, &errorBefore, false)
+			} else if bytes.Contains(line, defaultTitle.Skip) {
+				handleLineType(&line, opts.Skip, defaultTitle.Skip, &color, stdout, &errorBefore, false)
 
 				// FAIL
-			} else if bytes.Equal(line, []byte("FAIL")) {
-				color = ColorANSI(opts.Color.Failed)
-				addLineFeedBetweenErrorThrown(stdout, &errorBefore, false)
+			} else if bytes.Equal(line, defaultTitle.Failed) {
+				handleLineType(&line, opts.Failed, defaultTitle.Failed, &color, stdout, &errorBefore, false)
 				stdout.Write([]byte("\n"))
 
 				// ok
-			} else if bytes.Equal(line, []byte("PASS")) {
-				color = ColorANSI(opts.Color.Ok)
-				addLineFeedBetweenErrorThrown(stdout, &errorBefore, false)
+			} else if bytes.Equal(line, defaultTitle.Ok) {
+				handleLineType(&line, opts.Ok, defaultTitle.Ok, &color, stdout, &errorBefore, false)
 				stdout.Write([]byte("\n"))
 
 				// error thrown
 			} else {
-				color = ColorANSI(opts.Color.ErrorThrown)
-				addLineFeedBetweenErrorThrown(stdout, &errorBefore, true)
-			}
-
-			if tabs {
-				stdout.Write([]byte("\t"))
+				handleLineType(&line, opts.ErrorThrown, defaultTitle.ErrorThrown, &color, stdout, &errorBefore, true)
 			}
 
 			stdout.Write(color)
@@ -258,14 +295,26 @@ func ColorizeTests(m *testing.M, opts Opts) {
 			stdout.Write([]byte("\n"))
 		}
 
+		// nothing to read
 		if err != nil {
 			break
 		}
 	}
 
-	// Restore outputs
+	// restore outputs
 	os.Stdout = stdout
 	os.Stderr = stderr
+
+	// [0, 125]
+	return exitCode
+}
+
+// WARN: all tests must be in this folder, no subfolder authorized
+func TestMain(m *testing.M) {
+	os.Setenv("APP_GO_TEST", "true")
+
+	opts := NewDefaultOpts()
+	exitCode := RunTestColor(m, opts)
 
 	os.Exit(exitCode)
 }
