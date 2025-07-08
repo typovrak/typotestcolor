@@ -6,7 +6,8 @@ import (
 	"strconv"
 	"strings"
 	"testing"
-	"typotestcolor"
+
+	"github.com/typovrak/typotestcolor"
 )
 
 type verifyAddLineFeedBetweenErrorThrown struct {

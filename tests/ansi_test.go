@@ -3,7 +3,8 @@ package tests
 import (
 	"strconv"
 	"testing"
-	"typotestcolor"
+
+	"github.com/typovrak/typotestcolor"
 )
 
 func validateTestColorANSI(t *testing.T, res string, expected string) {

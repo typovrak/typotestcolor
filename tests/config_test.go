@@ -2,7 +2,8 @@ package tests
 
 import (
 	"testing"
-	"typotestcolor"
+
+	"github.com/typovrak/typotestcolor"
 )
 
 func validateTestNewDefaultOptsInt(t *testing.T, res int, expected int) {

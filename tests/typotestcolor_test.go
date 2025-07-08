@@ -3,7 +3,8 @@ package tests
 import (
 	"strconv"
 	"testing"
-	"typotestcolor"
+
+	"github.com/typovrak/typotestcolor"
 )
 
 type verifyDefault struct {
