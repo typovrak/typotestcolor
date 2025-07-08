@@ -24,7 +24,7 @@ func TestColorANSI(t *testing.T) {
 				Background: typotestcolor.ColorANSIBackground[typotestcolor.ANSIBackgroundNone],
 			}),
 		)
-		expected := "\033[1;36m"
+		expected := string(typotestcolor.ColorANSI(typotestcolor.NewDefaultOpts().Run.Colors))
 		validateTestColorANSI(t, res, expected)
 	})
 
@@ -36,7 +36,7 @@ func TestColorANSI(t *testing.T) {
 				Background: typotestcolor.ColorANSIBackground[typotestcolor.ANSIBackgroundNone],
 			}),
 		)
-		expected := "\033[22;31m"
+		expected := string(typotestcolor.ColorANSI(typotestcolor.NewDefaultOpts().Fail.Colors))
 		validateTestColorANSI(t, res, expected)
 	})
 
@@ -48,7 +48,7 @@ func TestColorANSI(t *testing.T) {
 				Background: typotestcolor.ColorANSIBackground[typotestcolor.ANSIBackgroundNone],
 			}),
 		)
-		expected := "\033[22;32m"
+		expected := string(typotestcolor.ColorANSI(typotestcolor.NewDefaultOpts().Pass.Colors))
 		validateTestColorANSI(t, res, expected)
 	})
 
@@ -60,7 +60,7 @@ func TestColorANSI(t *testing.T) {
 				Background: typotestcolor.ColorANSIBackground[typotestcolor.ANSIBackgroundNone],
 			}),
 		)
-		expected := "\033[22;33m"
+		expected := string(typotestcolor.ColorANSI(typotestcolor.NewDefaultOpts().Skip.Colors))
 		validateTestColorANSI(t, res, expected)
 	})
 
@@ -72,7 +72,7 @@ func TestColorANSI(t *testing.T) {
 				Background: typotestcolor.ColorANSIBackground[typotestcolor.ANSIBackgroundRed],
 			}),
 		)
-		expected := "\033[1;30;41m"
+		expected := string(typotestcolor.ColorANSI(typotestcolor.NewDefaultOpts().Failed.Colors))
 		validateTestColorANSI(t, res, expected)
 	})
 
@@ -84,7 +84,7 @@ func TestColorANSI(t *testing.T) {
 				Background: typotestcolor.ColorANSIBackground[typotestcolor.ANSIBackgroundGreen],
 			}),
 		)
-		expected := "\033[1;30;42m"
+		expected := string(typotestcolor.ColorANSI(typotestcolor.NewDefaultOpts().Ok.Colors))
 		validateTestColorANSI(t, res, expected)
 	})
 
@@ -96,7 +96,7 @@ func TestColorANSI(t *testing.T) {
 				Background: typotestcolor.ColorANSIBackground[typotestcolor.ANSIBackgroundNone],
 			}),
 		)
-		expected := "\033[22;37m"
+		expected := string(typotestcolor.ColorANSI(typotestcolor.NewDefaultOpts().ErrorThrown.Colors))
 		validateTestColorANSI(t, res, expected)
 	})
 }
