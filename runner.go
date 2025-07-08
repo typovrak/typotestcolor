@@ -37,7 +37,13 @@ func RunTestColor(m *testing.M, opts Opts) int {
 	os.Stdout = w
 	os.Stderr = w
 
-	exitCode := m.Run()
+	// no error when no test executed
+	exitCode := 0
+
+	// test mock
+	if m != nil {
+		exitCode = m.Run()
+	}
 
 	// close the writer end of the pipe so the reader stops at EOF
 	w.Close()

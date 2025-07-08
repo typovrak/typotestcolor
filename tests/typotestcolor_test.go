@@ -6,12 +6,12 @@ import (
 	"typotestcolor"
 )
 
-type verifyRunTestColor struct {
+type verifyDefault struct {
 	exitCode int
 	out      string
 }
 
-func validateTestRunTestColor(t *testing.T, res verifyRunTestColor, expected verifyRunTestColor) {
+func validateTestDefault(t *testing.T, res verifyDefault, expected verifyDefault) {
 	if res.exitCode != expected.exitCode {
 		t.Errorf("[exitCode] expected %d, got %d", expected.exitCode, res.exitCode)
 	}
@@ -24,18 +24,18 @@ func validateTestRunTestColor(t *testing.T, res verifyRunTestColor, expected ver
 	}
 }
 
-func TestRunTestColor(t *testing.T) {
+func TestDefault(t *testing.T) {
 	t.Run("untestable", func(t *testing.T) {
-		res := verifyRunTestColor{
+		res := verifyDefault{
 			exitCode: 0,
 			out:      "",
 		}
-		expected := verifyRunTestColor{
+		expected := verifyDefault{
 			exitCode: 0,
 			out:      "",
 		}
 
-		res.exitCode = typotestcolor.RunTestColor(nil, typotestcolor.NewDefaultOpts())
-		validateTestRunTestColor(t, res, expected)
+		res.exitCode = typotestcolor.Default(nil)
+		validateTestDefault(t, res, expected)
 	})
 }
