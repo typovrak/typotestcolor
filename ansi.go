@@ -76,6 +76,8 @@ var ColorANSIBackground = map[ANSIBackground]int{
 	ANSIBackgroundWhite:  47,
 }
 
+var ColorReset = []byte("\033[0m")
+
 type ANSIConfig struct {
 	Style      int
 	Foreground int
