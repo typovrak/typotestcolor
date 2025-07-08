@@ -277,9 +277,36 @@ func TestHandleLineType(t *testing.T) {
 	})
 }
 
+type verifyReadTestLines struct {
+	out         string
+	errorBefore bool
+}
+
+func validateTestReadTestLines(t *testing.T, res verifyReadTestLines, expected verifyReadTestLines) {
+	resLine := strconv.QuoteToASCII(string(res.out))
+	expectedLine := strconv.QuoteToASCII(string(expected.out))
+
+	if resLine != expectedLine {
+		t.Errorf("[out] expected %s (length: %d)\n\ngot %s (length: %d)", expectedLine, len(expectedLine), resLine, len(resLine))
+	}
+
+	if res.errorBefore != expected.errorBefore {
+		t.Errorf("[errorBefore] expected %t, got %t", expected.errorBefore, res.errorBefore)
+	}
+}
+
 func TestReadTestLines(t *testing.T) {
-	t.Run("default", func(t *testing.T) {
-		testOutput := `=== RUN   TestColorANSI
+	t.Run("all line type with ok result", func(t *testing.T) {
+		defaultOpts := typotestcolor.NewDefaultOpts()
+
+		res := verifyReadTestLines{
+			errorBefore: false,
+		}
+		expected := verifyReadTestLines{
+			errorBefore: false,
+		}
+
+		rawOutput := `=== RUN   TestColorANSI
 === RUN   TestColorANSI/run_default_color
 html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)
 === RUN   TestColorANSI/fail_default_color
@@ -293,12 +320,11 @@ html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (le
     --- PASS: TestColorANSI/error_thrown_default_color (0.00s)
 === RUN   TestNewDefaultOpts
 === RUN   TestNewDefaultOpts/run_default_style
---- PASS: TestNewDefaultOpts (0.00s)`
-
-		defaultOpts := typotestcolor.NewDefaultOpts()
+--- PASS: TestNewDefaultOpts (0.00s)
+PASS`
 
 		// === RUN   TestColorANSI
-		expectedOutput := string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+		expected.out = string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
 			string(defaultOpts.Run.Title) +
 			" TestColorANSI" +
 			string(typotestcolor.ColorReset) + "\n" +
@@ -371,17 +397,230 @@ html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (le
 			string(typotestcolor.ColorANSI(defaultOpts.Pass.Colors)) +
 			string(defaultOpts.Pass.Title) +
 			" TestNewDefaultOpts (0.00s)" +
+			string(typotestcolor.ColorReset) + "\n" +
+			// PASS
+			"\n" + string(typotestcolor.ColorANSI(defaultOpts.Ok.Colors)) +
+			string(defaultOpts.Ok.Title) +
 			string(typotestcolor.ColorReset) + "\n"
 
-		input := bufio.NewReader(strings.NewReader(testOutput))
-		var out bytes.Buffer
-		errorBefore := false
-		typotestcolor.ReadTestLines(defaultOpts, input, &out, &errorBefore)
+		var (
+			input = bufio.NewReader(strings.NewReader(rawOutput))
+			out   bytes.Buffer
+		)
 
-		res := out.String()
+		typotestcolor.ReadTestLines(defaultOpts, input, &out, &res.errorBefore)
+		res.out = out.String()
 
-		if res != expectedOutput {
-			t.Errorf("expected %s (length: %d)\n\n\n got %s (length: %d)", strconv.QuoteToASCII(expectedOutput), len(expectedOutput), strconv.QuoteToASCII(res), len(res))
+		validateTestReadTestLines(t, res, expected)
+	})
+
+	t.Run("all line type with failed result", func(t *testing.T) {
+		defaultOpts := typotestcolor.NewDefaultOpts()
+
+		res := verifyReadTestLines{
+			errorBefore: false,
 		}
+		expected := verifyReadTestLines{
+			errorBefore: false,
+		}
+
+		rawOutput := `=== RUN   TestColorANSI
+=== RUN   TestColorANSI/run_default_color
+html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)
+=== RUN   TestColorANSI/fail_default_color
+--- PASS: TestColorANSI (0.00s)
+    --- PASS: TestColorANSI/run_default_color (0.00s)
+    --- PASS: TestColorANSI/fail_default_color (0.00s)
+    --- PASS: TestColorANSI/pass_default_color (0.00s)
+    --- SKIP: TestColorANSI/skip_default_color (0.00s)
+    --- PASS: TestColorANSI/failed_default_color (0.00s)
+    --- FAIL: TestColorANSI/ok_default_color (0.00s)
+    --- PASS: TestColorANSI/error_thrown_default_color (0.00s)
+=== RUN   TestNewDefaultOpts
+=== RUN   TestNewDefaultOpts/run_default_style
+--- PASS: TestNewDefaultOpts (0.00s)
+FAIL`
+
+		// === RUN   TestColorANSI
+		expected.out = string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+			string(defaultOpts.Run.Title) +
+			" TestColorANSI" +
+			string(typotestcolor.ColorReset) + "\n" +
+			// === RUN   TestColorANSI/run_default_color
+			string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+			string(defaultOpts.Run.Title) +
+			" TestColorANSI/run_default_color" +
+			string(typotestcolor.ColorReset) + "\n" +
+			// \nhtml-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)\n
+			"\n" + string(typotestcolor.ColorANSI(defaultOpts.ErrorThrown.Colors)) +
+			string(defaultOpts.ErrorThrown.Title) +
+			"html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)" +
+			string(typotestcolor.ColorReset) + "\n\n" +
+			// === RUN   TestColorANSI/fail_default_color
+			string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+			string(defaultOpts.Run.Title) +
+			" TestColorANSI/fail_default_color" +
+			string(typotestcolor.ColorReset) + "\n" +
+			// --- PASS: TestColorANSI (0.00s)
+			string(typotestcolor.ColorANSI(defaultOpts.Pass.Colors)) +
+			string(defaultOpts.Pass.Title) +
+			" TestColorANSI (0.00s)" +
+			string(typotestcolor.ColorReset) + "\n" +
+			// \t--- PASS: TestColorANSI/run_default_color (0.00s)
+			string(typotestcolor.ColorANSI(defaultOpts.Pass.Colors)) +
+			string(defaultOpts.Pass.Title) +
+			" TestColorANSI/run_default_color (0.00s)" +
+			string(typotestcolor.ColorReset) + "\n" +
+			// \t--- PASS: TestColorANSI/fail_default_color (0.00s)
+			string(typotestcolor.ColorANSI(defaultOpts.Pass.Colors)) +
+			string(defaultOpts.Pass.Title) +
+			" TestColorANSI/fail_default_color (0.00s)" +
+			string(typotestcolor.ColorReset) + "\n" +
+			// \t--- PASS: TestColorANSI/pass_default_color (0.00s)
+			string(typotestcolor.ColorANSI(defaultOpts.Pass.Colors)) +
+			string(defaultOpts.Pass.Title) +
+			" TestColorANSI/pass_default_color (0.00s)" +
+			string(typotestcolor.ColorReset) + "\n" +
+			// \t--- SKIP: TestColorANSI/skip_default_color (0.00s)
+			string(typotestcolor.ColorANSI(defaultOpts.Skip.Colors)) +
+			string(defaultOpts.Skip.Title) +
+			" TestColorANSI/skip_default_color (0.00s)" +
+			string(typotestcolor.ColorReset) + "\n" +
+			// \t--- PASS: TestColorANSI/failed_default_color (0.00s)
+			string(typotestcolor.ColorANSI(defaultOpts.Pass.Colors)) +
+			string(defaultOpts.Pass.Title) +
+			" TestColorANSI/failed_default_color (0.00s)" +
+			string(typotestcolor.ColorReset) + "\n" +
+			// \t--- FAIL: TestColorANSI/ok_default_color (0.00s)
+			string(typotestcolor.ColorANSI(defaultOpts.Fail.Colors)) +
+			string(defaultOpts.Fail.Title) +
+			" TestColorANSI/ok_default_color (0.00s)" +
+			string(typotestcolor.ColorReset) + "\n" +
+			// \t--- PASS: TestColorANSI/error_thrown_default_color (0.00s)
+			string(typotestcolor.ColorANSI(defaultOpts.Pass.Colors)) +
+			string(defaultOpts.Pass.Title) +
+			" TestColorANSI/error_thrown_default_color (0.00s)" +
+			string(typotestcolor.ColorReset) + "\n" +
+			// === RUN   TestNewDefaultOpts
+			string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+			string(defaultOpts.Run.Title) +
+			" TestNewDefaultOpts" +
+			string(typotestcolor.ColorReset) + "\n" +
+			// === RUN   TestNewDefaultOpts/run_default_style
+			string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+			string(defaultOpts.Run.Title) +
+			" TestNewDefaultOpts/run_default_style" +
+			string(typotestcolor.ColorReset) + "\n" +
+			// --- PASS: TestNewDefaultOpts (0.00s)
+			string(typotestcolor.ColorANSI(defaultOpts.Pass.Colors)) +
+			string(defaultOpts.Pass.Title) +
+			" TestNewDefaultOpts (0.00s)" +
+			string(typotestcolor.ColorReset) + "\n" +
+			// FAIL
+			"\n" + string(typotestcolor.ColorANSI(defaultOpts.Failed.Colors)) +
+			string(defaultOpts.Failed.Title) +
+			string(typotestcolor.ColorReset) + "\n"
+
+		var (
+			input = bufio.NewReader(strings.NewReader(rawOutput))
+			out   bytes.Buffer
+		)
+
+		typotestcolor.ReadTestLines(defaultOpts, input, &out, &res.errorBefore)
+		res.out = out.String()
+
+		validateTestReadTestLines(t, res, expected)
+	})
+
+	t.Run("error thrown with line feed", func(t *testing.T) {
+		defaultOpts := typotestcolor.NewDefaultOpts()
+
+		res := verifyReadTestLines{
+			errorBefore: false,
+		}
+		expected := verifyReadTestLines{
+			errorBefore: false,
+		}
+
+		rawOutput := `=== RUN   TestColorANSI
+=== RUN   TestColorANSI/run_default_color
+html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)\ntest\ntest
+=== RUN   TestColorANSI/fail_default_color`
+
+		// === RUN   TestColorANSI
+		expected.out = string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+			string(defaultOpts.Run.Title) +
+			" TestColorANSI" +
+			string(typotestcolor.ColorReset) + "\n" +
+			// === RUN   TestColorANSI/run_default_color
+			string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+			string(defaultOpts.Run.Title) +
+			" TestColorANSI/run_default_color" +
+			string(typotestcolor.ColorReset) + "\n" +
+			// \nhtml-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)\n
+			"\n" + string(typotestcolor.ColorANSI(defaultOpts.ErrorThrown.Colors)) +
+			string(defaultOpts.ErrorThrown.Title) +
+			"html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)" + "\\n" +
+			"test" + "\\n" +
+			"test" +
+			string(typotestcolor.ColorReset) + "\n\n" +
+			// === RUN   TestColorANSI/fail_default_color
+			string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+			string(defaultOpts.Run.Title) +
+			" TestColorANSI/fail_default_color" +
+			string(typotestcolor.ColorReset) + "\n"
+
+		var (
+			input = bufio.NewReader(strings.NewReader(rawOutput))
+			out   bytes.Buffer
+		)
+
+		typotestcolor.ReadTestLines(defaultOpts, input, &out, &res.errorBefore)
+		res.out = out.String()
+
+		validateTestReadTestLines(t, res, expected)
+	})
+
+	t.Run("errorBefore true at the end", func(t *testing.T) {
+		defaultOpts := typotestcolor.NewDefaultOpts()
+
+		res := verifyReadTestLines{
+			errorBefore: false,
+		}
+		expected := verifyReadTestLines{
+			errorBefore: true,
+		}
+
+		rawOutput := `=== RUN   TestColorANSI
+=== RUN   TestColorANSI/run_default_color
+html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)\ntest\ntest`
+
+		// === RUN   TestColorANSI
+		expected.out = string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+			string(defaultOpts.Run.Title) +
+			" TestColorANSI" +
+			string(typotestcolor.ColorReset) + "\n" +
+			// === RUN   TestColorANSI/run_default_color
+			string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+			string(defaultOpts.Run.Title) +
+			" TestColorANSI/run_default_color" +
+			string(typotestcolor.ColorReset) + "\n" +
+			// \nhtml-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)\n
+			"\n" + string(typotestcolor.ColorANSI(defaultOpts.ErrorThrown.Colors)) +
+			string(defaultOpts.ErrorThrown.Title) +
+			"html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)" + "\\n" +
+			"test" + "\\n" +
+			"test" +
+			string(typotestcolor.ColorReset) + "\n"
+
+		var (
+			input = bufio.NewReader(strings.NewReader(rawOutput))
+			out   bytes.Buffer
+		)
+
+		typotestcolor.ReadTestLines(defaultOpts, input, &out, &res.errorBefore)
+		res.out = out.String()
+
+		validateTestReadTestLines(t, res, expected)
 	})
 }
