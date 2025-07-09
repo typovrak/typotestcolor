@@ -39,12 +39,22 @@ func ReadTestLines(
 	stdout io.Writer,
 	errorBefore *bool,
 ) {
+	// TODO: try debugging with log files
+	//	f, err := os.Open("debug.log")
+	//	if err != nil {
+	//		fmt.Println(err)
+	//		return
+	//	}
+
 	Debug(opts, "ReadTestLines")
 
 	for {
 		line, err := reader.ReadBytes('\n')
 
 		if len(line) > 0 {
+			//			l, _ := f.Write(line)
+			//			fmt.Println(l)
+
 			line = bytes.TrimRight(line, "\n")
 			line = bytes.TrimLeft(line, " ")
 

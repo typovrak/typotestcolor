@@ -1,0 +1,16 @@
+=== RUN   TestColorANSI
+=== RUN   TestColorANSI/run_default_color
+html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)
+=== RUN   TestColorANSI/fail_default_color
+--- PASS: TestColorANSI (0.00s)
+    --- PASS: TestColorANSI/run_default_color (0.00s)
+    --- PASS: TestColorANSI/fail_default_color (0.00s)
+    --- PASS: TestColorANSI/pass_default_color (0.00s)
+    --- SKIP: TestColorANSI/skip_default_color (0.00s)
+    --- PASS: TestColorANSI/failed_default_color (0.00s)
+    --- FAIL: TestColorANSI/ok_default_color (0.00s)
+    --- PASS: TestColorANSI/error_thrown_default_color (0.00s)
+=== RUN   TestNewDefaultOpts
+=== RUN   TestNewDefaultOpts/run_default_style
+--- PASS: TestNewDefaultOpts (0.00s)
+PASS
