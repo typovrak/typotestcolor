@@ -19,85 +19,85 @@ func validateTestColorANSI(t *testing.T, res string, expected string) {
 func TestColorANSI(t *testing.T) {
 	t.Run("run default color", func(t *testing.T) {
 		res := string(
-			typotestcolor.ColorANSI(typotestcolor.ANSIConfig{
+			typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.ANSIConfig{
 				Style:      typotestcolor.ColorANSISTyle[typotestcolor.ANSIStyleBold],
 				Foreground: typotestcolor.ColorANSIForeground[typotestcolor.ANSIForegroundCyan],
 				Background: typotestcolor.ColorANSIBackground[typotestcolor.ANSIBackgroundNone],
 			}),
 		)
-		expected := string(typotestcolor.ColorANSI(typotestcolor.NewDefaultOpts().Run.Colors))
+		expected := string(typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Run.Colors))
 		validateTestColorANSI(t, res, expected)
 	})
 
 	t.Run("fail default color", func(t *testing.T) {
 		res := string(
-			typotestcolor.ColorANSI(typotestcolor.ANSIConfig{
+			typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.ANSIConfig{
 				Style:      typotestcolor.ColorANSISTyle[typotestcolor.ANSIStyleNormal],
 				Foreground: typotestcolor.ColorANSIForeground[typotestcolor.ANSIForegroundRed],
 				Background: typotestcolor.ColorANSIBackground[typotestcolor.ANSIBackgroundNone],
 			}),
 		)
-		expected := string(typotestcolor.ColorANSI(typotestcolor.NewDefaultOpts().Fail.Colors))
+		expected := string(typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Fail.Colors))
 		validateTestColorANSI(t, res, expected)
 	})
 
 	t.Run("pass default color", func(t *testing.T) {
 		res := string(
-			typotestcolor.ColorANSI(typotestcolor.ANSIConfig{
+			typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.ANSIConfig{
 				Style:      typotestcolor.ColorANSISTyle[typotestcolor.ANSIStyleNormal],
 				Foreground: typotestcolor.ColorANSIForeground[typotestcolor.ANSIForegroundGreen],
 				Background: typotestcolor.ColorANSIBackground[typotestcolor.ANSIBackgroundNone],
 			}),
 		)
-		expected := string(typotestcolor.ColorANSI(typotestcolor.NewDefaultOpts().Pass.Colors))
+		expected := string(typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Pass.Colors))
 		validateTestColorANSI(t, res, expected)
 	})
 
 	t.Run("skip default color", func(t *testing.T) {
 		res := string(
-			typotestcolor.ColorANSI(typotestcolor.ANSIConfig{
+			typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.ANSIConfig{
 				Style:      typotestcolor.ColorANSISTyle[typotestcolor.ANSIStyleNormal],
 				Foreground: typotestcolor.ColorANSIForeground[typotestcolor.ANSIForegroundYellow],
 				Background: typotestcolor.ColorANSIBackground[typotestcolor.ANSIBackgroundNone],
 			}),
 		)
-		expected := string(typotestcolor.ColorANSI(typotestcolor.NewDefaultOpts().Skip.Colors))
+		expected := string(typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Skip.Colors))
 		validateTestColorANSI(t, res, expected)
 	})
 
 	t.Run("failed default color", func(t *testing.T) {
 		res := string(
-			typotestcolor.ColorANSI(typotestcolor.ANSIConfig{
+			typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.ANSIConfig{
 				Style:      typotestcolor.ColorANSISTyle[typotestcolor.ANSIStyleBold],
 				Foreground: typotestcolor.ColorANSIForeground[typotestcolor.ANSIForegroundBlack],
 				Background: typotestcolor.ColorANSIBackground[typotestcolor.ANSIBackgroundRed],
 			}),
 		)
-		expected := string(typotestcolor.ColorANSI(typotestcolor.NewDefaultOpts().Failed.Colors))
+		expected := string(typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Failed.Colors))
 		validateTestColorANSI(t, res, expected)
 	})
 
 	t.Run("ok default color", func(t *testing.T) {
 		res := string(
-			typotestcolor.ColorANSI(typotestcolor.ANSIConfig{
+			typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.ANSIConfig{
 				Style:      typotestcolor.ColorANSISTyle[typotestcolor.ANSIStyleBold],
 				Foreground: typotestcolor.ColorANSIForeground[typotestcolor.ANSIForegroundBlack],
 				Background: typotestcolor.ColorANSIBackground[typotestcolor.ANSIBackgroundGreen],
 			}),
 		)
-		expected := string(typotestcolor.ColorANSI(typotestcolor.NewDefaultOpts().Ok.Colors))
+		expected := string(typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Ok.Colors))
 		validateTestColorANSI(t, res, expected)
 	})
 
 	t.Run("error thrown default color", func(t *testing.T) {
 		res := string(
-			typotestcolor.ColorANSI(typotestcolor.ANSIConfig{
+			typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.ANSIConfig{
 				Style:      typotestcolor.ColorANSISTyle[typotestcolor.ANSIStyleNormal],
 				Foreground: typotestcolor.ColorANSIForeground[typotestcolor.ANSIForegroundWhite],
 				Background: typotestcolor.ColorANSIBackground[typotestcolor.ANSIBackgroundNone],
 			}),
 		)
-		expected := string(typotestcolor.ColorANSI(typotestcolor.NewDefaultOpts().ErrorThrown.Colors))
+		expected := string(typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().ErrorThrown.Colors))
 		validateTestColorANSI(t, res, expected)
 	})
 }

@@ -6,7 +6,9 @@ import (
 	"io"
 )
 
-func AddLineFeedBetweenErrorThrown(w io.Writer, errorBefore *bool, isError bool) {
+func AddLineFeedBetweenErrorThrown(opts Opts, w io.Writer, errorBefore *bool, isError bool) {
+	Debug(opts, "AddLineFeedBetweenErrorThrown")
+
 	if (!isError && *errorBefore) || (isError && !*errorBefore) {
 		w.Write([]byte("\n"))
 	}
@@ -15,6 +17,7 @@ func AddLineFeedBetweenErrorThrown(w io.Writer, errorBefore *bool, isError bool)
 }
 
 func HandleLineType(
+	opts Opts,
 	line *[]byte,
 	lineType LineType,
 	defaultTitleType []byte,
@@ -23,8 +26,10 @@ func HandleLineType(
 	errorBefore *bool,
 	isError bool,
 ) {
-	*color = ColorANSI(lineType.Colors)
-	AddLineFeedBetweenErrorThrown(w, errorBefore, isError)
+	Debug(opts, "HandleLineType")
+
+	*color = ColorANSI(opts, lineType.Colors)
+	AddLineFeedBetweenErrorThrown(opts, w, errorBefore, isError)
 	*line = bytes.Replace(*line, defaultTitleType, []byte(lineType.Title), 1)
 }
 
@@ -34,6 +39,8 @@ func ReadTestLines(
 	stdout io.Writer,
 	errorBefore *bool,
 ) {
+	Debug(opts, "ReadTestLines")
+
 	for {
 		line, err := reader.ReadBytes('\n')
 
@@ -46,33 +53,33 @@ func ReadTestLines(
 			// manage color and style line depending on the content
 			// === RUN
 			if bytes.Contains(line, DefaultTitle.Run) {
-				HandleLineType(&line, opts.Run, DefaultTitle.Run, &color, stdout, errorBefore, false)
+				HandleLineType(opts, &line, opts.Run, DefaultTitle.Run, &color, stdout, errorBefore, false)
 
 				// --- FAIL:
 			} else if bytes.Contains(line, DefaultTitle.Fail) {
-				HandleLineType(&line, opts.Fail, DefaultTitle.Fail, &color, stdout, errorBefore, false)
+				HandleLineType(opts, &line, opts.Fail, DefaultTitle.Fail, &color, stdout, errorBefore, false)
 
 				// --- PASS:
 			} else if bytes.Contains(line, DefaultTitle.Pass) {
-				HandleLineType(&line, opts.Pass, DefaultTitle.Pass, &color, stdout, errorBefore, false)
+				HandleLineType(opts, &line, opts.Pass, DefaultTitle.Pass, &color, stdout, errorBefore, false)
 
 				// --- SKIP:
 			} else if bytes.Contains(line, DefaultTitle.Skip) {
-				HandleLineType(&line, opts.Skip, DefaultTitle.Skip, &color, stdout, errorBefore, false)
+				HandleLineType(opts, &line, opts.Skip, DefaultTitle.Skip, &color, stdout, errorBefore, false)
 
 				// FAIL
 			} else if bytes.Equal(line, DefaultTitle.Failed) {
-				HandleLineType(&line, opts.Failed, DefaultTitle.Failed, &color, stdout, errorBefore, false)
+				HandleLineType(opts, &line, opts.Failed, DefaultTitle.Failed, &color, stdout, errorBefore, false)
 				stdout.Write([]byte("\n"))
 
 				// ok
 			} else if bytes.Equal(line, DefaultTitle.Ok) {
-				HandleLineType(&line, opts.Ok, DefaultTitle.Ok, &color, stdout, errorBefore, false)
+				HandleLineType(opts, &line, opts.Ok, DefaultTitle.Ok, &color, stdout, errorBefore, false)
 				stdout.Write([]byte("\n"))
 
 				// error thrown
 			} else {
-				HandleLineType(&line, opts.ErrorThrown, DefaultTitle.ErrorThrown, &color, stdout, errorBefore, true)
+				HandleLineType(opts, &line, opts.ErrorThrown, DefaultTitle.ErrorThrown, &color, stdout, errorBefore, true)
 			}
 
 			stdout.Write(color)

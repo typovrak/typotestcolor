@@ -8,6 +8,7 @@ type Opts struct {
 	Failed      LineType
 	Ok          LineType
 	ErrorThrown LineType
+	Debug       bool
 }
 
 type LineType struct {
@@ -74,5 +75,6 @@ func NewDefaultOpts() Opts {
 			},
 			Title: "",
 		},
+		Debug: false,
 	}
 }

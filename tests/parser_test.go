@@ -38,7 +38,7 @@ func TestAddLineFeedBetweenErrorThrown(t *testing.T) {
 			errorBefore: true,
 		}
 
-		typotestcolor.AddLineFeedBetweenErrorThrown(&res.buffer, &res.errorBefore, isError)
+		typotestcolor.AddLineFeedBetweenErrorThrown(DefaultTestOpts, &res.buffer, &res.errorBefore, isError)
 		validateTestAddLineFeedBetweenErrorThrown(t, res, expected)
 	})
 
@@ -52,7 +52,7 @@ func TestAddLineFeedBetweenErrorThrown(t *testing.T) {
 		}
 		expected.buffer.Write([]byte("\n"))
 
-		typotestcolor.AddLineFeedBetweenErrorThrown(&res.buffer, &res.errorBefore, isError)
+		typotestcolor.AddLineFeedBetweenErrorThrown(DefaultTestOpts, &res.buffer, &res.errorBefore, isError)
 		validateTestAddLineFeedBetweenErrorThrown(t, res, expected)
 	})
 
@@ -66,7 +66,7 @@ func TestAddLineFeedBetweenErrorThrown(t *testing.T) {
 		}
 		expected.buffer.Write([]byte("\n"))
 
-		typotestcolor.AddLineFeedBetweenErrorThrown(&res.buffer, &res.errorBefore, isError)
+		typotestcolor.AddLineFeedBetweenErrorThrown(DefaultTestOpts, &res.buffer, &res.errorBefore, isError)
 		validateTestAddLineFeedBetweenErrorThrown(t, res, expected)
 	})
 
@@ -79,7 +79,7 @@ func TestAddLineFeedBetweenErrorThrown(t *testing.T) {
 			errorBefore: false,
 		}
 
-		typotestcolor.AddLineFeedBetweenErrorThrown(&res.buffer, &res.errorBefore, isError)
+		typotestcolor.AddLineFeedBetweenErrorThrown(DefaultTestOpts, &res.buffer, &res.errorBefore, isError)
 		validateTestAddLineFeedBetweenErrorThrown(t, res, expected)
 	})
 }
@@ -137,11 +137,11 @@ func TestHandleLineType(t *testing.T) {
 			// default run title
 			line: []byte(lineType.Title),
 			// default run ansi color
-			color:       typotestcolor.ColorANSI(typotestcolor.NewDefaultOpts().Run.Colors),
+			color:       typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Run.Colors),
 			errorBefore: true,
 		}
 
-		typotestcolor.HandleLineType(&res.line, lineType, defaultLineType, &res.color, &res.buffer, &res.errorBefore, isError)
+		typotestcolor.HandleLineType(DefaultTestOpts, &res.line, lineType, defaultLineType, &res.color, &res.buffer, &res.errorBefore, isError)
 		validateTestHandleLineType(t, res, expected)
 	})
 
@@ -159,11 +159,11 @@ func TestHandleLineType(t *testing.T) {
 			// default fail title
 			line: []byte(lineType.Title),
 			// default fail ansi color
-			color:       typotestcolor.ColorANSI(typotestcolor.NewDefaultOpts().Fail.Colors),
+			color:       typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Fail.Colors),
 			errorBefore: true,
 		}
 
-		typotestcolor.HandleLineType(&res.line, lineType, defaultLineType, &res.color, &res.buffer, &res.errorBefore, isError)
+		typotestcolor.HandleLineType(DefaultTestOpts, &res.line, lineType, defaultLineType, &res.color, &res.buffer, &res.errorBefore, isError)
 		validateTestHandleLineType(t, res, expected)
 	})
 
@@ -181,11 +181,11 @@ func TestHandleLineType(t *testing.T) {
 			// default pass title
 			line: []byte(lineType.Title),
 			// default pass ansi color
-			color:       typotestcolor.ColorANSI(typotestcolor.NewDefaultOpts().Pass.Colors),
+			color:       typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Pass.Colors),
 			errorBefore: true,
 		}
 
-		typotestcolor.HandleLineType(&res.line, lineType, defaultLineType, &res.color, &res.buffer, &res.errorBefore, isError)
+		typotestcolor.HandleLineType(DefaultTestOpts, &res.line, lineType, defaultLineType, &res.color, &res.buffer, &res.errorBefore, isError)
 		validateTestHandleLineType(t, res, expected)
 	})
 
@@ -203,11 +203,11 @@ func TestHandleLineType(t *testing.T) {
 			// default skip title
 			line: []byte(lineType.Title),
 			// default skip ansi color
-			color:       typotestcolor.ColorANSI(typotestcolor.NewDefaultOpts().Skip.Colors),
+			color:       typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Skip.Colors),
 			errorBefore: true,
 		}
 
-		typotestcolor.HandleLineType(&res.line, lineType, defaultLineType, &res.color, &res.buffer, &res.errorBefore, isError)
+		typotestcolor.HandleLineType(DefaultTestOpts, &res.line, lineType, defaultLineType, &res.color, &res.buffer, &res.errorBefore, isError)
 		validateTestHandleLineType(t, res, expected)
 	})
 
@@ -225,11 +225,11 @@ func TestHandleLineType(t *testing.T) {
 			// default failed title
 			line: []byte(lineType.Title),
 			// default failed ansi color
-			color:       typotestcolor.ColorANSI(typotestcolor.NewDefaultOpts().Failed.Colors),
+			color:       typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Failed.Colors),
 			errorBefore: true,
 		}
 
-		typotestcolor.HandleLineType(&res.line, lineType, defaultLineType, &res.color, &res.buffer, &res.errorBefore, isError)
+		typotestcolor.HandleLineType(DefaultTestOpts, &res.line, lineType, defaultLineType, &res.color, &res.buffer, &res.errorBefore, isError)
 		validateTestHandleLineType(t, res, expected)
 	})
 
@@ -247,11 +247,11 @@ func TestHandleLineType(t *testing.T) {
 			// default ok title
 			line: []byte(lineType.Title),
 			// default ok ansi color
-			color:       typotestcolor.ColorANSI(typotestcolor.NewDefaultOpts().Ok.Colors),
+			color:       typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Ok.Colors),
 			errorBefore: true,
 		}
 
-		typotestcolor.HandleLineType(&res.line, lineType, defaultLineType, &res.color, &res.buffer, &res.errorBefore, isError)
+		typotestcolor.HandleLineType(DefaultTestOpts, &res.line, lineType, defaultLineType, &res.color, &res.buffer, &res.errorBefore, isError)
 		validateTestHandleLineType(t, res, expected)
 	})
 
@@ -269,11 +269,11 @@ func TestHandleLineType(t *testing.T) {
 			// default error thrown title
 			line: []byte(lineType.Title),
 			// default error thrown ansi color
-			color:       typotestcolor.ColorANSI(typotestcolor.NewDefaultOpts().ErrorThrown.Colors),
+			color:       typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().ErrorThrown.Colors),
 			errorBefore: true,
 		}
 
-		typotestcolor.HandleLineType(&res.line, lineType, defaultLineType, &res.color, &res.buffer, &res.errorBefore, isError)
+		typotestcolor.HandleLineType(DefaultTestOpts, &res.line, lineType, defaultLineType, &res.color, &res.buffer, &res.errorBefore, isError)
 		validateTestHandleLineType(t, res, expected)
 	})
 }
@@ -325,82 +325,82 @@ html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (le
 PASS`
 
 		// === RUN   TestColorANSI
-		expected.out = string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+		expected.out = string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Run.Colors)) +
 			string(defaultOpts.Run.Title) +
 			" TestColorANSI" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// === RUN   TestColorANSI/run_default_color
-			string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Run.Colors)) +
 			string(defaultOpts.Run.Title) +
 			" TestColorANSI/run_default_color" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// \nhtml-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)\n
-			"\n" + string(typotestcolor.ColorANSI(defaultOpts.ErrorThrown.Colors)) +
+			"\n" + string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.ErrorThrown.Colors)) +
 			string(defaultOpts.ErrorThrown.Title) +
 			"html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)" +
 			string(typotestcolor.ColorReset) + "\n\n" +
 			// === RUN   TestColorANSI/fail_default_color
-			string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Run.Colors)) +
 			string(defaultOpts.Run.Title) +
 			" TestColorANSI/fail_default_color" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// --- PASS: TestColorANSI (0.00s)
-			string(typotestcolor.ColorANSI(defaultOpts.Pass.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Pass.Colors)) +
 			string(defaultOpts.Pass.Title) +
 			" TestColorANSI (0.00s)" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// \t--- PASS: TestColorANSI/run_default_color (0.00s)
-			string(typotestcolor.ColorANSI(defaultOpts.Pass.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Pass.Colors)) +
 			string(defaultOpts.Pass.Title) +
 			" TestColorANSI/run_default_color (0.00s)" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// \t--- PASS: TestColorANSI/fail_default_color (0.00s)
-			string(typotestcolor.ColorANSI(defaultOpts.Pass.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Pass.Colors)) +
 			string(defaultOpts.Pass.Title) +
 			" TestColorANSI/fail_default_color (0.00s)" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// \t--- PASS: TestColorANSI/pass_default_color (0.00s)
-			string(typotestcolor.ColorANSI(defaultOpts.Pass.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Pass.Colors)) +
 			string(defaultOpts.Pass.Title) +
 			" TestColorANSI/pass_default_color (0.00s)" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// \t--- SKIP: TestColorANSI/skip_default_color (0.00s)
-			string(typotestcolor.ColorANSI(defaultOpts.Skip.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Skip.Colors)) +
 			string(defaultOpts.Skip.Title) +
 			" TestColorANSI/skip_default_color (0.00s)" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// \t--- PASS: TestColorANSI/failed_default_color (0.00s)
-			string(typotestcolor.ColorANSI(defaultOpts.Pass.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Pass.Colors)) +
 			string(defaultOpts.Pass.Title) +
 			" TestColorANSI/failed_default_color (0.00s)" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// \t--- FAIL: TestColorANSI/ok_default_color (0.00s)
-			string(typotestcolor.ColorANSI(defaultOpts.Fail.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Fail.Colors)) +
 			string(defaultOpts.Fail.Title) +
 			" TestColorANSI/ok_default_color (0.00s)" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// \t--- PASS: TestColorANSI/error_thrown_default_color (0.00s)
-			string(typotestcolor.ColorANSI(defaultOpts.Pass.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Pass.Colors)) +
 			string(defaultOpts.Pass.Title) +
 			" TestColorANSI/error_thrown_default_color (0.00s)" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// === RUN   TestNewDefaultOpts
-			string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Run.Colors)) +
 			string(defaultOpts.Run.Title) +
 			" TestNewDefaultOpts" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// === RUN   TestNewDefaultOpts/run_default_style
-			string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Run.Colors)) +
 			string(defaultOpts.Run.Title) +
 			" TestNewDefaultOpts/run_default_style" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// --- PASS: TestNewDefaultOpts (0.00s)
-			string(typotestcolor.ColorANSI(defaultOpts.Pass.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Pass.Colors)) +
 			string(defaultOpts.Pass.Title) +
 			" TestNewDefaultOpts (0.00s)" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// PASS
-			"\n" + string(typotestcolor.ColorANSI(defaultOpts.Ok.Colors)) +
+			"\n" + string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Ok.Colors)) +
 			string(defaultOpts.Ok.Title) +
 			string(typotestcolor.ColorReset) + "\n"
 
@@ -443,82 +443,82 @@ html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (le
 FAIL`
 
 		// === RUN   TestColorANSI
-		expected.out = string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+		expected.out = string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Run.Colors)) +
 			string(defaultOpts.Run.Title) +
 			" TestColorANSI" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// === RUN   TestColorANSI/run_default_color
-			string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Run.Colors)) +
 			string(defaultOpts.Run.Title) +
 			" TestColorANSI/run_default_color" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// \nhtml-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)\n
-			"\n" + string(typotestcolor.ColorANSI(defaultOpts.ErrorThrown.Colors)) +
+			"\n" + string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.ErrorThrown.Colors)) +
 			string(defaultOpts.ErrorThrown.Title) +
 			"html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)" +
 			string(typotestcolor.ColorReset) + "\n\n" +
 			// === RUN   TestColorANSI/fail_default_color
-			string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Run.Colors)) +
 			string(defaultOpts.Run.Title) +
 			" TestColorANSI/fail_default_color" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// --- PASS: TestColorANSI (0.00s)
-			string(typotestcolor.ColorANSI(defaultOpts.Pass.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Pass.Colors)) +
 			string(defaultOpts.Pass.Title) +
 			" TestColorANSI (0.00s)" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// \t--- PASS: TestColorANSI/run_default_color (0.00s)
-			string(typotestcolor.ColorANSI(defaultOpts.Pass.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Pass.Colors)) +
 			string(defaultOpts.Pass.Title) +
 			" TestColorANSI/run_default_color (0.00s)" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// \t--- PASS: TestColorANSI/fail_default_color (0.00s)
-			string(typotestcolor.ColorANSI(defaultOpts.Pass.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Pass.Colors)) +
 			string(defaultOpts.Pass.Title) +
 			" TestColorANSI/fail_default_color (0.00s)" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// \t--- PASS: TestColorANSI/pass_default_color (0.00s)
-			string(typotestcolor.ColorANSI(defaultOpts.Pass.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Pass.Colors)) +
 			string(defaultOpts.Pass.Title) +
 			" TestColorANSI/pass_default_color (0.00s)" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// \t--- SKIP: TestColorANSI/skip_default_color (0.00s)
-			string(typotestcolor.ColorANSI(defaultOpts.Skip.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Skip.Colors)) +
 			string(defaultOpts.Skip.Title) +
 			" TestColorANSI/skip_default_color (0.00s)" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// \t--- PASS: TestColorANSI/failed_default_color (0.00s)
-			string(typotestcolor.ColorANSI(defaultOpts.Pass.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Pass.Colors)) +
 			string(defaultOpts.Pass.Title) +
 			" TestColorANSI/failed_default_color (0.00s)" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// \t--- FAIL: TestColorANSI/ok_default_color (0.00s)
-			string(typotestcolor.ColorANSI(defaultOpts.Fail.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Fail.Colors)) +
 			string(defaultOpts.Fail.Title) +
 			" TestColorANSI/ok_default_color (0.00s)" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// \t--- PASS: TestColorANSI/error_thrown_default_color (0.00s)
-			string(typotestcolor.ColorANSI(defaultOpts.Pass.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Pass.Colors)) +
 			string(defaultOpts.Pass.Title) +
 			" TestColorANSI/error_thrown_default_color (0.00s)" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// === RUN   TestNewDefaultOpts
-			string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Run.Colors)) +
 			string(defaultOpts.Run.Title) +
 			" TestNewDefaultOpts" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// === RUN   TestNewDefaultOpts/run_default_style
-			string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Run.Colors)) +
 			string(defaultOpts.Run.Title) +
 			" TestNewDefaultOpts/run_default_style" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// --- PASS: TestNewDefaultOpts (0.00s)
-			string(typotestcolor.ColorANSI(defaultOpts.Pass.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Pass.Colors)) +
 			string(defaultOpts.Pass.Title) +
 			" TestNewDefaultOpts (0.00s)" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// FAIL
-			"\n" + string(typotestcolor.ColorANSI(defaultOpts.Failed.Colors)) +
+			"\n" + string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Failed.Colors)) +
 			string(defaultOpts.Failed.Title) +
 			string(typotestcolor.ColorReset) + "\n"
 
@@ -549,24 +549,24 @@ html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (le
 === RUN   TestColorANSI/fail_default_color`
 
 		// === RUN   TestColorANSI
-		expected.out = string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+		expected.out = string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Run.Colors)) +
 			string(defaultOpts.Run.Title) +
 			" TestColorANSI" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// === RUN   TestColorANSI/run_default_color
-			string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Run.Colors)) +
 			string(defaultOpts.Run.Title) +
 			" TestColorANSI/run_default_color" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// \nhtml-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)\n
-			"\n" + string(typotestcolor.ColorANSI(defaultOpts.ErrorThrown.Colors)) +
+			"\n" + string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.ErrorThrown.Colors)) +
 			string(defaultOpts.ErrorThrown.Title) +
 			"html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)" + "\\n" +
 			"test" + "\\n" +
 			"test" +
 			string(typotestcolor.ColorReset) + "\n\n" +
 			// === RUN   TestColorANSI/fail_default_color
-			string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Run.Colors)) +
 			string(defaultOpts.Run.Title) +
 			" TestColorANSI/fail_default_color" +
 			string(typotestcolor.ColorReset) + "\n"
@@ -597,17 +597,17 @@ html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (le
 html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)\ntest\ntest`
 
 		// === RUN   TestColorANSI
-		expected.out = string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+		expected.out = string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Run.Colors)) +
 			string(defaultOpts.Run.Title) +
 			" TestColorANSI" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// === RUN   TestColorANSI/run_default_color
-			string(typotestcolor.ColorANSI(defaultOpts.Run.Colors)) +
+			string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.Run.Colors)) +
 			string(defaultOpts.Run.Title) +
 			" TestColorANSI/run_default_color" +
 			string(typotestcolor.ColorReset) + "\n" +
 			// \nhtml-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)\n
-			"\n" + string(typotestcolor.ColorANSI(defaultOpts.ErrorThrown.Colors)) +
+			"\n" + string(typotestcolor.ColorANSI(DefaultTestOpts, defaultOpts.ErrorThrown.Colors)) +
 			string(defaultOpts.ErrorThrown.Title) +
 			"html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)" + "\\n" +
 			"test" + "\\n" +

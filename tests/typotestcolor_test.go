@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"fmt"
 	"strconv"
 	"testing"
 
@@ -35,6 +36,8 @@ func TestDefault(t *testing.T) {
 			exitCode: 0,
 			out:      "",
 		}
+
+		fmt.Println("fmt.Println testing")
 
 		res.exitCode = typotestcolor.Default(nil)
 		validateTestDefault(t, res, expected)

@@ -7,7 +7,11 @@ import (
 	"github.com/typovrak/typotestcolor"
 )
 
+var DefaultTestOpts = typotestcolor.NewDefaultOpts()
+
 // WARN: all tests must be in this folder, no subfolder authorized
 func TestMain(m *testing.M) {
-	os.Exit(typotestcolor.Default(m))
+	DefaultTestOpts.Debug = true
+
+	os.Exit(typotestcolor.RunTestColor(m, DefaultTestOpts))
 }

@@ -26,6 +26,8 @@ var DefaultTitle = struct {
 
 // return exitCode
 func RunTestColor(m *testing.M, opts Opts) int {
+	Debug(opts, "RuntestColor")
+
 	// create a pipe
 	r, w, _ := os.Pipe()
 

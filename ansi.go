@@ -1,6 +1,8 @@
 package typotestcolor
 
-import "strconv"
+import (
+	"strconv"
+)
 
 type ANSIStyle int
 
@@ -84,7 +86,9 @@ type ANSIConfig struct {
 	Background int
 }
 
-func ColorANSI(config ANSIConfig) []byte {
+func ColorANSI(opts Opts, config ANSIConfig) []byte {
+	Debug(opts, "ColorANSI")
+
 	color := []byte("\033[")
 
 	color = append(color, []byte(strconv.Itoa(config.Style))...)
