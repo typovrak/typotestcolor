@@ -2,7 +2,11 @@ package typotestcolor
 
 import (
 	"bufio"
+	"fmt"
+	"io"
 	"os"
+	"os/signal"
+	"syscall"
 	"testing"
 )
 
@@ -26,6 +30,38 @@ var DefaultTitle = struct {
 
 // return exitCode
 func RunTestColor(m *testing.M, opts Opts) int {
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		<-c
+		// Étape 1 : créer un pipe
+		r, w, _ := os.Pipe()
+
+		// Étape 2 : sauvegarder os.Stdout original
+		originalStdout := os.Stdout
+
+		// Étape 3 : rediriger os.Stdout vers le writer du pipe
+		os.Stdout = w
+
+		// Étape 4 : écrire dans fmt.Println (redirigé)
+		fmt.Println("Message capturé")
+
+		// Étape 5 : fermer le writer pour signaler EOF
+		w.Close()
+
+		// Étape 6 : restaurer os.Stdout
+		os.Stdout = originalStdout
+
+		// Étape 7 : lire tout le contenu capturé depuis le reader
+		output, _ := io.ReadAll(r)
+
+		// Étape 8 : afficher ce qui a été capturé
+		fmt.Println("Sortie capturée :")
+		fmt.Print(string(output))
+
+		os.Exit(1)
+	}()
+
 	Debug(opts, "RuntestColor")
 
 	// create a pipe
