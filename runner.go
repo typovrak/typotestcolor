@@ -58,7 +58,9 @@ func RunTestColor(m *testing.M, opts Opts) int {
 
 	// test mock
 	if m != nil {
+		f.WriteString("BEFORE m.Run()")
 		exitCode = m.Run()
+		f.WriteString("AFTER m.Run()")
 	}
 
 	f.WriteString("AFTER RUNNING TEST")

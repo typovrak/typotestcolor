@@ -1,4 +1,4 @@
-
+ENTER IN RunTestColorcreate a pipeBEFORE RUNNING TEST
 LEN LINE > 0 :
 === RUN   TestColorANSI
 
@@ -275,11 +275,11 @@ html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (le
 AFTER WRITE STDOUT :
 html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)\ntest\ntest
 ERROR :
-
+ENTER IN RunTestColorcreate a pipeBEFORE RUNNING TESTAFTER RUNNING TESTAFTER READER BUFIO
 ERROR :
-
+AFTER ReadTestLinesBEFORE RETURNING EXITCODEENTER IN RunTestColorcreate a pipeBEFORE RUNNING TESTAFTER RUNNING TESTAFTER READER BUFIO
 ERROR :
-
+AFTER ReadTestLinesBEFORE RETURNING EXITCODEAFTER RUNNING TESTAFTER READER BUFIO
 LEN LINE > 0 :
 === RUN   TestColorANSI
 
@@ -1716,3 +1716,4 @@ PASS
 AFTER WRITE STDOUT :
 PASS
 ERROR :
+AFTER ReadTestLinesBEFORE RETURNING EXITCODE
