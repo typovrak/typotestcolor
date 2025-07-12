@@ -3,6 +3,7 @@ package typotestcolor
 import (
 	"bytes"
 	"io"
+	"strconv"
 )
 
 func AddLineFeedBetweenErrorThrown(opts Opts, w io.Writer, errorBefore *bool, isError bool) {
@@ -37,6 +38,7 @@ func FormatTestLine(
 	line []byte,
 	errorBefore *bool,
 	stdout io.Writer,
+	lineAggregation *LineAggregation,
 ) []byte {
 	var formattedLine []byte
 
@@ -53,12 +55,20 @@ func FormatTestLine(
 				return []byte("")
 			}
 
+			if !opts.Run.AggregationHide {
+				lineAggregation.Run++
+			}
+
 			HandleLineType(opts, &line, opts.Run, DefaultTitle.Run, &color, stdout, errorBefore, false)
 
 			// --- FAIL:
 		} else if bytes.Contains(line, DefaultTitle.Fail) {
 			if opts.Fail.Hide {
 				return []byte("")
+			}
+
+			if !opts.Fail.AggregationHide {
+				lineAggregation.Fail++
 			}
 
 			HandleLineType(opts, &line, opts.Fail, DefaultTitle.Fail, &color, stdout, errorBefore, false)
@@ -69,6 +79,10 @@ func FormatTestLine(
 				return []byte("")
 			}
 
+			if !opts.Pass.AggregationHide {
+				lineAggregation.Pass++
+			}
+
 			HandleLineType(opts, &line, opts.Pass, DefaultTitle.Pass, &color, stdout, errorBefore, false)
 
 			// --- SKIP:
@@ -77,12 +91,20 @@ func FormatTestLine(
 				return []byte("")
 			}
 
+			if !opts.Skip.AggregationHide {
+				lineAggregation.Skip++
+			}
+
 			HandleLineType(opts, &line, opts.Skip, DefaultTitle.Skip, &color, stdout, errorBefore, false)
 
 			// FAIL
 		} else if bytes.Equal(line, DefaultTitle.Failed) {
 			if opts.Failed.Hide {
 				return []byte("")
+			}
+
+			if !opts.Failed.AggregationHide {
+				lineAggregation.Failed++
 			}
 
 			HandleLineType(opts, &line, opts.Failed, DefaultTitle.Failed, &color, stdout, errorBefore, false)
@@ -94,6 +116,10 @@ func FormatTestLine(
 				return []byte("")
 			}
 
+			if !opts.Ok.AggregationHide {
+				lineAggregation.Ok++
+			}
+
 			HandleLineType(opts, &line, opts.Ok, DefaultTitle.Ok, &color, stdout, errorBefore, false)
 			formattedLine = append(formattedLine, []byte("\n")...)
 
@@ -101,6 +127,10 @@ func FormatTestLine(
 		} else {
 			if opts.ErrorThrown.Hide {
 				return []byte("")
+			}
+
+			if !opts.ErrorThrown.AggregationHide {
+				lineAggregation.ErrorThrown++
 			}
 
 			HandleLineType(opts, &line, opts.ErrorThrown, DefaultTitle.ErrorThrown, &color, stdout, errorBefore, true)
@@ -116,4 +146,44 @@ func FormatTestLine(
 	}
 
 	return formattedLine
+}
+
+func AddPrintLineAggregation(print *[]byte, title string, value int) {
+	*print = append(*print, []byte(title)...)
+	*print = append(*print, []byte(strconv.Itoa(value))...)
+	*print = append(*print, []byte("\n")...)
+}
+
+func PrintLineAggregation(opts Opts, lineAggregation LineAggregation) []byte {
+	var print []byte
+
+	if !opts.Run.AggregationHide {
+		AddPrintLineAggregation(&print, opts.Run.AggregationTitle, lineAggregation.Run)
+	}
+
+	if !opts.Fail.AggregationHide {
+		AddPrintLineAggregation(&print, opts.Fail.AggregationTitle, lineAggregation.Fail)
+	}
+
+	if !opts.Pass.AggregationHide {
+		AddPrintLineAggregation(&print, opts.Pass.AggregationTitle, lineAggregation.Pass)
+	}
+
+	if !opts.Skip.AggregationHide {
+		AddPrintLineAggregation(&print, opts.Skip.AggregationTitle, lineAggregation.Skip)
+	}
+
+	if !opts.Failed.AggregationHide {
+		AddPrintLineAggregation(&print, opts.Failed.AggregationTitle, lineAggregation.Failed)
+	}
+
+	if !opts.Ok.AggregationHide {
+		AddPrintLineAggregation(&print, opts.Ok.AggregationTitle, lineAggregation.Ok)
+	}
+
+	if !opts.ErrorThrown.AggregationHide {
+		AddPrintLineAggregation(&print, opts.ErrorThrown.AggregationTitle, lineAggregation.ErrorThrown)
+	}
+
+	return print
 }

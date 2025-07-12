@@ -50,12 +50,18 @@ func RunTestColor(m *testing.M, opts Opts) int {
 	go func() {
 		scanner := bufio.NewScanner(r)
 		errorBefore := false
+		var lineAggregation LineAggregation
 
 		for scanner.Scan() {
 			line := scanner.Bytes()
 
-			formattedLine := FormatTestLine(opts, line, &errorBefore, w)
+			formattedLine := FormatTestLine(opts, line, &errorBefore, w, &lineAggregation)
 			fmt.Fprint(stdout, string(formattedLine))
+		}
+
+		print := PrintLineAggregation(opts, lineAggregation)
+		if len(print) > 0 {
+			fmt.Fprint(stdout, string(print))
 		}
 
 		close(done)

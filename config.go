@@ -12,9 +12,21 @@ type Opts struct {
 }
 
 type LineType struct {
-	Colors ANSIConfig
-	Title  string
-	Hide   bool
+	Colors           ANSIConfig
+	Title            string
+	Hide             bool
+	AggregationTitle string
+	AggregationHide  bool
+}
+
+type LineAggregation = struct {
+	Run         int
+	Fail        int
+	Pass        int
+	Skip        int
+	Failed      int
+	Ok          int
+	ErrorThrown int
 }
 
 func NewDefaultOpts() Opts {
@@ -25,8 +37,10 @@ func NewDefaultOpts() Opts {
 				Foreground: ColorANSIForeground[ANSIForegroundCyan],
 				Background: ColorANSIBackground[ANSIBackgroundNone],
 			},
-			Title: "\t=== RUN:",
-			Hide:  false,
+			Title:            "\t=== RUN:",
+			Hide:             false,
+			AggregationTitle: "RUN:",
+			AggregationHide:  false,
 		},
 		Fail: LineType{
 			Colors: ANSIConfig{
@@ -34,8 +48,10 @@ func NewDefaultOpts() Opts {
 				Foreground: ColorANSIForeground[ANSIForegroundRed],
 				Background: ColorANSIBackground[ANSIBackgroundNone],
 			},
-			Title: "\t--- FAIL:",
-			Hide:  false,
+			Title:            "\t--- FAIL:",
+			Hide:             false,
+			AggregationTitle: "FAIL:",
+			AggregationHide:  false,
 		},
 		Pass: LineType{
 			Colors: ANSIConfig{
@@ -43,8 +59,10 @@ func NewDefaultOpts() Opts {
 				Foreground: ColorANSIForeground[ANSIForegroundGreen],
 				Background: ColorANSIBackground[ANSIBackgroundNone],
 			},
-			Title: "\t--- PASS:",
-			Hide:  false,
+			Title:            "\t--- PASS:",
+			Hide:             false,
+			AggregationTitle: "PASS:",
+			AggregationHide:  false,
 		},
 		Skip: LineType{
 			Colors: ANSIConfig{
@@ -52,8 +70,10 @@ func NewDefaultOpts() Opts {
 				Foreground: ColorANSIForeground[ANSIForegroundYellow],
 				Background: ColorANSIBackground[ANSIBackgroundNone],
 			},
-			Title: "\t--- SKIP:",
-			Hide:  false,
+			Title:            "\t--- SKIP:",
+			Hide:             false,
+			AggregationTitle: "SKIP:",
+			AggregationHide:  false,
 		},
 		Failed: LineType{
 			Colors: ANSIConfig{
@@ -61,8 +81,10 @@ func NewDefaultOpts() Opts {
 				Foreground: ColorANSIForeground[ANSIForegroundBlack],
 				Background: ColorANSIBackground[ANSIBackgroundRed],
 			},
-			Title: "FAIL",
-			Hide:  false,
+			Title:            "FAIL",
+			Hide:             false,
+			AggregationTitle: "FAILED:",
+			AggregationHide:  false,
 		},
 		Ok: LineType{
 			Colors: ANSIConfig{
@@ -70,8 +92,10 @@ func NewDefaultOpts() Opts {
 				Foreground: ColorANSIForeground[ANSIForegroundBlack],
 				Background: ColorANSIBackground[ANSIBackgroundGreen],
 			},
-			Title: "PASS",
-			Hide:  false,
+			Title:            "PASS",
+			Hide:             false,
+			AggregationTitle: "OK:",
+			AggregationHide:  false,
 		},
 
 		ErrorThrown: LineType{
@@ -80,8 +104,10 @@ func NewDefaultOpts() Opts {
 				Foreground: ColorANSIForeground[ANSIForegroundWhite],
 				Background: ColorANSIBackground[ANSIBackgroundNone],
 			},
-			Title: "",
-			Hide:  false,
+			Title:            "",
+			Hide:             false,
+			AggregationTitle: "ERROR_THROWN:",
+			AggregationHide:  false,
 		},
 		Debug: false,
 	}
