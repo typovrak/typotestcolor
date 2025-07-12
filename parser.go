@@ -3,7 +3,10 @@ package typotestcolor
 import (
 	"bufio"
 	"bytes"
+	"fmt"
 	"io"
+	"log"
+	"os"
 )
 
 func AddLineFeedBetweenErrorThrown(opts Opts, w io.Writer, errorBefore *bool, isError bool) {
@@ -40,11 +43,12 @@ func ReadTestLines(
 	errorBefore *bool,
 ) {
 	// TODO: try debugging with log files
-	//	f, err := os.Open("debug.log")
-	//	if err != nil {
-	//		fmt.Println(err)
-	//		return
-	//	}
+	f, err := os.OpenFile("debug.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer f.Close()
 
 	Debug(opts, "ReadTestLines")
 
@@ -52,8 +56,10 @@ func ReadTestLines(
 		line, err := reader.ReadBytes('\n')
 
 		if len(line) > 0 {
-			//			l, _ := f.Write(line)
-			//			fmt.Println(l)
+			_, err = f.WriteString("\nLEN LINE > 0 :\n" + string(line))
+			if err != nil {
+				log.Fatal(err)
+			}
 
 			line = bytes.TrimRight(line, "\n")
 			line = bytes.TrimLeft(line, " ")
@@ -92,14 +98,29 @@ func ReadTestLines(
 				HandleLineType(opts, &line, opts.ErrorThrown, DefaultTitle.ErrorThrown, &color, stdout, errorBefore, true)
 			}
 
+			_, err = f.WriteString("\nAFTER SWITCH :\n" + string(line))
+			if err != nil {
+				log.Fatal(err)
+			}
+
 			stdout.Write(color)
 			stdout.Write(line)
 			stdout.Write(ColorReset)
 			stdout.Write([]byte("\n"))
+
+			_, err = f.WriteString("\nAFTER WRITE STDOUT :\n" + string(line))
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
 
 		// nothing to read
 		if err != nil {
+
+			_, err = f.WriteString("\nERROR :\n" + string(line))
+			if err != nil {
+				log.Fatal(err)
+			}
 			break
 		}
 	}

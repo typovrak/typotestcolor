@@ -1,16 +1,1718 @@
+
+LEN LINE > 0 :
 === RUN   TestColorANSI
+
+AFTER SWITCH :
+	=== RUN: TestColorANSI
+AFTER WRITE STDOUT :
+	=== RUN: TestColorANSI
+LEN LINE > 0 :
 === RUN   TestColorANSI/run_default_color
+
+AFTER SWITCH :
+	=== RUN: TestColorANSI/run_default_color
+AFTER WRITE STDOUT :
+	=== RUN: TestColorANSI/run_default_color
+LEN LINE > 0 :
 html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)
+
+AFTER SWITCH :
+html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)
+AFTER WRITE STDOUT :
+html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)
+LEN LINE > 0 :
 === RUN   TestColorANSI/fail_default_color
+
+AFTER SWITCH :
+	=== RUN: TestColorANSI/fail_default_color
+AFTER WRITE STDOUT :
+	=== RUN: TestColorANSI/fail_default_color
+LEN LINE > 0 :
 --- PASS: TestColorANSI (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestColorANSI (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestColorANSI (0.00s)
+LEN LINE > 0 :
     --- PASS: TestColorANSI/run_default_color (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestColorANSI/run_default_color (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestColorANSI/run_default_color (0.00s)
+LEN LINE > 0 :
     --- PASS: TestColorANSI/fail_default_color (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestColorANSI/fail_default_color (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestColorANSI/fail_default_color (0.00s)
+LEN LINE > 0 :
     --- PASS: TestColorANSI/pass_default_color (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestColorANSI/pass_default_color (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestColorANSI/pass_default_color (0.00s)
+LEN LINE > 0 :
     --- SKIP: TestColorANSI/skip_default_color (0.00s)
+
+AFTER SWITCH :
+	--- SKIP: TestColorANSI/skip_default_color (0.00s)
+AFTER WRITE STDOUT :
+	--- SKIP: TestColorANSI/skip_default_color (0.00s)
+LEN LINE > 0 :
     --- PASS: TestColorANSI/failed_default_color (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestColorANSI/failed_default_color (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestColorANSI/failed_default_color (0.00s)
+LEN LINE > 0 :
     --- FAIL: TestColorANSI/ok_default_color (0.00s)
+
+AFTER SWITCH :
+	--- FAIL: TestColorANSI/ok_default_color (0.00s)
+AFTER WRITE STDOUT :
+	--- FAIL: TestColorANSI/ok_default_color (0.00s)
+LEN LINE > 0 :
     --- PASS: TestColorANSI/error_thrown_default_color (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestColorANSI/error_thrown_default_color (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestColorANSI/error_thrown_default_color (0.00s)
+LEN LINE > 0 :
 === RUN   TestNewDefaultOpts
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts
+LEN LINE > 0 :
 === RUN   TestNewDefaultOpts/run_default_style
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/run_default_style
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/run_default_style
+LEN LINE > 0 :
 --- PASS: TestNewDefaultOpts (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts (0.00s)
+LEN LINE > 0 :
 PASS
+AFTER SWITCH :
+PASS
+AFTER WRITE STDOUT :
+PASS
+ERROR :
+
+LEN LINE > 0 :
+=== RUN   TestColorANSI
+
+AFTER SWITCH :
+	=== RUN: TestColorANSI
+AFTER WRITE STDOUT :
+	=== RUN: TestColorANSI
+LEN LINE > 0 :
+=== RUN   TestColorANSI/run_default_color
+
+AFTER SWITCH :
+	=== RUN: TestColorANSI/run_default_color
+AFTER WRITE STDOUT :
+	=== RUN: TestColorANSI/run_default_color
+LEN LINE > 0 :
+html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)
+
+AFTER SWITCH :
+html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)
+AFTER WRITE STDOUT :
+html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)
+LEN LINE > 0 :
+=== RUN   TestColorANSI/fail_default_color
+
+AFTER SWITCH :
+	=== RUN: TestColorANSI/fail_default_color
+AFTER WRITE STDOUT :
+	=== RUN: TestColorANSI/fail_default_color
+LEN LINE > 0 :
+--- PASS: TestColorANSI (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestColorANSI (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestColorANSI (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestColorANSI/run_default_color (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestColorANSI/run_default_color (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestColorANSI/run_default_color (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestColorANSI/fail_default_color (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestColorANSI/fail_default_color (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestColorANSI/fail_default_color (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestColorANSI/pass_default_color (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestColorANSI/pass_default_color (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestColorANSI/pass_default_color (0.00s)
+LEN LINE > 0 :
+    --- SKIP: TestColorANSI/skip_default_color (0.00s)
+
+AFTER SWITCH :
+	--- SKIP: TestColorANSI/skip_default_color (0.00s)
+AFTER WRITE STDOUT :
+	--- SKIP: TestColorANSI/skip_default_color (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestColorANSI/failed_default_color (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestColorANSI/failed_default_color (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestColorANSI/failed_default_color (0.00s)
+LEN LINE > 0 :
+    --- FAIL: TestColorANSI/ok_default_color (0.00s)
+
+AFTER SWITCH :
+	--- FAIL: TestColorANSI/ok_default_color (0.00s)
+AFTER WRITE STDOUT :
+	--- FAIL: TestColorANSI/ok_default_color (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestColorANSI/error_thrown_default_color (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestColorANSI/error_thrown_default_color (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestColorANSI/error_thrown_default_color (0.00s)
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/run_default_style
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/run_default_style
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/run_default_style
+LEN LINE > 0 :
+--- PASS: TestNewDefaultOpts (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts (0.00s)
+LEN LINE > 0 :
+FAIL
+AFTER SWITCH :
+FAIL
+AFTER WRITE STDOUT :
+FAIL
+ERROR :
+
+LEN LINE > 0 :
+=== RUN   TestColorANSI
+
+AFTER SWITCH :
+	=== RUN: TestColorANSI
+AFTER WRITE STDOUT :
+	=== RUN: TestColorANSI
+LEN LINE > 0 :
+=== RUN   TestColorANSI/run_default_color
+
+AFTER SWITCH :
+	=== RUN: TestColorANSI/run_default_color
+AFTER WRITE STDOUT :
+	=== RUN: TestColorANSI/run_default_color
+LEN LINE > 0 :
+html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)\ntest\ntest
+
+AFTER SWITCH :
+html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)\ntest\ntest
+AFTER WRITE STDOUT :
+html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)\ntest\ntest
+LEN LINE > 0 :
+=== RUN   TestColorANSI/fail_default_color
+AFTER SWITCH :
+	=== RUN: TestColorANSI/fail_default_color
+AFTER WRITE STDOUT :
+	=== RUN: TestColorANSI/fail_default_color
+ERROR :
+
+LEN LINE > 0 :
+=== RUN   TestColorANSI
+
+AFTER SWITCH :
+	=== RUN: TestColorANSI
+AFTER WRITE STDOUT :
+	=== RUN: TestColorANSI
+LEN LINE > 0 :
+=== RUN   TestColorANSI/run_default_color
+
+AFTER SWITCH :
+	=== RUN: TestColorANSI/run_default_color
+AFTER WRITE STDOUT :
+	=== RUN: TestColorANSI/run_default_color
+LEN LINE > 0 :
+html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)\ntest\ntest
+AFTER SWITCH :
+html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)\ntest\ntest
+AFTER WRITE STDOUT :
+html-minifier_test.go:19: expected <a>  <  </a> (length: 12), got <a>  <</a> (length: 10)\ntest\ntest
+ERROR :
+
+ERROR :
+
+ERROR :
+
+LEN LINE > 0 :
+=== RUN   TestColorANSI
+
+AFTER SWITCH :
+	=== RUN: TestColorANSI
+AFTER WRITE STDOUT :
+	=== RUN: TestColorANSI
+LEN LINE > 0 :
+=== RUN   TestColorANSI/run_default_color
+
+AFTER SWITCH :
+	=== RUN: TestColorANSI/run_default_color
+AFTER WRITE STDOUT :
+	=== RUN: TestColorANSI/run_default_color
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+=== RUN   TestColorANSI/fail_default_color
+
+AFTER SWITCH :
+	=== RUN: TestColorANSI/fail_default_color
+AFTER WRITE STDOUT :
+	=== RUN: TestColorANSI/fail_default_color
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+=== RUN   TestColorANSI/pass_default_color
+
+AFTER SWITCH :
+	=== RUN: TestColorANSI/pass_default_color
+AFTER WRITE STDOUT :
+	=== RUN: TestColorANSI/pass_default_color
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+=== RUN   TestColorANSI/skip_default_color
+
+AFTER SWITCH :
+	=== RUN: TestColorANSI/skip_default_color
+AFTER WRITE STDOUT :
+	=== RUN: TestColorANSI/skip_default_color
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+=== RUN   TestColorANSI/failed_default_color
+
+AFTER SWITCH :
+	=== RUN: TestColorANSI/failed_default_color
+AFTER WRITE STDOUT :
+	=== RUN: TestColorANSI/failed_default_color
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+=== RUN   TestColorANSI/ok_default_color
+
+AFTER SWITCH :
+	=== RUN: TestColorANSI/ok_default_color
+AFTER WRITE STDOUT :
+	=== RUN: TestColorANSI/ok_default_color
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+=== RUN   TestColorANSI/error_thrown_default_color
+
+AFTER SWITCH :
+	=== RUN: TestColorANSI/error_thrown_default_color
+AFTER WRITE STDOUT :
+	=== RUN: TestColorANSI/error_thrown_default_color
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+--- PASS: TestColorANSI (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestColorANSI (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestColorANSI (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestColorANSI/run_default_color (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestColorANSI/run_default_color (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestColorANSI/run_default_color (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestColorANSI/fail_default_color (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestColorANSI/fail_default_color (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestColorANSI/fail_default_color (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestColorANSI/pass_default_color (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestColorANSI/pass_default_color (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestColorANSI/pass_default_color (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestColorANSI/skip_default_color (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestColorANSI/skip_default_color (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestColorANSI/skip_default_color (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestColorANSI/failed_default_color (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestColorANSI/failed_default_color (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestColorANSI/failed_default_color (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestColorANSI/ok_default_color (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestColorANSI/ok_default_color (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestColorANSI/ok_default_color (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestColorANSI/error_thrown_default_color (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestColorANSI/error_thrown_default_color (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestColorANSI/error_thrown_default_color (0.00s)
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/run_default_style
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/run_default_style
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/run_default_style
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/run_default_foreground
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/run_default_foreground
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/run_default_foreground
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/run_default_background
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/run_default_background
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/run_default_background
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/run_default_title
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/run_default_title
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/run_default_title
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/fail_default_style
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/fail_default_style
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/fail_default_style
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/fail_default_foreground
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/fail_default_foreground
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/fail_default_foreground
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/fail_default_background
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/fail_default_background
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/fail_default_background
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/fail_default_title
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/fail_default_title
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/fail_default_title
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/pass_default_style
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/pass_default_style
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/pass_default_style
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/pass_default_foreground
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/pass_default_foreground
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/pass_default_foreground
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/pass_default_background
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/pass_default_background
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/pass_default_background
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/pass_default_title
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/pass_default_title
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/pass_default_title
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/skip_default_style
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/skip_default_style
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/skip_default_style
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/skip_default_foreground
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/skip_default_foreground
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/skip_default_foreground
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/skip_default_background
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/skip_default_background
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/skip_default_background
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/skip_default_title
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/skip_default_title
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/skip_default_title
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/failed_default_style
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/failed_default_style
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/failed_default_style
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/failed_default_foreground
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/failed_default_foreground
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/failed_default_foreground
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/failed_default_background
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/failed_default_background
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/failed_default_background
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/failed_default_title
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/failed_default_title
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/failed_default_title
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/ok_default_style
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/ok_default_style
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/ok_default_style
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/ok_default_foreground
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/ok_default_foreground
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/ok_default_foreground
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/ok_default_background
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/ok_default_background
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/ok_default_background
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/ok_default_title
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/ok_default_title
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/ok_default_title
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/error_thrown_default_style
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/error_thrown_default_style
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/error_thrown_default_style
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/error_thrown_default_foreground
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/error_thrown_default_foreground
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/error_thrown_default_foreground
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/error_thrown_default_background
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/error_thrown_default_background
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/error_thrown_default_background
+LEN LINE > 0 :
+=== RUN   TestNewDefaultOpts/error_thrown_default_title
+
+AFTER SWITCH :
+	=== RUN: TestNewDefaultOpts/error_thrown_default_title
+AFTER WRITE STDOUT :
+	=== RUN: TestNewDefaultOpts/error_thrown_default_title
+LEN LINE > 0 :
+--- PASS: TestNewDefaultOpts (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/run_default_style (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/run_default_style (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/run_default_style (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/run_default_foreground (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/run_default_foreground (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/run_default_foreground (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/run_default_background (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/run_default_background (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/run_default_background (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/run_default_title (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/run_default_title (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/run_default_title (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/fail_default_style (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/fail_default_style (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/fail_default_style (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/fail_default_foreground (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/fail_default_foreground (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/fail_default_foreground (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/fail_default_background (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/fail_default_background (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/fail_default_background (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/fail_default_title (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/fail_default_title (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/fail_default_title (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/pass_default_style (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/pass_default_style (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/pass_default_style (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/pass_default_foreground (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/pass_default_foreground (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/pass_default_foreground (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/pass_default_background (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/pass_default_background (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/pass_default_background (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/pass_default_title (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/pass_default_title (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/pass_default_title (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/skip_default_style (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/skip_default_style (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/skip_default_style (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/skip_default_foreground (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/skip_default_foreground (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/skip_default_foreground (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/skip_default_background (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/skip_default_background (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/skip_default_background (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/skip_default_title (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/skip_default_title (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/skip_default_title (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/failed_default_style (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/failed_default_style (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/failed_default_style (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/failed_default_foreground (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/failed_default_foreground (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/failed_default_foreground (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/failed_default_background (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/failed_default_background (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/failed_default_background (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/failed_default_title (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/failed_default_title (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/failed_default_title (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/ok_default_style (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/ok_default_style (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/ok_default_style (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/ok_default_foreground (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/ok_default_foreground (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/ok_default_foreground (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/ok_default_background (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/ok_default_background (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/ok_default_background (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/ok_default_title (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/ok_default_title (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/ok_default_title (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/error_thrown_default_style (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/error_thrown_default_style (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/error_thrown_default_style (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/error_thrown_default_foreground (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/error_thrown_default_foreground (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/error_thrown_default_foreground (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/error_thrown_default_background (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/error_thrown_default_background (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/error_thrown_default_background (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestNewDefaultOpts/error_thrown_default_title (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestNewDefaultOpts/error_thrown_default_title (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestNewDefaultOpts/error_thrown_default_title (0.00s)
+LEN LINE > 0 :
+=== RUN   TestAddLineFeedBetweenErrorThrown
+
+AFTER SWITCH :
+	=== RUN: TestAddLineFeedBetweenErrorThrown
+AFTER WRITE STDOUT :
+	=== RUN: TestAddLineFeedBetweenErrorThrown
+LEN LINE > 0 :
+=== RUN   TestAddLineFeedBetweenErrorThrown/errorBefore_and_isError_should_not_add__
+
+AFTER SWITCH :
+	=== RUN: TestAddLineFeedBetweenErrorThrown/errorBefore_and_isError_should_not_add__
+AFTER WRITE STDOUT :
+	=== RUN: TestAddLineFeedBetweenErrorThrown/errorBefore_and_isError_should_not_add__
+LEN LINE > 0 :
+DEBUG: AddLineFeedBetweenErrorThrown
+
+AFTER SWITCH :
+DEBUG: AddLineFeedBetweenErrorThrown
+AFTER WRITE STDOUT :
+DEBUG: AddLineFeedBetweenErrorThrown
+LEN LINE > 0 :
+=== RUN   TestAddLineFeedBetweenErrorThrown/!errorBefore_and_isError_should_return__
+
+AFTER SWITCH :
+	=== RUN: TestAddLineFeedBetweenErrorThrown/!errorBefore_and_isError_should_return__
+AFTER WRITE STDOUT :
+	=== RUN: TestAddLineFeedBetweenErrorThrown/!errorBefore_and_isError_should_return__
+LEN LINE > 0 :
+DEBUG: AddLineFeedBetweenErrorThrown
+
+AFTER SWITCH :
+DEBUG: AddLineFeedBetweenErrorThrown
+AFTER WRITE STDOUT :
+DEBUG: AddLineFeedBetweenErrorThrown
+LEN LINE > 0 :
+=== RUN   TestAddLineFeedBetweenErrorThrown/errorBefore_and_!isError_should_return__
+
+AFTER SWITCH :
+	=== RUN: TestAddLineFeedBetweenErrorThrown/errorBefore_and_!isError_should_return__
+AFTER WRITE STDOUT :
+	=== RUN: TestAddLineFeedBetweenErrorThrown/errorBefore_and_!isError_should_return__
+LEN LINE > 0 :
+DEBUG: AddLineFeedBetweenErrorThrown
+
+AFTER SWITCH :
+DEBUG: AddLineFeedBetweenErrorThrown
+AFTER WRITE STDOUT :
+DEBUG: AddLineFeedBetweenErrorThrown
+LEN LINE > 0 :
+=== RUN   TestAddLineFeedBetweenErrorThrown/!errorBefore_and_!isError_should_not_return__
+
+AFTER SWITCH :
+	=== RUN: TestAddLineFeedBetweenErrorThrown/!errorBefore_and_!isError_should_not_return__
+AFTER WRITE STDOUT :
+	=== RUN: TestAddLineFeedBetweenErrorThrown/!errorBefore_and_!isError_should_not_return__
+LEN LINE > 0 :
+DEBUG: AddLineFeedBetweenErrorThrown
+
+AFTER SWITCH :
+DEBUG: AddLineFeedBetweenErrorThrown
+AFTER WRITE STDOUT :
+DEBUG: AddLineFeedBetweenErrorThrown
+LEN LINE > 0 :
+--- PASS: TestAddLineFeedBetweenErrorThrown (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestAddLineFeedBetweenErrorThrown (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestAddLineFeedBetweenErrorThrown (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestAddLineFeedBetweenErrorThrown/errorBefore_and_isError_should_not_add__ (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestAddLineFeedBetweenErrorThrown/errorBefore_and_isError_should_not_add__ (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestAddLineFeedBetweenErrorThrown/errorBefore_and_isError_should_not_add__ (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestAddLineFeedBetweenErrorThrown/!errorBefore_and_isError_should_return__ (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestAddLineFeedBetweenErrorThrown/!errorBefore_and_isError_should_return__ (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestAddLineFeedBetweenErrorThrown/!errorBefore_and_isError_should_return__ (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestAddLineFeedBetweenErrorThrown/errorBefore_and_!isError_should_return__ (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestAddLineFeedBetweenErrorThrown/errorBefore_and_!isError_should_return__ (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestAddLineFeedBetweenErrorThrown/errorBefore_and_!isError_should_return__ (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestAddLineFeedBetweenErrorThrown/!errorBefore_and_!isError_should_not_return__ (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestAddLineFeedBetweenErrorThrown/!errorBefore_and_!isError_should_not_return__ (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestAddLineFeedBetweenErrorThrown/!errorBefore_and_!isError_should_not_return__ (0.00s)
+LEN LINE > 0 :
+=== RUN   TestHandleLineType
+
+AFTER SWITCH :
+	=== RUN: TestHandleLineType
+AFTER WRITE STDOUT :
+	=== RUN: TestHandleLineType
+LEN LINE > 0 :
+=== RUN   TestHandleLineType/run_0
+
+AFTER SWITCH :
+	=== RUN: TestHandleLineType/run_0
+AFTER WRITE STDOUT :
+	=== RUN: TestHandleLineType/run_0
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: HandleLineType
+
+AFTER SWITCH :
+DEBUG: HandleLineType
+AFTER WRITE STDOUT :
+DEBUG: HandleLineType
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: AddLineFeedBetweenErrorThrown
+
+AFTER SWITCH :
+DEBUG: AddLineFeedBetweenErrorThrown
+AFTER WRITE STDOUT :
+DEBUG: AddLineFeedBetweenErrorThrown
+LEN LINE > 0 :
+=== RUN   TestHandleLineType/fail_0
+
+AFTER SWITCH :
+	=== RUN: TestHandleLineType/fail_0
+AFTER WRITE STDOUT :
+	=== RUN: TestHandleLineType/fail_0
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: HandleLineType
+
+AFTER SWITCH :
+DEBUG: HandleLineType
+AFTER WRITE STDOUT :
+DEBUG: HandleLineType
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: AddLineFeedBetweenErrorThrown
+
+AFTER SWITCH :
+DEBUG: AddLineFeedBetweenErrorThrown
+AFTER WRITE STDOUT :
+DEBUG: AddLineFeedBetweenErrorThrown
+LEN LINE > 0 :
+=== RUN   TestHandleLineType/pass_0
+
+AFTER SWITCH :
+	=== RUN: TestHandleLineType/pass_0
+AFTER WRITE STDOUT :
+	=== RUN: TestHandleLineType/pass_0
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: HandleLineType
+
+AFTER SWITCH :
+DEBUG: HandleLineType
+AFTER WRITE STDOUT :
+DEBUG: HandleLineType
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: AddLineFeedBetweenErrorThrown
+
+AFTER SWITCH :
+DEBUG: AddLineFeedBetweenErrorThrown
+AFTER WRITE STDOUT :
+DEBUG: AddLineFeedBetweenErrorThrown
+LEN LINE > 0 :
+=== RUN   TestHandleLineType/skip_0
+
+AFTER SWITCH :
+	=== RUN: TestHandleLineType/skip_0
+AFTER WRITE STDOUT :
+	=== RUN: TestHandleLineType/skip_0
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: HandleLineType
+
+AFTER SWITCH :
+DEBUG: HandleLineType
+AFTER WRITE STDOUT :
+DEBUG: HandleLineType
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: AddLineFeedBetweenErrorThrown
+
+AFTER SWITCH :
+DEBUG: AddLineFeedBetweenErrorThrown
+AFTER WRITE STDOUT :
+DEBUG: AddLineFeedBetweenErrorThrown
+LEN LINE > 0 :
+=== RUN   TestHandleLineType/failed_0
+
+AFTER SWITCH :
+	=== RUN: TestHandleLineType/failed_0
+AFTER WRITE STDOUT :
+	=== RUN: TestHandleLineType/failed_0
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: HandleLineType
+
+AFTER SWITCH :
+DEBUG: HandleLineType
+AFTER WRITE STDOUT :
+DEBUG: HandleLineType
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: AddLineFeedBetweenErrorThrown
+
+AFTER SWITCH :
+DEBUG: AddLineFeedBetweenErrorThrown
+AFTER WRITE STDOUT :
+DEBUG: AddLineFeedBetweenErrorThrown
+LEN LINE > 0 :
+=== RUN   TestHandleLineType/ok_0
+
+AFTER SWITCH :
+	=== RUN: TestHandleLineType/ok_0
+AFTER WRITE STDOUT :
+	=== RUN: TestHandleLineType/ok_0
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: HandleLineType
+
+AFTER SWITCH :
+DEBUG: HandleLineType
+AFTER WRITE STDOUT :
+DEBUG: HandleLineType
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: AddLineFeedBetweenErrorThrown
+
+AFTER SWITCH :
+DEBUG: AddLineFeedBetweenErrorThrown
+AFTER WRITE STDOUT :
+DEBUG: AddLineFeedBetweenErrorThrown
+LEN LINE > 0 :
+=== RUN   TestHandleLineType/error_thrown_0
+
+AFTER SWITCH :
+	=== RUN: TestHandleLineType/error_thrown_0
+AFTER WRITE STDOUT :
+	=== RUN: TestHandleLineType/error_thrown_0
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: HandleLineType
+
+AFTER SWITCH :
+DEBUG: HandleLineType
+AFTER WRITE STDOUT :
+DEBUG: HandleLineType
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: AddLineFeedBetweenErrorThrown
+
+AFTER SWITCH :
+DEBUG: AddLineFeedBetweenErrorThrown
+AFTER WRITE STDOUT :
+DEBUG: AddLineFeedBetweenErrorThrown
+LEN LINE > 0 :
+--- PASS: TestHandleLineType (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestHandleLineType (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestHandleLineType (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestHandleLineType/run_0 (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestHandleLineType/run_0 (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestHandleLineType/run_0 (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestHandleLineType/fail_0 (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestHandleLineType/fail_0 (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestHandleLineType/fail_0 (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestHandleLineType/pass_0 (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestHandleLineType/pass_0 (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestHandleLineType/pass_0 (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestHandleLineType/skip_0 (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestHandleLineType/skip_0 (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestHandleLineType/skip_0 (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestHandleLineType/failed_0 (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestHandleLineType/failed_0 (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestHandleLineType/failed_0 (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestHandleLineType/ok_0 (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestHandleLineType/ok_0 (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestHandleLineType/ok_0 (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestHandleLineType/error_thrown_0 (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestHandleLineType/error_thrown_0 (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestHandleLineType/error_thrown_0 (0.00s)
+LEN LINE > 0 :
+=== RUN   TestReadTestLines
+
+AFTER SWITCH :
+	=== RUN: TestReadTestLines
+AFTER WRITE STDOUT :
+	=== RUN: TestReadTestLines
+LEN LINE > 0 :
+=== RUN   TestReadTestLines/all_line_type_with_ok_result
+
+AFTER SWITCH :
+	=== RUN: TestReadTestLines/all_line_type_with_ok_result
+AFTER WRITE STDOUT :
+	=== RUN: TestReadTestLines/all_line_type_with_ok_result
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+=== RUN   TestReadTestLines/all_line_type_with_failed_result
+
+AFTER SWITCH :
+	=== RUN: TestReadTestLines/all_line_type_with_failed_result
+AFTER WRITE STDOUT :
+	=== RUN: TestReadTestLines/all_line_type_with_failed_result
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+=== RUN   TestReadTestLines/error_thrown_with_line_feed
+
+AFTER SWITCH :
+	=== RUN: TestReadTestLines/error_thrown_with_line_feed
+AFTER WRITE STDOUT :
+	=== RUN: TestReadTestLines/error_thrown_with_line_feed
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+=== RUN   TestReadTestLines/errorBefore_true_at_the_end
+
+AFTER SWITCH :
+	=== RUN: TestReadTestLines/errorBefore_true_at_the_end
+AFTER WRITE STDOUT :
+	=== RUN: TestReadTestLines/errorBefore_true_at_the_end
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+DEBUG: ColorANSI
+
+AFTER SWITCH :
+DEBUG: ColorANSI
+AFTER WRITE STDOUT :
+DEBUG: ColorANSI
+LEN LINE > 0 :
+--- PASS: TestReadTestLines (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestReadTestLines (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestReadTestLines (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestReadTestLines/all_line_type_with_ok_result (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestReadTestLines/all_line_type_with_ok_result (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestReadTestLines/all_line_type_with_ok_result (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestReadTestLines/all_line_type_with_failed_result (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestReadTestLines/all_line_type_with_failed_result (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestReadTestLines/all_line_type_with_failed_result (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestReadTestLines/error_thrown_with_line_feed (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestReadTestLines/error_thrown_with_line_feed (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestReadTestLines/error_thrown_with_line_feed (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestReadTestLines/errorBefore_true_at_the_end (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestReadTestLines/errorBefore_true_at_the_end (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestReadTestLines/errorBefore_true_at_the_end (0.00s)
+LEN LINE > 0 :
+=== RUN   TestRunTestColor
+
+AFTER SWITCH :
+	=== RUN: TestRunTestColor
+AFTER WRITE STDOUT :
+	=== RUN: TestRunTestColor
+LEN LINE > 0 :
+=== RUN   TestRunTestColor/untestable
+
+AFTER SWITCH :
+	=== RUN: TestRunTestColor/untestable
+AFTER WRITE STDOUT :
+	=== RUN: TestRunTestColor/untestable
+LEN LINE > 0 :
+--- PASS: TestRunTestColor (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestRunTestColor (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestRunTestColor (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestRunTestColor/untestable (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestRunTestColor/untestable (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestRunTestColor/untestable (0.00s)
+LEN LINE > 0 :
+=== RUN   TestDefault
+
+AFTER SWITCH :
+	=== RUN: TestDefault
+AFTER WRITE STDOUT :
+	=== RUN: TestDefault
+LEN LINE > 0 :
+=== RUN   TestDefault/untestable
+
+AFTER SWITCH :
+	=== RUN: TestDefault/untestable
+AFTER WRITE STDOUT :
+	=== RUN: TestDefault/untestable
+LEN LINE > 0 :
+fmt.Println testing
+
+AFTER SWITCH :
+fmt.Println testing
+AFTER WRITE STDOUT :
+fmt.Println testing
+LEN LINE > 0 :
+--- PASS: TestDefault (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestDefault (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestDefault (0.00s)
+LEN LINE > 0 :
+    --- PASS: TestDefault/untestable (0.00s)
+
+AFTER SWITCH :
+	--- PASS: TestDefault/untestable (0.00s)
+AFTER WRITE STDOUT :
+	--- PASS: TestDefault/untestable (0.00s)
+LEN LINE > 0 :
+PASS
+
+AFTER SWITCH :
+PASS
+AFTER WRITE STDOUT :
+PASS
+ERROR :
