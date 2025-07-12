@@ -49,7 +49,7 @@ func RunTestColor(m *testing.M, opts Opts) int {
 
 	// redirect stdout and stderr to the pipe
 	os.Stdout = w
-	// os.Stderr = w
+	os.Stderr = w
 
 	// no error when no test executed
 	exitCode := 0
