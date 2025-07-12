@@ -45,7 +45,7 @@ func RunTestColor(m *testing.M, opts Opts) int {
 
 	// backup original outputs
 	stdout := os.Stdout
-	// stderr := os.Stderr
+	stderr := os.Stderr
 
 	// redirect stdout and stderr to the pipe
 	os.Stdout = w
@@ -79,7 +79,7 @@ func RunTestColor(m *testing.M, opts Opts) int {
 
 	// restore outputs
 	os.Stdout = stdout
-	// os.Stderr = stderr
+	os.Stderr = stderr
 
 	f.WriteString("BEFORE RETURNING EXITCODE")
 
