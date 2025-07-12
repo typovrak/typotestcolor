@@ -14,6 +14,7 @@ type Opts struct {
 type LineType struct {
 	Colors ANSIConfig
 	Title  string
+	Hide   bool
 }
 
 func NewDefaultOpts() Opts {
@@ -25,6 +26,7 @@ func NewDefaultOpts() Opts {
 				Background: ColorANSIBackground[ANSIBackgroundNone],
 			},
 			Title: "\t=== RUN:",
+			Hide:  false,
 		},
 		Fail: LineType{
 			Colors: ANSIConfig{
@@ -33,6 +35,7 @@ func NewDefaultOpts() Opts {
 				Background: ColorANSIBackground[ANSIBackgroundNone],
 			},
 			Title: "\t--- FAIL:",
+			Hide:  false,
 		},
 		Pass: LineType{
 			Colors: ANSIConfig{
@@ -41,6 +44,7 @@ func NewDefaultOpts() Opts {
 				Background: ColorANSIBackground[ANSIBackgroundNone],
 			},
 			Title: "\t--- PASS:",
+			Hide:  false,
 		},
 		Skip: LineType{
 			Colors: ANSIConfig{
@@ -49,6 +53,7 @@ func NewDefaultOpts() Opts {
 				Background: ColorANSIBackground[ANSIBackgroundNone],
 			},
 			Title: "\t--- SKIP:",
+			Hide:  false,
 		},
 		Failed: LineType{
 			Colors: ANSIConfig{
@@ -57,6 +62,7 @@ func NewDefaultOpts() Opts {
 				Background: ColorANSIBackground[ANSIBackgroundRed],
 			},
 			Title: "FAIL",
+			Hide:  false,
 		},
 		Ok: LineType{
 			Colors: ANSIConfig{
@@ -65,6 +71,7 @@ func NewDefaultOpts() Opts {
 				Background: ColorANSIBackground[ANSIBackgroundGreen],
 			},
 			Title: "PASS",
+			Hide:  false,
 		},
 
 		ErrorThrown: LineType{
@@ -74,6 +81,7 @@ func NewDefaultOpts() Opts {
 				Background: ColorANSIBackground[ANSIBackgroundNone],
 			},
 			Title: "",
+			Hide:  false,
 		},
 		Debug: false,
 	}

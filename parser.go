@@ -28,7 +28,7 @@ func HandleLineType(
 	Debug(opts, "HandleLineType")
 
 	*color = ColorANSI(opts, lineType.Colors)
-	// AddLineFeedBetweenErrorThrown(opts, w, errorBefore, isError)
+	AddLineFeedBetweenErrorThrown(opts, w, errorBefore, isError)
 	*line = bytes.Replace(*line, defaultTitleType, []byte(lineType.Title), 1)
 }
 
@@ -49,32 +49,60 @@ func FormatTestLine(
 		// manage color and style line depending on the content
 		// === RUN
 		if bytes.Contains(line, DefaultTitle.Run) {
+			if opts.Run.Hide {
+				return []byte("")
+			}
+
 			HandleLineType(opts, &line, opts.Run, DefaultTitle.Run, &color, stdout, errorBefore, false)
 
 			// --- FAIL:
 		} else if bytes.Contains(line, DefaultTitle.Fail) {
+			if opts.Fail.Hide {
+				return []byte("")
+			}
+
 			HandleLineType(opts, &line, opts.Fail, DefaultTitle.Fail, &color, stdout, errorBefore, false)
 
 			// --- PASS:
 		} else if bytes.Contains(line, DefaultTitle.Pass) {
+			if opts.Pass.Hide {
+				return []byte("")
+			}
+
 			HandleLineType(opts, &line, opts.Pass, DefaultTitle.Pass, &color, stdout, errorBefore, false)
 
 			// --- SKIP:
 		} else if bytes.Contains(line, DefaultTitle.Skip) {
+			if opts.Skip.Hide {
+				return []byte("")
+			}
+
 			HandleLineType(opts, &line, opts.Skip, DefaultTitle.Skip, &color, stdout, errorBefore, false)
 
 			// FAIL
 		} else if bytes.Equal(line, DefaultTitle.Failed) {
+			if opts.Failed.Hide {
+				return []byte("")
+			}
+
 			HandleLineType(opts, &line, opts.Failed, DefaultTitle.Failed, &color, stdout, errorBefore, false)
 			formattedLine = append(formattedLine, []byte("\n")...)
 
 			// ok
 		} else if bytes.Equal(line, DefaultTitle.Ok) {
+			if opts.Ok.Hide {
+				return []byte("")
+			}
+
 			HandleLineType(opts, &line, opts.Ok, DefaultTitle.Ok, &color, stdout, errorBefore, false)
 			formattedLine = append(formattedLine, []byte("\n")...)
 
 			// error thrown
 		} else {
+			if opts.ErrorThrown.Hide {
+				return []byte("")
+			}
+
 			HandleLineType(opts, &line, opts.ErrorThrown, DefaultTitle.ErrorThrown, &color, stdout, errorBefore, true)
 		}
 
