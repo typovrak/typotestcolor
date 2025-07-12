@@ -2,6 +2,7 @@ package typotestcolor
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"os"
 	"testing"
@@ -27,63 +28,53 @@ var DefaultTitle = struct {
 
 // return exitCode
 func RunTestColor(m *testing.M, opts Opts) int {
-	// TODO: try debugging with log files
-	f, err := os.OpenFile("debug.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer f.Close()
-
-	f.WriteString("ENTER IN RunTestColor")
-
 	Debug(opts, "RunTestColor")
 
 	// create a pipe
 	r, w, _ := os.Pipe()
 
-	f.WriteString("create a pipe")
-
 	// backup original outputs
 	stdout := os.Stdout
 	stderr := os.Stderr
+	oldlog := log.Writer()
 
 	// redirect stdout and stderr to the pipe
 	os.Stdout = w
 	os.Stderr = w
+	log.SetOutput(w)
 
 	// no error when no test executed
 	exitCode := 0
 
-	f.WriteString("BEFORE RUNNING TEST")
+	done := make(chan struct{})
+	go func() {
+		scanner := bufio.NewScanner(r)
+		errorBefore := false
+
+		for scanner.Scan() {
+			line := scanner.Bytes()
+
+			formattedLine := FormatTestLine(opts, line, &errorBefore, w)
+			fmt.Fprint(stdout, string(formattedLine))
+		}
+
+		close(done)
+	}()
 
 	// test mock
 	if m != nil {
-		f.WriteString("BEFORE m.Run()")
 		exitCode = m.Run()
-		f.WriteString("AFTER m.Run()")
 	}
 
-	f.WriteString("AFTER RUNNING TEST")
 	// close the writer end of the pipe so the reader stops at EOF
 	w.Close()
 
-	// setup the reader
-	reader := bufio.NewReader(r)
-
-	f.WriteString("AFTER READER BUFIO")
-
-	errorBefore := false
-
-	// read line by line
-	ReadTestLines(opts, reader, stdout, &errorBefore)
-
-	f.WriteString("AFTER ReadTestLines")
+	<-done
 
 	// restore outputs
 	os.Stdout = stdout
 	os.Stderr = stderr
-
-	f.WriteString("BEFORE RETURNING EXITCODE")
+	log.SetOutput(oldlog)
 
 	// [0, 125]
 	return exitCode

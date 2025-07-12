@@ -11,7 +11,7 @@ var DefaultTestOpts = typotestcolor.NewDefaultOpts()
 
 // WARN: all tests must be in this folder, no subfolder authorized
 func TestMain(m *testing.M) {
-	DefaultTestOpts.Debug = true
+	// DefaultTestOpts.Debug = true
 	exitCode := typotestcolor.RunTestColor(m, DefaultTestOpts)
 	os.Exit(exitCode)
 }

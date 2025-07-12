@@ -1,12 +1,8 @@
 package typotestcolor
 
 import (
-	"bufio"
 	"bytes"
-	"fmt"
 	"io"
-	"log"
-	"os"
 )
 
 func AddLineFeedBetweenErrorThrown(opts Opts, w io.Writer, errorBefore *bool, isError bool) {
@@ -32,96 +28,64 @@ func HandleLineType(
 	Debug(opts, "HandleLineType")
 
 	*color = ColorANSI(opts, lineType.Colors)
-	AddLineFeedBetweenErrorThrown(opts, w, errorBefore, isError)
+	// AddLineFeedBetweenErrorThrown(opts, w, errorBefore, isError)
 	*line = bytes.Replace(*line, defaultTitleType, []byte(lineType.Title), 1)
 }
 
-func ReadTestLines(
+func FormatTestLine(
 	opts Opts,
-	reader *bufio.Reader,
-	stdout io.Writer,
+	line []byte,
 	errorBefore *bool,
-) {
-	// TODO: try debugging with log files
-	f, err := os.OpenFile("debug.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	defer f.Close()
+	stdout io.Writer,
+) []byte {
+	var formattedLine []byte
 
-	Debug(opts, "ReadTestLines")
+	if len(line) > 0 {
+		line = bytes.TrimRight(line, "\n")
+		line = bytes.TrimLeft(line, " ")
 
-	for {
-		line, err := reader.ReadBytes('\n')
+		var color []byte
 
-		if len(line) > 0 {
-			_, err = f.WriteString("\nLEN LINE > 0 :\n" + string(line))
-			if err != nil {
-				log.Fatal(err)
-			}
+		// manage color and style line depending on the content
+		// === RUN
+		if bytes.Contains(line, DefaultTitle.Run) {
+			HandleLineType(opts, &line, opts.Run, DefaultTitle.Run, &color, stdout, errorBefore, false)
 
-			line = bytes.TrimRight(line, "\n")
-			line = bytes.TrimLeft(line, " ")
+			// --- FAIL:
+		} else if bytes.Contains(line, DefaultTitle.Fail) {
+			HandleLineType(opts, &line, opts.Fail, DefaultTitle.Fail, &color, stdout, errorBefore, false)
 
-			var color []byte
+			// --- PASS:
+		} else if bytes.Contains(line, DefaultTitle.Pass) {
+			HandleLineType(opts, &line, opts.Pass, DefaultTitle.Pass, &color, stdout, errorBefore, false)
 
-			// manage color and style line depending on the content
-			// === RUN
-			if bytes.Contains(line, DefaultTitle.Run) {
-				HandleLineType(opts, &line, opts.Run, DefaultTitle.Run, &color, stdout, errorBefore, false)
+			// --- SKIP:
+		} else if bytes.Contains(line, DefaultTitle.Skip) {
+			HandleLineType(opts, &line, opts.Skip, DefaultTitle.Skip, &color, stdout, errorBefore, false)
 
-				// --- FAIL:
-			} else if bytes.Contains(line, DefaultTitle.Fail) {
-				HandleLineType(opts, &line, opts.Fail, DefaultTitle.Fail, &color, stdout, errorBefore, false)
+			// FAIL
+		} else if bytes.Equal(line, DefaultTitle.Failed) {
+			HandleLineType(opts, &line, opts.Failed, DefaultTitle.Failed, &color, stdout, errorBefore, false)
+			formattedLine = append(formattedLine, []byte("\n")...)
 
-				// --- PASS:
-			} else if bytes.Contains(line, DefaultTitle.Pass) {
-				HandleLineType(opts, &line, opts.Pass, DefaultTitle.Pass, &color, stdout, errorBefore, false)
+			// ok
+		} else if bytes.Equal(line, DefaultTitle.Ok) {
+			HandleLineType(opts, &line, opts.Ok, DefaultTitle.Ok, &color, stdout, errorBefore, false)
+			formattedLine = append(formattedLine, []byte("\n")...)
 
-				// --- SKIP:
-			} else if bytes.Contains(line, DefaultTitle.Skip) {
-				HandleLineType(opts, &line, opts.Skip, DefaultTitle.Skip, &color, stdout, errorBefore, false)
-
-				// FAIL
-			} else if bytes.Equal(line, DefaultTitle.Failed) {
-				HandleLineType(opts, &line, opts.Failed, DefaultTitle.Failed, &color, stdout, errorBefore, false)
-				stdout.Write([]byte("\n"))
-
-				// ok
-			} else if bytes.Equal(line, DefaultTitle.Ok) {
-				HandleLineType(opts, &line, opts.Ok, DefaultTitle.Ok, &color, stdout, errorBefore, false)
-				stdout.Write([]byte("\n"))
-
-				// error thrown
-			} else {
-				HandleLineType(opts, &line, opts.ErrorThrown, DefaultTitle.ErrorThrown, &color, stdout, errorBefore, true)
-			}
-
-			_, err = f.WriteString("\nAFTER SWITCH :\n" + string(line))
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			stdout.Write(color)
-			stdout.Write(line)
-			stdout.Write(ColorReset)
-			stdout.Write([]byte("\n"))
-
-			_, err = f.WriteString("\nAFTER WRITE STDOUT :\n" + string(line))
-			if err != nil {
-				log.Fatal(err)
-			}
+			// error thrown
+		} else {
+			HandleLineType(opts, &line, opts.ErrorThrown, DefaultTitle.ErrorThrown, &color, stdout, errorBefore, true)
 		}
 
-		// nothing to read
-		if err != nil {
-
-			_, err = f.WriteString("\nERROR :\n" + string(line))
-			if err != nil {
-				log.Fatal(err)
-			}
-			break
+		if len(color) > 0 {
+			formattedLine = append(formattedLine, color...)
 		}
+
+		formattedLine = append(formattedLine, line...)
+		formattedLine = append(formattedLine, ColorReset...)
+		formattedLine = append(formattedLine, []byte("\n")...)
 	}
+
+	return formattedLine
 }
