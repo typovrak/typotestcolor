@@ -37,7 +37,8 @@ func PrintAggregation(aggregationCount *AggregationCount, aggregationLines *[]by
 	if aggregationCount.Value >= 4 {
 		*aggregationLines = append(*aggregationLines, aggregationCount.Lines[0]...)
 		*aggregationLines = append(*aggregationLines, '[')
-		*aggregationLines = append(*aggregationLines, []byte(strconv.Itoa(aggregationCount.Value))...)
+		// Value-2, remove first and last line
+		*aggregationLines = append(*aggregationLines, []byte(strconv.Itoa(aggregationCount.Value-2))...)
 		*aggregationLines = append(*aggregationLines, ']')
 		*aggregationLines = append(*aggregationLines, []byte("\n")...)
 
@@ -63,10 +64,10 @@ func HandleAggregation(lineType LineType, aggregationCount *AggregationCount, ag
 			aggregationCount.Value = 0
 			aggregationCount.Lines = [][]byte{*formattedLine}
 		} else {
+			aggregationCount.Lines = append(aggregationCount.Lines, *formattedLine)
 		}
 
 		aggregationCount.Value++
-		aggregationCount.Lines = append(aggregationCount.Lines, *formattedLine)
 		*formattedLine = nil
 		return
 	}
