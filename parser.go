@@ -28,9 +28,9 @@ func HandleLineType(
 ) {
 	Debug(opts, "HandleLineType")
 
-	*color = ColorANSI(opts, lineType.Colors)
+	*color = ColorANSI(opts, lineType.Title.Colors)
 	AddLineFeedBetweenErrorThrown(opts, w, errorBefore, isError)
-	*line = bytes.Replace(*line, defaultTitleType, []byte(lineType.Title), 1)
+	*line = bytes.Replace(*line, defaultTitleType, []byte(lineType.Title.Prefix), 1)
 }
 
 func FormatTestLine(
@@ -38,7 +38,7 @@ func FormatTestLine(
 	line []byte,
 	errorBefore *bool,
 	stdout io.Writer,
-	lineAggregation *LineAggregation,
+	lineSummary *LineSummary,
 ) []byte {
 	var formattedLine []byte
 
@@ -51,60 +51,60 @@ func FormatTestLine(
 		// manage color and style line depending on the content
 		// === RUN
 		if bytes.Contains(line, DefaultTitle.Run) {
-			if opts.Run.Hide {
+			if opts.Run.Title.Hide {
 				return []byte("")
 			}
 
-			if !opts.Run.AggregationHide {
-				lineAggregation.Run++
+			if !opts.Run.Summary.Hide {
+				lineSummary.Run++
 			}
 
 			HandleLineType(opts, &line, opts.Run, DefaultTitle.Run, &color, stdout, errorBefore, false)
 
 			// --- FAIL:
 		} else if bytes.Contains(line, DefaultTitle.Fail) {
-			if opts.Fail.Hide {
+			if opts.Fail.Title.Hide {
 				return []byte("")
 			}
 
-			if !opts.Fail.AggregationHide {
-				lineAggregation.Fail++
+			if !opts.Fail.Summary.Hide {
+				lineSummary.Fail++
 			}
 
 			HandleLineType(opts, &line, opts.Fail, DefaultTitle.Fail, &color, stdout, errorBefore, false)
 
 			// --- PASS:
 		} else if bytes.Contains(line, DefaultTitle.Pass) {
-			if opts.Pass.Hide {
+			if opts.Pass.Title.Hide {
 				return []byte("")
 			}
 
-			if !opts.Pass.AggregationHide {
-				lineAggregation.Pass++
+			if !opts.Pass.Summary.Hide {
+				lineSummary.Pass++
 			}
 
 			HandleLineType(opts, &line, opts.Pass, DefaultTitle.Pass, &color, stdout, errorBefore, false)
 
 			// --- SKIP:
 		} else if bytes.Contains(line, DefaultTitle.Skip) {
-			if opts.Skip.Hide {
+			if opts.Skip.Title.Hide {
 				return []byte("")
 			}
 
-			if !opts.Skip.AggregationHide {
-				lineAggregation.Skip++
+			if !opts.Skip.Summary.Hide {
+				lineSummary.Skip++
 			}
 
 			HandleLineType(opts, &line, opts.Skip, DefaultTitle.Skip, &color, stdout, errorBefore, false)
 
 			// FAIL
 		} else if bytes.Equal(line, DefaultTitle.Failed) {
-			if opts.Failed.Hide {
+			if opts.Failed.Title.Hide {
 				return []byte("")
 			}
 
-			if !opts.Failed.AggregationHide {
-				lineAggregation.Failed++
+			if !opts.Failed.Summary.Hide {
+				lineSummary.Failed++
 			}
 
 			HandleLineType(opts, &line, opts.Failed, DefaultTitle.Failed, &color, stdout, errorBefore, false)
@@ -112,12 +112,12 @@ func FormatTestLine(
 
 			// ok
 		} else if bytes.Equal(line, DefaultTitle.Ok) {
-			if opts.Ok.Hide {
+			if opts.Ok.Title.Hide {
 				return []byte("")
 			}
 
-			if !opts.Ok.AggregationHide {
-				lineAggregation.Ok++
+			if !opts.Ok.Summary.Hide {
+				lineSummary.Ok++
 			}
 
 			HandleLineType(opts, &line, opts.Ok, DefaultTitle.Ok, &color, stdout, errorBefore, false)
@@ -125,12 +125,12 @@ func FormatTestLine(
 
 			// error thrown
 		} else {
-			if opts.ErrorThrown.Hide {
+			if opts.ErrorThrown.Title.Hide {
 				return []byte("")
 			}
 
-			if !opts.ErrorThrown.AggregationHide {
-				lineAggregation.ErrorThrown++
+			if !opts.ErrorThrown.Summary.Hide {
+				lineSummary.ErrorThrown++
 			}
 
 			HandleLineType(opts, &line, opts.ErrorThrown, DefaultTitle.ErrorThrown, &color, stdout, errorBefore, true)
@@ -148,41 +148,43 @@ func FormatTestLine(
 	return formattedLine
 }
 
-func AddPrintLineAggregation(print *[]byte, title string, value int) {
-	*print = append(*print, []byte(title)...)
+func AddPrintLineSummary(print *[]byte, opts Opts, summary LineTypeSummary, value int) {
+	*print = append(*print, ColorANSI(opts, summary.Colors)...)
+	*print = append(*print, []byte(summary.Prefix)...)
 	*print = append(*print, []byte(strconv.Itoa(value))...)
 	*print = append(*print, []byte("\n")...)
+	*print = append(*print, ColorReset...)
 }
 
-func PrintLineAggregation(opts Opts, lineAggregation LineAggregation) []byte {
+func PrintLineSummary(opts Opts, lineSummary LineSummary) []byte {
 	var print []byte
 
-	if !opts.Run.AggregationHide {
-		AddPrintLineAggregation(&print, opts.Run.AggregationTitle, lineAggregation.Run)
+	if !opts.Run.Summary.Hide {
+		AddPrintLineSummary(&print, opts, opts.Run.Summary, lineSummary.Run)
 	}
 
-	if !opts.Fail.AggregationHide {
-		AddPrintLineAggregation(&print, opts.Fail.AggregationTitle, lineAggregation.Fail)
+	if !opts.Fail.Summary.Hide {
+		AddPrintLineSummary(&print, opts, opts.Fail.Summary, lineSummary.Fail)
 	}
 
-	if !opts.Pass.AggregationHide {
-		AddPrintLineAggregation(&print, opts.Pass.AggregationTitle, lineAggregation.Pass)
+	if !opts.Pass.Summary.Hide {
+		AddPrintLineSummary(&print, opts, opts.Pass.Summary, lineSummary.Pass)
 	}
 
-	if !opts.Skip.AggregationHide {
-		AddPrintLineAggregation(&print, opts.Skip.AggregationTitle, lineAggregation.Skip)
+	if !opts.Skip.Summary.Hide {
+		AddPrintLineSummary(&print, opts, opts.Skip.Summary, lineSummary.Skip)
 	}
 
-	if !opts.Failed.AggregationHide {
-		AddPrintLineAggregation(&print, opts.Failed.AggregationTitle, lineAggregation.Failed)
+	if !opts.Failed.Summary.Hide {
+		AddPrintLineSummary(&print, opts, opts.Failed.Summary, lineSummary.Failed)
 	}
 
-	if !opts.Ok.AggregationHide {
-		AddPrintLineAggregation(&print, opts.Ok.AggregationTitle, lineAggregation.Ok)
+	if !opts.Ok.Summary.Hide {
+		AddPrintLineSummary(&print, opts, opts.Ok.Summary, lineSummary.Ok)
 	}
 
-	if !opts.ErrorThrown.AggregationHide {
-		AddPrintLineAggregation(&print, opts.ErrorThrown.AggregationTitle, lineAggregation.ErrorThrown)
+	if !opts.ErrorThrown.Summary.Hide {
+		AddPrintLineSummary(&print, opts, opts.ErrorThrown.Summary, lineSummary.ErrorThrown)
 	}
 
 	return print
