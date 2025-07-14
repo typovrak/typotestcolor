@@ -25,7 +25,7 @@ func TestColorANSI(t *testing.T) {
 				Background: typotestcolor.ColorANSIBackground[typotestcolor.ANSIBackgroundNone],
 			}),
 		)
-		expected := string(typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Run.Colors))
+		expected := string(typotestcolor.ColorANSI(DefaultTestOpts, DefaultTestOpts.Run.Title.Colors))
 		validateTestColorANSI(t, res, expected)
 	})
 
@@ -37,7 +37,7 @@ func TestColorANSI(t *testing.T) {
 				Background: typotestcolor.ColorANSIBackground[typotestcolor.ANSIBackgroundNone],
 			}),
 		)
-		expected := string(typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Fail.Colors))
+		expected := string(typotestcolor.ColorANSI(DefaultTestOpts, DefaultTestOpts.Fail.Title.Colors))
 		validateTestColorANSI(t, res, expected)
 	})
 
@@ -49,7 +49,7 @@ func TestColorANSI(t *testing.T) {
 				Background: typotestcolor.ColorANSIBackground[typotestcolor.ANSIBackgroundNone],
 			}),
 		)
-		expected := string(typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Pass.Colors))
+		expected := string(typotestcolor.ColorANSI(DefaultTestOpts, DefaultTestOpts.Pass.Title.Colors))
 		validateTestColorANSI(t, res, expected)
 	})
 
@@ -61,7 +61,7 @@ func TestColorANSI(t *testing.T) {
 				Background: typotestcolor.ColorANSIBackground[typotestcolor.ANSIBackgroundNone],
 			}),
 		)
-		expected := string(typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Skip.Colors))
+		expected := string(typotestcolor.ColorANSI(DefaultTestOpts, DefaultTestOpts.Skip.Title.Colors))
 		validateTestColorANSI(t, res, expected)
 	})
 
@@ -73,7 +73,7 @@ func TestColorANSI(t *testing.T) {
 				Background: typotestcolor.ColorANSIBackground[typotestcolor.ANSIBackgroundRed],
 			}),
 		)
-		expected := string(typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Failed.Colors))
+		expected := string(typotestcolor.ColorANSI(DefaultTestOpts, DefaultTestOpts.Failed.Title.Colors))
 		validateTestColorANSI(t, res, expected)
 	})
 
@@ -85,7 +85,7 @@ func TestColorANSI(t *testing.T) {
 				Background: typotestcolor.ColorANSIBackground[typotestcolor.ANSIBackgroundGreen],
 			}),
 		)
-		expected := string(typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Ok.Colors))
+		expected := string(typotestcolor.ColorANSI(DefaultTestOpts, DefaultTestOpts.Ok.Title.Colors))
 		validateTestColorANSI(t, res, expected)
 	})
 
@@ -97,7 +97,7 @@ func TestColorANSI(t *testing.T) {
 				Background: typotestcolor.ColorANSIBackground[typotestcolor.ANSIBackgroundNone],
 			}),
 		)
-		expected := string(typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().ErrorThrown.Colors))
+		expected := string(typotestcolor.ColorANSI(DefaultTestOpts, DefaultTestOpts.ErrorThrown.Title.Colors))
 		validateTestColorANSI(t, res, expected)
 	})
 }

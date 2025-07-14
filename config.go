@@ -12,14 +12,23 @@ type Opts struct {
 }
 
 type LineType struct {
-	Colors           ANSIConfig
-	Title            string
-	Hide             bool
-	AggregationTitle string
-	AggregationHide  bool
+	Title   LineTypeTitle
+	Summary LineTypeSummary
 }
 
-type LineAggregation = struct {
+type LineTypeTitle struct {
+	Colors ANSIConfig
+	Prefix string
+	Hide   bool
+}
+
+type LineTypeSummary struct {
+	Colors ANSIConfig
+	Prefix string
+	Hide   bool
+}
+
+type LineSummary = struct {
 	Run         int
 	Fail        int
 	Pass        int
@@ -32,82 +41,145 @@ type LineAggregation = struct {
 func NewDefaultOpts() Opts {
 	return Opts{
 		Run: LineType{
-			Colors: ANSIConfig{
-				Style:      ColorANSISTyle[ANSIStyleBold],
-				Foreground: ColorANSIForeground[ANSIForegroundCyan],
-				Background: ColorANSIBackground[ANSIBackgroundNone],
+			Title: LineTypeTitle{
+				Colors: ANSIConfig{
+					Style:      ColorANSISTyle[ANSIStyleBold],
+					Foreground: ColorANSIForeground[ANSIForegroundCyan],
+					Background: ColorANSIBackground[ANSIBackgroundNone],
+				},
+				Prefix: "\t=== RUN:",
+				Hide:   false,
 			},
-			Title:            "\t=== RUN:",
-			Hide:             false,
-			AggregationTitle: "RUN:",
-			AggregationHide:  false,
+			Summary: LineTypeSummary{
+				Colors: ANSIConfig{
+					Style:      ColorANSISTyle[ANSIStyleBold],
+					Foreground: ColorANSIForeground[ANSIForegroundCyan],
+					Background: ColorANSIBackground[ANSIBackgroundNone],
+				},
+				Prefix: "RUN:",
+				Hide:   false,
+			},
 		},
 		Fail: LineType{
-			Colors: ANSIConfig{
-				Style:      ColorANSISTyle[ANSIStyleNormal],
-				Foreground: ColorANSIForeground[ANSIForegroundRed],
-				Background: ColorANSIBackground[ANSIBackgroundNone],
+			Title: LineTypeTitle{
+				Colors: ANSIConfig{
+					Style:      ColorANSISTyle[ANSIStyleNormal],
+					Foreground: ColorANSIForeground[ANSIForegroundRed],
+					Background: ColorANSIBackground[ANSIBackgroundNone],
+				},
+				Prefix: "\t--- FAIL:",
+				Hide:   false,
 			},
-			Title:            "\t--- FAIL:",
-			Hide:             false,
-			AggregationTitle: "FAIL:",
-			AggregationHide:  false,
+			Summary: LineTypeSummary{
+				Colors: ANSIConfig{
+					Style:      ColorANSISTyle[ANSIStyleNormal],
+					Foreground: ColorANSIForeground[ANSIForegroundRed],
+					Background: ColorANSIBackground[ANSIBackgroundNone],
+				},
+				Prefix: "FAIL:",
+				Hide:   false,
+			},
 		},
 		Pass: LineType{
-			Colors: ANSIConfig{
-				Style:      ColorANSISTyle[ANSIStyleNormal],
-				Foreground: ColorANSIForeground[ANSIForegroundGreen],
-				Background: ColorANSIBackground[ANSIBackgroundNone],
+			Title: LineTypeTitle{
+				Colors: ANSIConfig{
+					Style:      ColorANSISTyle[ANSIStyleNormal],
+					Foreground: ColorANSIForeground[ANSIForegroundGreen],
+					Background: ColorANSIBackground[ANSIBackgroundNone],
+				},
+				Prefix: "\t--- PASS:",
+				Hide:   false,
 			},
-			Title:            "\t--- PASS:",
-			Hide:             false,
-			AggregationTitle: "PASS:",
-			AggregationHide:  false,
+			Summary: LineTypeSummary{
+				Colors: ANSIConfig{
+					Style:      ColorANSISTyle[ANSIStyleNormal],
+					Foreground: ColorANSIForeground[ANSIForegroundGreen],
+					Background: ColorANSIBackground[ANSIBackgroundNone],
+				},
+				Prefix: "PASS:",
+				Hide:   false,
+			},
 		},
 		Skip: LineType{
-			Colors: ANSIConfig{
-				Style:      ColorANSISTyle[ANSIStyleNormal],
-				Foreground: ColorANSIForeground[ANSIForegroundYellow],
-				Background: ColorANSIBackground[ANSIBackgroundNone],
+			Title: LineTypeTitle{
+				Colors: ANSIConfig{
+					Style:      ColorANSISTyle[ANSIStyleNormal],
+					Foreground: ColorANSIForeground[ANSIForegroundYellow],
+					Background: ColorANSIBackground[ANSIBackgroundNone],
+				},
+				Prefix: "\t--- SKIP:",
+				Hide:   false,
 			},
-			Title:            "\t--- SKIP:",
-			Hide:             false,
-			AggregationTitle: "SKIP:",
-			AggregationHide:  false,
+			Summary: LineTypeSummary{
+				Colors: ANSIConfig{
+					Style:      ColorANSISTyle[ANSIStyleNormal],
+					Foreground: ColorANSIForeground[ANSIForegroundYellow],
+					Background: ColorANSIBackground[ANSIBackgroundNone],
+				},
+				Prefix: "SKIP:",
+				Hide:   false,
+			},
 		},
 		Failed: LineType{
-			Colors: ANSIConfig{
-				Style:      ColorANSISTyle[ANSIStyleBold],
-				Foreground: ColorANSIForeground[ANSIForegroundBlack],
-				Background: ColorANSIBackground[ANSIBackgroundRed],
+			Title: LineTypeTitle{
+				Colors: ANSIConfig{
+					Style:      ColorANSISTyle[ANSIStyleBold],
+					Foreground: ColorANSIForeground[ANSIForegroundBlack],
+					Background: ColorANSIBackground[ANSIBackgroundRed],
+				},
+				Prefix: "FAIL",
+				Hide:   false,
 			},
-			Title:            "FAIL",
-			Hide:             false,
-			AggregationTitle: "FAILED:",
-			AggregationHide:  false,
+			Summary: LineTypeSummary{
+				Colors: ANSIConfig{
+					Style:      ColorANSISTyle[ANSIStyleBold],
+					Foreground: ColorANSIForeground[ANSIForegroundBlack],
+					Background: ColorANSIBackground[ANSIBackgroundRed],
+				},
+				Prefix: "FAILED:",
+				Hide:   false,
+			},
 		},
 		Ok: LineType{
-			Colors: ANSIConfig{
-				Style:      ColorANSISTyle[ANSIStyleBold],
-				Foreground: ColorANSIForeground[ANSIForegroundBlack],
-				Background: ColorANSIBackground[ANSIBackgroundGreen],
+			Title: LineTypeTitle{
+				Colors: ANSIConfig{
+					Style:      ColorANSISTyle[ANSIStyleBold],
+					Foreground: ColorANSIForeground[ANSIForegroundBlack],
+					Background: ColorANSIBackground[ANSIBackgroundGreen],
+				},
+				Prefix: "PASS",
+				Hide:   false,
 			},
-			Title:            "PASS",
-			Hide:             false,
-			AggregationTitle: "OK:",
-			AggregationHide:  false,
+			Summary: LineTypeSummary{
+				Colors: ANSIConfig{
+					Style:      ColorANSISTyle[ANSIStyleBold],
+					Foreground: ColorANSIForeground[ANSIForegroundBlack],
+					Background: ColorANSIBackground[ANSIBackgroundGreen],
+				},
+				Prefix: "OK:",
+				Hide:   false,
+			},
 		},
 
 		ErrorThrown: LineType{
-			Colors: ANSIConfig{
-				Style:      ColorANSISTyle[ANSIStyleNormal],
-				Foreground: ColorANSIForeground[ANSIForegroundWhite],
-				Background: ColorANSIBackground[ANSIBackgroundNone],
+			Title: LineTypeTitle{
+				Colors: ANSIConfig{
+					Style:      ColorANSISTyle[ANSIStyleNormal],
+					Foreground: ColorANSIForeground[ANSIForegroundWhite],
+					Background: ColorANSIBackground[ANSIBackgroundNone],
+				},
+				Prefix: "",
+				Hide:   false,
 			},
-			Title:            "",
-			Hide:             false,
-			AggregationTitle: "ERROR_THROWN:",
-			AggregationHide:  false,
+			Summary: LineTypeSummary{
+				Colors: ANSIConfig{
+					Style:      ColorANSISTyle[ANSIStyleNormal],
+					Foreground: ColorANSIForeground[ANSIForegroundWhite],
+					Background: ColorANSIBackground[ANSIBackgroundNone],
+				},
+				Prefix: "ERROR_THROWN:",
+				Hide:   false,
+			},
 		},
 		Debug: false,
 	}

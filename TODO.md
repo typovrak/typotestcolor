@@ -1,4 +1,5 @@
 - aggrégation de log
+- Rewrite ErrorThrown into something else ? Like Logs?
 
 - typotestcolor.Println et .Print pour avoir un print et type différent dans le rendu des tests
 (créer un nouveau type que errorThrown pour les logs de debbogage?)

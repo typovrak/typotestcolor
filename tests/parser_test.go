@@ -133,9 +133,9 @@ func TestHandleLineType(t *testing.T) {
 		}
 		expected := verifyHandleLineType{
 			// default run title
-			line: []byte(lineType.Title),
+			line: []byte(lineType.Title.Prefix),
 			// default run ansi color
-			color:       typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Run.Colors),
+			color:       typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Run.Title.Colors),
 			errorBefore: true,
 		}
 
@@ -155,9 +155,9 @@ func TestHandleLineType(t *testing.T) {
 		}
 		expected := verifyHandleLineType{
 			// default fail title
-			line: []byte(lineType.Title),
+			line: []byte(lineType.Title.Prefix),
 			// default fail ansi color
-			color:       typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Fail.Colors),
+			color:       typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Fail.Title.Colors),
 			errorBefore: true,
 		}
 
@@ -177,9 +177,9 @@ func TestHandleLineType(t *testing.T) {
 		}
 		expected := verifyHandleLineType{
 			// default pass title
-			line: []byte(lineType.Title),
+			line: []byte(lineType.Title.Prefix),
 			// default pass ansi color
-			color:       typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Pass.Colors),
+			color:       typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Pass.Title.Colors),
 			errorBefore: true,
 		}
 
@@ -199,9 +199,9 @@ func TestHandleLineType(t *testing.T) {
 		}
 		expected := verifyHandleLineType{
 			// default skip title
-			line: []byte(lineType.Title),
+			line: []byte(lineType.Title.Prefix),
 			// default skip ansi color
-			color:       typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Skip.Colors),
+			color:       typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Skip.Title.Colors),
 			errorBefore: true,
 		}
 
@@ -221,9 +221,9 @@ func TestHandleLineType(t *testing.T) {
 		}
 		expected := verifyHandleLineType{
 			// default failed title
-			line: []byte(lineType.Title),
+			line: []byte(lineType.Title.Prefix),
 			// default failed ansi color
-			color:       typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Failed.Colors),
+			color:       typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Failed.Title.Colors),
 			errorBefore: true,
 		}
 
@@ -243,9 +243,9 @@ func TestHandleLineType(t *testing.T) {
 		}
 		expected := verifyHandleLineType{
 			// default ok title
-			line: []byte(lineType.Title),
+			line: []byte(lineType.Title.Prefix),
 			// default ok ansi color
-			color:       typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Ok.Colors),
+			color:       typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().Ok.Title.Colors),
 			errorBefore: true,
 		}
 
@@ -265,9 +265,9 @@ func TestHandleLineType(t *testing.T) {
 		}
 		expected := verifyHandleLineType{
 			// default error thrown title
-			line: []byte(lineType.Title),
+			line: []byte(lineType.Title.Prefix),
 			// default error thrown ansi color
-			color:       typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().ErrorThrown.Colors),
+			color:       typotestcolor.ColorANSI(DefaultTestOpts, typotestcolor.NewDefaultOpts().ErrorThrown.Title.Colors),
 			errorBefore: true,
 		}
 
