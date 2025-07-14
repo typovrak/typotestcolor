@@ -17,10 +17,10 @@ var DefaultTitle = struct {
 	Ok          []byte
 	ErrorThrown []byte
 }{
-	Run:         []byte("=== RUN  "),
-	Fail:        []byte("--- FAIL:"),
-	Pass:        []byte("--- PASS:"),
-	Skip:        []byte("--- SKIP:"),
+	Run:         []byte("=== RUN   "),
+	Fail:        []byte("--- FAIL: "),
+	Pass:        []byte("--- PASS: "),
+	Skip:        []byte("--- SKIP: "),
 	Failed:      []byte("FAIL"),
 	Ok:          []byte("PASS"),
 	ErrorThrown: []byte(""),

@@ -286,15 +286,21 @@ func FormatTestLine(
 func AddPrintLineSummary(print *[]byte, opts Opts, summary LineTypeSummary, value int) {
 	if len(*print) == 0 {
 		*print = append(*print, []byte("\n")...)
+
+		// manage header summary
 		*print = append(*print, ColorANSI(opts, opts.Summary.Header.Colors)...)
 		*print = append(*print, []byte(opts.Summary.Header.Title)...)
 		*print = append(*print, ColorReset...)
 		*print = append(*print, []byte("\n")...)
 	}
 
+	// manage summary content
 	*print = append(*print, ColorANSI(opts, summary.Colors)...)
 	*print = append(*print, []byte(summary.Prefix)...)
 	*print = append(*print, []byte(strconv.Itoa(value))...)
+	*print = append(*print, []byte(summary.Suffix)...)
+
+	// manage end of line
 	*print = append(*print, ColorReset...)
 	*print = append(*print, []byte("\n")...)
 }

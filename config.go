@@ -27,6 +27,7 @@ type LineTypeTitle struct {
 type LineTypeSummary struct {
 	Colors ANSIConfig
 	Prefix string
+	Suffix string
 	Hide   bool
 }
 
@@ -86,7 +87,7 @@ func NewDefaultOpts() Opts {
 					Foreground: ColorANSIForeground[ANSIForegroundCyan],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
-				Prefix: "\t=== RUN:",
+				Prefix: "\t=== RUN: ",
 				Hide:   false,
 				Aggregation: LineTypeTitleAggregation{
 					Activate: true,
@@ -106,7 +107,8 @@ func NewDefaultOpts() Opts {
 					Foreground: ColorANSIForeground[ANSIForegroundCyan],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
-				Prefix: "run: ",
+				Prefix: "Run: ",
+				Suffix: "",
 				Hide:   false,
 			},
 		},
@@ -117,7 +119,7 @@ func NewDefaultOpts() Opts {
 					Foreground: ColorANSIForeground[ANSIForegroundRed],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
-				Prefix: "\t--- FAIL:",
+				Prefix: "\t--- FAIL: ",
 				Hide:   false,
 				Aggregation: LineTypeTitleAggregation{
 					Activate: true,
@@ -138,6 +140,7 @@ func NewDefaultOpts() Opts {
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
 				Prefix: "Fail: ",
+				Suffix: " ✗",
 				Hide:   false,
 			},
 		},
@@ -148,7 +151,7 @@ func NewDefaultOpts() Opts {
 					Foreground: ColorANSIForeground[ANSIForegroundGreen],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
-				Prefix: "\t--- PASS:",
+				Prefix: "\t--- PASS: ",
 				Hide:   false,
 				Aggregation: LineTypeTitleAggregation{
 					Activate: true,
@@ -169,6 +172,7 @@ func NewDefaultOpts() Opts {
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
 				Prefix: "Pass: ",
+				Suffix: " ✓",
 				Hide:   false,
 			},
 		},
@@ -179,7 +183,7 @@ func NewDefaultOpts() Opts {
 					Foreground: ColorANSIForeground[ANSIForegroundYellow],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
-				Prefix: "\t--- SKIP:",
+				Prefix: "\t--- SKIP: ",
 				Hide:   false,
 				Aggregation: LineTypeTitleAggregation{
 					Activate: true,
@@ -200,6 +204,7 @@ func NewDefaultOpts() Opts {
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
 				Prefix: "Skip: ",
+				Suffix: " ~",
 				Hide:   false,
 			},
 		},
@@ -231,6 +236,7 @@ func NewDefaultOpts() Opts {
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
 				Prefix: "Failed: ",
+				Suffix: " ✗",
 				Hide:   true,
 			},
 		},
@@ -262,10 +268,10 @@ func NewDefaultOpts() Opts {
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
 				Prefix: "Ok: ",
+				Suffix: " ✓",
 				Hide:   true,
 			},
 		},
-
 		ErrorThrown: LineType{
 			Title: LineTypeTitle{
 				Colors: ANSIConfig{
@@ -294,6 +300,7 @@ func NewDefaultOpts() Opts {
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
 				Prefix: "Error thrown: ",
+				Suffix: " !",
 				Hide:   false,
 			},
 		},
