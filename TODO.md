@@ -1,4 +1,3 @@
-- aggrégation de log
 - FIX: summary: afficher que FAILED ou OK
 
 - ajouter des titres pour séparer chaque section? 
