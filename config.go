@@ -53,10 +53,9 @@ const (
 )
 
 type AggregationCount = struct {
-	Type      AggregationType
-	Value     int
-	FirstLine []byte
-	LastLine  []byte
+	Type  AggregationType
+	Value int
+	Lines [][]byte
 }
 
 func NewDefaultOpts() Opts {

@@ -34,17 +34,26 @@ func HandleLineType(
 }
 
 func PrintAggregation(aggregationCount *AggregationCount, aggregationLines *[]byte) {
-	*aggregationLines = append(*aggregationLines, aggregationCount.FirstLine...)
-	*aggregationLines = append(*aggregationLines, '[')
-	*aggregationLines = append(*aggregationLines, []byte(strconv.Itoa(aggregationCount.Value))...)
-	*aggregationLines = append(*aggregationLines, ']')
-	*aggregationLines = append(*aggregationLines, []byte("\n")...)
-	*aggregationLines = append(*aggregationLines, aggregationCount.LastLine...)
+	if aggregationCount.Value >= 4 {
+		*aggregationLines = append(*aggregationLines, aggregationCount.Lines[0]...)
+		*aggregationLines = append(*aggregationLines, '[')
+		*aggregationLines = append(*aggregationLines, []byte(strconv.Itoa(aggregationCount.Value))...)
+		*aggregationLines = append(*aggregationLines, ']')
+		*aggregationLines = append(*aggregationLines, []byte("\n")...)
+
+		lastLine := aggregationCount.Lines[len(aggregationCount.Lines)-1]
+		*aggregationLines = append(*aggregationLines, bytes.TrimLeft(lastLine, "\n")...)
+		return
+	}
+
+	// no aggregation output
+	for i := 0; i < len(aggregationCount.Lines); i++ {
+		*aggregationLines = append(*aggregationLines, aggregationCount.Lines[i]...)
+	}
 }
 
 func HandleAggregation(lineType LineType, aggregationCount *AggregationCount, aggregationType AggregationType, aggregationLines *[]byte, formattedLine *[]byte) {
-	// TODO: 4 need to be a config parameter after
-	if aggregationCount.Type != aggregationType && aggregationCount.Value >= 4 {
+	if aggregationCount.Type != aggregationType {
 		PrintAggregation(aggregationCount, aggregationLines)
 	}
 
@@ -52,13 +61,12 @@ func HandleAggregation(lineType LineType, aggregationCount *AggregationCount, ag
 		if aggregationCount.Type != aggregationType {
 			aggregationCount.Type = aggregationType
 			aggregationCount.Value = 0
-			aggregationCount.FirstLine = *formattedLine
-			aggregationCount.LastLine = nil
+			aggregationCount.Lines = [][]byte{*formattedLine}
 		} else {
-			aggregationCount.LastLine = *formattedLine
 		}
 
 		aggregationCount.Value++
+		aggregationCount.Lines = append(aggregationCount.Lines, *formattedLine)
 		*formattedLine = nil
 		return
 	}
@@ -67,8 +75,7 @@ func HandleAggregation(lineType LineType, aggregationCount *AggregationCount, ag
 	if aggregationCount.Type != AggregationTypeNone {
 		aggregationCount.Type = AggregationTypeNone
 		aggregationCount.Value = 0
-		aggregationCount.FirstLine = nil
-		aggregationCount.LastLine = nil
+		aggregationCount.Lines = [][]byte{}
 	}
 }
 

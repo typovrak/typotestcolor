@@ -70,7 +70,6 @@ func RunTestColor(m *testing.M, opts Opts) int {
 			}
 		}
 
-		// TODO: gérer le cas où tu aggregate mais il n'y a pas assez de ligne
 		if aggregationCount.Type != AggregationTypeNone {
 			var aggregationLines []byte
 			PrintAggregation(&aggregationCount, &aggregationLines)
