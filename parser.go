@@ -31,6 +31,7 @@ func HandleLineType(
 	*color = ColorANSI(opts, lineType.Title.Colors)
 	AddLineFeedBetweenErrorThrown(opts, w, errorBefore, isError)
 	*line = bytes.Replace(*line, defaultTitleType, []byte(lineType.Title.Prefix), 1)
+	// *line = append(*line, []byte(lineType.Title.Suffix)...)
 }
 
 func PrintAggregation(opts Opts, optsTypeTitleAggregation LineTypeTitleAggregation, aggregationCount *AggregationCount, aggregationLines *[]byte) {

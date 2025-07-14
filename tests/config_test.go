@@ -37,7 +37,7 @@ func TestNewDefaultOpts(t *testing.T) {
 
 	t.Run("run default title", func(t *testing.T) {
 		res := DefaultTestOpts.Run.Title.Prefix
-		expected := "\t=== RUN:"
+		expected := "\t=== RUN: "
 		validateTestNewDefaultOptsString(t, res, expected)
 	})
 
@@ -61,7 +61,7 @@ func TestNewDefaultOpts(t *testing.T) {
 
 	t.Run("fail default title", func(t *testing.T) {
 		res := DefaultTestOpts.Fail.Title.Prefix
-		expected := "\t--- FAIL:"
+		expected := "\t--- FAIL: "
 		validateTestNewDefaultOptsString(t, res, expected)
 	})
 
@@ -85,7 +85,7 @@ func TestNewDefaultOpts(t *testing.T) {
 
 	t.Run("pass default title", func(t *testing.T) {
 		res := DefaultTestOpts.Pass.Title.Prefix
-		expected := "\t--- PASS:"
+		expected := "\t--- PASS: "
 		validateTestNewDefaultOptsString(t, res, expected)
 	})
 
@@ -109,7 +109,7 @@ func TestNewDefaultOpts(t *testing.T) {
 
 	t.Run("skip default title", func(t *testing.T) {
 		res := DefaultTestOpts.Skip.Title.Prefix
-		expected := "\t--- SKIP:"
+		expected := "\t--- SKIP: "
 		validateTestNewDefaultOptsString(t, res, expected)
 	})
 

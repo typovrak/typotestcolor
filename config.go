@@ -20,6 +20,7 @@ type LineType struct {
 type LineTypeTitle struct {
 	Colors      ANSIConfig
 	Prefix      string
+	Suffix      string
 	Hide        bool
 	Aggregation LineTypeTitleAggregation
 }
@@ -88,6 +89,7 @@ func NewDefaultOpts() Opts {
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
 				Prefix: "\t=== RUN: ",
+				Suffix: "",
 				Hide:   false,
 				Aggregation: LineTypeTitleAggregation{
 					Activate: true,
@@ -120,6 +122,7 @@ func NewDefaultOpts() Opts {
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
 				Prefix: "\t--- FAIL: ",
+				Suffix: "",
 				Hide:   false,
 				Aggregation: LineTypeTitleAggregation{
 					Activate: true,
@@ -152,6 +155,7 @@ func NewDefaultOpts() Opts {
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
 				Prefix: "\t--- PASS: ",
+				Suffix: "",
 				Hide:   false,
 				Aggregation: LineTypeTitleAggregation{
 					Activate: true,
@@ -184,6 +188,7 @@ func NewDefaultOpts() Opts {
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
 				Prefix: "\t--- SKIP: ",
+				Suffix: "",
 				Hide:   false,
 				Aggregation: LineTypeTitleAggregation{
 					Activate: true,
@@ -216,6 +221,7 @@ func NewDefaultOpts() Opts {
 					Background: ColorANSIBackground[ANSIBackgroundRed],
 				},
 				Prefix: "FAIL",
+				Suffix: "",
 				Hide:   false,
 				Aggregation: LineTypeTitleAggregation{
 					Activate: false,
@@ -248,6 +254,7 @@ func NewDefaultOpts() Opts {
 					Background: ColorANSIBackground[ANSIBackgroundGreen],
 				},
 				Prefix: "PASS",
+				Suffix: "",
 				Hide:   false,
 				Aggregation: LineTypeTitleAggregation{
 					Activate: false,
@@ -280,6 +287,7 @@ func NewDefaultOpts() Opts {
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
 				Prefix: "",
+				Suffix: "",
 				Hide:   false,
 				Aggregation: LineTypeTitleAggregation{
 					Activate: false,
