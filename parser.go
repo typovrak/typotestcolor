@@ -286,7 +286,9 @@ func FormatTestLine(
 func AddPrintLineSummary(print *[]byte, opts Opts, summary LineTypeSummary, value int) {
 	if len(*print) == 0 {
 		*print = append(*print, []byte("\n")...)
-		*print = append(*print, []byte(opts.Summary.Header)...)
+		*print = append(*print, ColorANSI(opts, opts.Summary.Header.Colors)...)
+		*print = append(*print, []byte(opts.Summary.Header.Title)...)
+		*print = append(*print, ColorReset...)
 		*print = append(*print, []byte("\n")...)
 	}
 
@@ -329,7 +331,9 @@ func PrintLineSummary(opts Opts, lineSummary LineSummary) []byte {
 	}
 
 	if len(print) > 0 {
-		print = append(print, []byte(opts.Summary.Footer)...)
+		print = append(print, ColorANSI(opts, opts.Summary.Footer.Colors)...)
+		print = append(print, []byte(opts.Summary.Footer.Title)...)
+		print = append(print, ColorReset...)
 		print = append(print, []byte("\n")...)
 		print = append(print, []byte("\n")...)
 		return print

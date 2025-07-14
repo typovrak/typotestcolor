@@ -68,8 +68,13 @@ type LineTypeTitleAggregation = struct {
 }
 
 type SummaryConfig = struct {
-	Header string
-	Footer string
+	Header SummaryConfigTitle
+	Footer SummaryConfigTitle
+}
+
+type SummaryConfigTitle = struct {
+	Title  string
+	Colors ANSIConfig
 }
 
 func NewDefaultOpts() Opts {
@@ -97,11 +102,11 @@ func NewDefaultOpts() Opts {
 			},
 			Summary: LineTypeSummary{
 				Colors: ANSIConfig{
-					Style:      ColorANSISTyle[ANSIStyleBold],
+					Style:      ColorANSISTyle[ANSIStyleNormal],
 					Foreground: ColorANSIForeground[ANSIForegroundCyan],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
-				Prefix: "RUN:",
+				Prefix: "run: ",
 				Hide:   false,
 			},
 		},
@@ -132,7 +137,7 @@ func NewDefaultOpts() Opts {
 					Foreground: ColorANSIForeground[ANSIForegroundRed],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
-				Prefix: "FAIL:",
+				Prefix: "Fail: ",
 				Hide:   false,
 			},
 		},
@@ -163,7 +168,7 @@ func NewDefaultOpts() Opts {
 					Foreground: ColorANSIForeground[ANSIForegroundGreen],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
-				Prefix: "PASS:",
+				Prefix: "Pass: ",
 				Hide:   false,
 			},
 		},
@@ -194,7 +199,7 @@ func NewDefaultOpts() Opts {
 					Foreground: ColorANSIForeground[ANSIForegroundYellow],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
-				Prefix: "SKIP:",
+				Prefix: "Skip: ",
 				Hide:   false,
 			},
 		},
@@ -221,12 +226,12 @@ func NewDefaultOpts() Opts {
 			},
 			Summary: LineTypeSummary{
 				Colors: ANSIConfig{
-					Style:      ColorANSISTyle[ANSIStyleBold],
-					Foreground: ColorANSIForeground[ANSIForegroundBlack],
-					Background: ColorANSIBackground[ANSIBackgroundRed],
+					Style:      ColorANSISTyle[ANSIStyleNormal],
+					Foreground: ColorANSIForeground[ANSIForegroundRed],
+					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
-				Prefix: "FAILED:",
-				Hide:   false,
+				Prefix: "Failed: ",
+				Hide:   true,
 			},
 		},
 		Ok: LineType{
@@ -252,12 +257,12 @@ func NewDefaultOpts() Opts {
 			},
 			Summary: LineTypeSummary{
 				Colors: ANSIConfig{
-					Style:      ColorANSISTyle[ANSIStyleBold],
-					Foreground: ColorANSIForeground[ANSIForegroundBlack],
-					Background: ColorANSIBackground[ANSIBackgroundGreen],
+					Style:      ColorANSISTyle[ANSIStyleNormal],
+					Foreground: ColorANSIForeground[ANSIForegroundGreen],
+					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
-				Prefix: "OK:",
-				Hide:   false,
+				Prefix: "Ok: ",
+				Hide:   true,
 			},
 		},
 
@@ -288,14 +293,28 @@ func NewDefaultOpts() Opts {
 					Foreground: ColorANSIForeground[ANSIForegroundWhite],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
-				Prefix: "ERROR_THROWN:",
+				Prefix: "Error thrown: ",
 				Hide:   false,
 			},
 		},
 		Debug: false,
 		Summary: SummaryConfig{
-			Header: "----- SUMMARY -----",
-			Footer: "----- Made with <3 by Typovrak -----",
+			Header: SummaryConfigTitle{
+				Title: "-----> TESTS SUMMARY <-----",
+				Colors: ANSIConfig{
+					Style:      ColorANSISTyle[ANSIStyleBold],
+					Foreground: ColorANSIForeground[ANSIForegroundPurple],
+					Background: ColorANSIBackground[ANSIBackgroundNone],
+				},
+			},
+			Footer: SummaryConfigTitle{
+				Title: "-----> Made with <3 by Typovrak <-----",
+				Colors: ANSIConfig{
+					Style:      ColorANSISTyle[ANSIStyleBold],
+					Foreground: ColorANSIForeground[ANSIForegroundPurple],
+					Background: ColorANSIBackground[ANSIBackgroundNone],
+				},
+			},
 		},
 	}
 }
