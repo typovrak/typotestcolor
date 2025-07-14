@@ -9,6 +9,7 @@ type Opts struct {
 	Ok          LineType
 	ErrorThrown LineType
 	Debug       bool
+	Summary     SummaryConfig
 }
 
 type LineType struct {
@@ -64,6 +65,11 @@ type LineTypeTitleAggregation = struct {
 	Prefix    string
 	Suffix    string
 	Threshold int
+}
+
+type SummaryConfig = struct {
+	Header string
+	Footer string
 }
 
 func NewDefaultOpts() Opts {
@@ -287,5 +293,9 @@ func NewDefaultOpts() Opts {
 			},
 		},
 		Debug: false,
+		Summary: SummaryConfig{
+			Header: "----- SUMMARY -----",
+			Footer: "----- Made with <3 by Typovrak -----",
+		},
 	}
 }
