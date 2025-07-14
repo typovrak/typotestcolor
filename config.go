@@ -47,8 +47,9 @@ const (
 	AggregationTypeFail
 	AggregationTypePass
 	AggregationTypeSkip
-	// INFO: Failed and Ok can't have multiple lines
-	// INFO: ErrorThrown doesn't need this option
+	AggregationTypeFailed
+	AggregationTypeOk
+	AggregationTypeErrorThrown
 )
 
 type AggregationCount = struct {
