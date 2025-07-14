@@ -33,29 +33,39 @@ func HandleLineType(
 	*line = bytes.Replace(*line, defaultTitleType, []byte(lineType.Title.Prefix), 1)
 }
 
-func PrintAggregation(aggregationCount AggregationCount) []byte {
-	return nil
+func PrintAggregation(aggregationCount *AggregationCount) []byte {
+	var aggregationLines []byte
+
+	aggregationLines = append(aggregationLines, aggregationCount.FirstLine...)
+	aggregationLines = append(aggregationLines, '[')
+	aggregationLines = append(aggregationLines, []byte(strconv.Itoa(aggregationCount.Value))...)
+	aggregationLines = append(aggregationLines, ']')
+	aggregationLines = append(aggregationLines, []byte("\n")...)
+	aggregationLines = append(aggregationLines, aggregationCount.LastLine...)
+
+	return aggregationLines
 }
 
-func HandleAggregation(lineType LineType, aggregationCount AggregationCount, aggregationType AggregationType) []byte {
-	// si le type d'avant n'est plus le même que actuel, print first line + [n] + last line
-
-	//if !lineType.Title.Aggregate {
-	//}
+func HandleAggregation(lineType LineType, aggregationCount *AggregationCount, aggregationType AggregationType, formattedLine []byte) []byte {
+	var aggregationLines []byte
 
 	if aggregationCount.Type != aggregationType {
+		// TODO: 4 need to be a config parameter after
 		if aggregationCount.Value >= 4 {
-			// format and print
-			PrintAggregation(aggregationCount)
+			aggregationLines = PrintAggregation(aggregationCount)
 		}
 
 		aggregationCount.Type = aggregationType
 		aggregationCount.Value = 0
+		aggregationCount.FirstLine = formattedLine
+		aggregationCount.LastLine = nil
+	} else {
+		aggregationCount.LastLine = formattedLine
 	}
 
 	aggregationCount.Value++
 
-	return nil
+	return aggregationLines
 }
 
 func FormatTestEndLine(line []byte, formattedLine *[]byte, color []byte) {
@@ -74,7 +84,7 @@ func FormatTestLine(
 	errorBefore *bool,
 	stdout io.Writer,
 	lineSummary *LineSummary,
-	aggregationCount AggregationCount,
+	aggregationCount *AggregationCount,
 ) ([]byte, []byte) {
 	var formattedLine []byte
 
@@ -99,7 +109,7 @@ func FormatTestLine(
 
 			FormatTestEndLine(line, &formattedLine, color)
 
-			aggregationLines := HandleAggregation(opts.Run, aggregationCount, AggregationTypeRun)
+			aggregationLines := HandleAggregation(opts.Run, aggregationCount, AggregationTypeRun, formattedLine)
 			return formattedLine, aggregationLines
 
 			// INFO: --- FAIL:
@@ -107,8 +117,6 @@ func FormatTestLine(
 			if opts.Fail.Title.Hide {
 				return nil, nil
 			}
-
-			HandleAggregation(opts.Fail, aggregationCount, AggregationTypeFail)
 
 			if !opts.Fail.Summary.Hide {
 				lineSummary.Fail++
@@ -118,7 +126,7 @@ func FormatTestLine(
 
 			FormatTestEndLine(line, &formattedLine, color)
 
-			aggregationLines := HandleAggregation(opts.Run, aggregationCount, AggregationTypeFail)
+			aggregationLines := HandleAggregation(opts.Run, aggregationCount, AggregationTypeFail, formattedLine)
 			return formattedLine, aggregationLines
 
 			// INFO: --- PASS:
@@ -126,8 +134,6 @@ func FormatTestLine(
 			if opts.Pass.Title.Hide {
 				return nil, nil
 			}
-
-			HandleAggregation(opts.Pass, aggregationCount, AggregationTypePass)
 
 			if !opts.Pass.Summary.Hide {
 				lineSummary.Pass++
@@ -137,7 +143,7 @@ func FormatTestLine(
 
 			FormatTestEndLine(line, &formattedLine, color)
 
-			aggregationLines := HandleAggregation(opts.Run, aggregationCount, AggregationTypePass)
+			aggregationLines := HandleAggregation(opts.Run, aggregationCount, AggregationTypePass, formattedLine)
 			return formattedLine, aggregationLines
 
 			// INFO: --- SKIP:
@@ -145,8 +151,6 @@ func FormatTestLine(
 			if opts.Skip.Title.Hide {
 				return nil, nil
 			}
-
-			HandleAggregation(opts.Skip, aggregationCount, AggregationTypeSkip)
 
 			if !opts.Skip.Summary.Hide {
 				lineSummary.Skip++
@@ -156,7 +160,7 @@ func FormatTestLine(
 
 			FormatTestEndLine(line, &formattedLine, color)
 
-			aggregationLines := HandleAggregation(opts.Run, aggregationCount, AggregationTypeSkip)
+			aggregationLines := HandleAggregation(opts.Run, aggregationCount, AggregationTypeSkip, formattedLine)
 			return formattedLine, aggregationLines
 
 			// INFO: FAIL
@@ -164,8 +168,6 @@ func FormatTestLine(
 			if opts.Failed.Title.Hide {
 				return nil, nil
 			}
-
-			HandleAggregation(opts.Failed, aggregationCount, AggregationTypeFailed)
 
 			if !opts.Failed.Summary.Hide {
 				lineSummary.Failed++
@@ -176,7 +178,7 @@ func FormatTestLine(
 
 			FormatTestEndLine(line, &formattedLine, color)
 
-			aggregationLines := HandleAggregation(opts.Run, aggregationCount, AggregationTypeFailed)
+			aggregationLines := HandleAggregation(opts.Run, aggregationCount, AggregationTypeFailed, formattedLine)
 			return formattedLine, aggregationLines
 
 			// INFO: ok
@@ -184,8 +186,6 @@ func FormatTestLine(
 			if opts.Ok.Title.Hide {
 				return nil, nil
 			}
-
-			HandleAggregation(opts.Ok, aggregationCount, AggregationTypeOk)
 
 			if !opts.Ok.Summary.Hide {
 				lineSummary.Ok++
@@ -196,7 +196,7 @@ func FormatTestLine(
 
 			FormatTestEndLine(line, &formattedLine, color)
 
-			aggregationLines := HandleAggregation(opts.Run, aggregationCount, AggregationTypeOk)
+			aggregationLines := HandleAggregation(opts.Run, aggregationCount, AggregationTypeOk, formattedLine)
 			return formattedLine, aggregationLines
 
 			// INFO: error thrown
@@ -204,8 +204,6 @@ func FormatTestLine(
 			if opts.ErrorThrown.Title.Hide {
 				return nil, nil
 			}
-
-			HandleAggregation(opts.ErrorThrown, aggregationCount, AggregationTypeErrorThrown)
 
 			if !opts.ErrorThrown.Summary.Hide {
 				lineSummary.ErrorThrown++
@@ -215,7 +213,7 @@ func FormatTestLine(
 
 			FormatTestEndLine(line, &formattedLine, color)
 
-			aggregationLines := HandleAggregation(opts.Run, aggregationCount, AggregationTypeErrorThrown)
+			aggregationLines := HandleAggregation(opts.Run, aggregationCount, AggregationTypeErrorThrown, formattedLine)
 			return formattedLine, aggregationLines
 		}
 	}
