@@ -33,12 +33,13 @@ func HandleLineType(
 	*line = bytes.Replace(*line, defaultTitleType, []byte(lineType.Title.Prefix), 1)
 }
 
-func PrintAggregation(optsTypeTitleAggregation LineTypeTitleAggregation, aggregationCount *AggregationCount, aggregationLines *[]byte) {
+func PrintAggregation(opts Opts, optsTypeTitleAggregation LineTypeTitleAggregation, aggregationCount *AggregationCount, aggregationLines *[]byte) {
 	if aggregationCount.Value >= optsTypeTitleAggregation.Threshold && len(aggregationCount.Lines) > 2 {
-		// setup aggregation color
-
 		// first line
 		*aggregationLines = append(*aggregationLines, aggregationCount.Lines[0]...)
+
+		// setup aggregation color
+		*aggregationLines = append(*aggregationLines, ColorANSI(opts, optsTypeTitleAggregation.Colors)...)
 
 		// aggregation prefix
 		*aggregationLines = append(*aggregationLines, []byte(optsTypeTitleAggregation.Prefix)...)
@@ -50,11 +51,11 @@ func PrintAggregation(optsTypeTitleAggregation LineTypeTitleAggregation, aggrega
 		*aggregationLines = append(*aggregationLines, []byte(optsTypeTitleAggregation.Suffix)...)
 		*aggregationLines = append(*aggregationLines, []byte("\n")...)
 
+		// reset aggregation color
+		*aggregationLines = append(*aggregationLines, ColorReset...)
+
 		// last line
 		lastLine := aggregationCount.Lines[len(aggregationCount.Lines)-1]
-
-		// reset aggregation color
-
 		*aggregationLines = append(*aggregationLines, bytes.TrimLeft(lastLine, "\n")...)
 		return
 	}
@@ -103,7 +104,7 @@ func GetOptsTypeTitleAggregationFromAggregationCountType(opts Opts, aggregationC
 func HandleAggregation(opts Opts, lineType LineType, aggregationCount *AggregationCount, aggregationType AggregationType, aggregationLines *[]byte, formattedLine *[]byte) {
 	if aggregationCount.Type != aggregationType {
 		optsTypeTitleAggregation := GetOptsTypeTitleAggregationFromAggregationCountType(opts, aggregationCount)
-		PrintAggregation(optsTypeTitleAggregation, aggregationCount, aggregationLines)
+		PrintAggregation(opts, optsTypeTitleAggregation, aggregationCount, aggregationLines)
 	}
 
 	if lineType.Title.Aggregation.Activate {
@@ -187,7 +188,7 @@ func FormatTestLine(
 
 			FormatTestEndLine(line, &formattedLine, color)
 
-			HandleAggregation(opts, opts.Run, aggregationCount, AggregationTypeFail, &aggregationLines, &formattedLine)
+			HandleAggregation(opts, opts.Fail, aggregationCount, AggregationTypeFail, &aggregationLines, &formattedLine)
 			return formattedLine, aggregationLines
 
 			// INFO: --- PASS:
@@ -204,7 +205,7 @@ func FormatTestLine(
 
 			FormatTestEndLine(line, &formattedLine, color)
 
-			HandleAggregation(opts, opts.Run, aggregationCount, AggregationTypePass, &aggregationLines, &formattedLine)
+			HandleAggregation(opts, opts.Pass, aggregationCount, AggregationTypePass, &aggregationLines, &formattedLine)
 			return formattedLine, aggregationLines
 
 			// INFO: --- SKIP:
@@ -221,7 +222,7 @@ func FormatTestLine(
 
 			FormatTestEndLine(line, &formattedLine, color)
 
-			HandleAggregation(opts, opts.Run, aggregationCount, AggregationTypeSkip, &aggregationLines, &formattedLine)
+			HandleAggregation(opts, opts.Skip, aggregationCount, AggregationTypeSkip, &aggregationLines, &formattedLine)
 			return formattedLine, aggregationLines
 
 			// INFO: FAIL
@@ -239,7 +240,7 @@ func FormatTestLine(
 
 			FormatTestEndLine(line, &formattedLine, color)
 
-			HandleAggregation(opts, opts.Run, aggregationCount, AggregationTypeFailed, &aggregationLines, &formattedLine)
+			HandleAggregation(opts, opts.Failed, aggregationCount, AggregationTypeFailed, &aggregationLines, &formattedLine)
 			return formattedLine, aggregationLines
 
 			// INFO: ok
@@ -257,7 +258,7 @@ func FormatTestLine(
 
 			FormatTestEndLine(line, &formattedLine, color)
 
-			HandleAggregation(opts, opts.Run, aggregationCount, AggregationTypeOk, &aggregationLines, &formattedLine)
+			HandleAggregation(opts, opts.Ok, aggregationCount, AggregationTypeOk, &aggregationLines, &formattedLine)
 			return formattedLine, aggregationLines
 
 			// INFO: error thrown
@@ -274,7 +275,7 @@ func FormatTestLine(
 
 			FormatTestEndLine(line, &formattedLine, color)
 
-			HandleAggregation(opts, opts.Run, aggregationCount, AggregationTypeErrorThrown, &aggregationLines, &formattedLine)
+			HandleAggregation(opts, opts.ErrorThrown, aggregationCount, AggregationTypeErrorThrown, &aggregationLines, &formattedLine)
 			return formattedLine, aggregationLines
 		}
 	}
