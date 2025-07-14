@@ -220,7 +220,7 @@ func NewDefaultOpts() Opts {
 					Foreground: ColorANSIForeground[ANSIForegroundBlack],
 					Background: ColorANSIBackground[ANSIBackgroundRed],
 				},
-				Prefix: "FAIL",
+				Prefix: "\nFAIL",
 				Suffix: "",
 				Hide:   false,
 				Aggregation: LineTypeTitleAggregation{
@@ -253,7 +253,7 @@ func NewDefaultOpts() Opts {
 					Foreground: ColorANSIForeground[ANSIForegroundBlack],
 					Background: ColorANSIBackground[ANSIBackgroundGreen],
 				},
-				Prefix: "PASS",
+				Prefix: "\nPASS",
 				Suffix: "",
 				Hide:   false,
 				Aggregation: LineTypeTitleAggregation{
@@ -315,7 +315,7 @@ func NewDefaultOpts() Opts {
 		Debug: false,
 		Summary: SummaryConfig{
 			Header: SummaryConfigTitle{
-				Title: "-----> TESTS SUMMARY <-----",
+				Title: "\n-----> TESTS SUMMARY <-----",
 				Colors: ANSIConfig{
 					Style:      ColorANSISTyle[ANSIStyleBold],
 					Foreground: ColorANSIForeground[ANSIForegroundPurple],
@@ -323,7 +323,7 @@ func NewDefaultOpts() Opts {
 				},
 			},
 			Footer: SummaryConfigTitle{
-				Title: "-----> Made with <3 by Typovrak <-----",
+				Title: "-----> Made with <3 by Typovrak <-----\n",
 				Colors: ANSIConfig{
 					Style:      ColorANSISTyle[ANSIStyleBold],
 					Foreground: ColorANSIForeground[ANSIForegroundPurple],

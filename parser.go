@@ -31,7 +31,7 @@ func HandleLineType(
 	*color = ColorANSI(opts, lineType.Title.Colors)
 	AddLineFeedBetweenErrorThrown(opts, w, errorBefore, isError)
 	*line = bytes.Replace(*line, defaultTitleType, []byte(lineType.Title.Prefix), 1)
-	// *line = append(*line, []byte(lineType.Title.Suffix)...)
+	*line = append(*line, []byte(lineType.Title.Suffix)...)
 }
 
 func PrintAggregation(opts Opts, optsTypeTitleAggregation LineTypeTitleAggregation, aggregationCount *AggregationCount, aggregationLines *[]byte) {
@@ -237,7 +237,6 @@ func FormatTestLine(
 			}
 
 			HandleLineType(opts, &line, opts.Failed, DefaultTitle.Failed, &color, stdout, errorBefore, false)
-			formattedLine = append(formattedLine, []byte("\n")...)
 
 			FormatTestEndLine(line, &formattedLine, color)
 
@@ -255,7 +254,6 @@ func FormatTestLine(
 			}
 
 			HandleLineType(opts, &line, opts.Ok, DefaultTitle.Ok, &color, stdout, errorBefore, false)
-			formattedLine = append(formattedLine, []byte("\n")...)
 
 			FormatTestEndLine(line, &formattedLine, color)
 
@@ -286,8 +284,6 @@ func FormatTestLine(
 
 func AddPrintLineSummary(print *[]byte, opts Opts, summary LineTypeSummary, value int) {
 	if len(*print) == 0 {
-		*print = append(*print, []byte("\n")...)
-
 		// manage header summary
 		*print = append(*print, ColorANSI(opts, opts.Summary.Header.Colors)...)
 		*print = append(*print, []byte(opts.Summary.Header.Title)...)
@@ -341,7 +337,6 @@ func PrintLineSummary(opts Opts, lineSummary LineSummary) []byte {
 		print = append(print, ColorANSI(opts, opts.Summary.Footer.Colors)...)
 		print = append(print, []byte(opts.Summary.Footer.Title)...)
 		print = append(print, ColorReset...)
-		print = append(print, []byte("\n")...)
 		print = append(print, []byte("\n")...)
 		return print
 	}

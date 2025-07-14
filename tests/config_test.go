@@ -133,7 +133,7 @@ func TestNewDefaultOpts(t *testing.T) {
 
 	t.Run("failed default title", func(t *testing.T) {
 		res := DefaultTestOpts.Failed.Title.Prefix
-		expected := "FAIL"
+		expected := "\nFAIL"
 		validateTestNewDefaultOptsString(t, res, expected)
 	})
 
@@ -157,7 +157,7 @@ func TestNewDefaultOpts(t *testing.T) {
 
 	t.Run("ok default title", func(t *testing.T) {
 		res := DefaultTestOpts.Ok.Title.Prefix
-		expected := "PASS"
+		expected := "\nPASS"
 		validateTestNewDefaultOptsString(t, res, expected)
 	})
 
