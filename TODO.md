@@ -1,4 +1,8 @@
 - aggrégation de log
+
+- ajouter des titres pour séparer chaque section? 
+---------- SUMMARY ---------
+
 - Rewrite ErrorThrown into something else ? Like Logs?
 
 - typotestcolor.Println et .Print pour avoir un print et type différent dans le rendu des tests
