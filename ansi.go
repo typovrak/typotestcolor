@@ -78,6 +78,7 @@ var ColorANSIBackground = map[ANSIBackground]int{
 	ANSIBackgroundWhite:  47,
 }
 
+// INFO: always use ColorReset before adding a line feed (\n)
 var ColorReset = []byte("\033[0m")
 
 type ANSIConfig struct {
