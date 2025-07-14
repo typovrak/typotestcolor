@@ -1,4 +1,5 @@
 - aggrégation de log
+- FIX: summary: afficher que FAILED ou OK
 
 - ajouter des titres pour séparer chaque section? 
 ---------- SUMMARY ---------
@@ -9,11 +10,33 @@
 (créer un nouveau type que errorThrown pour les logs de debbogage?)
 
 - tester avec des logs et toutes les fonctions fmt. aussi
-- test with multiple files for spacing RUN and PASS/FAIL title
+
+- ajouter une option pour mettre un retour à la ligne entre les RUN et PASS/FAIL/SKIP
+
+
+
+
+- fonction différenciel de string && buffer ?
+
+
+- asserts normalisé ?
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------
+- mettre Debug() dans chaque nouvelle fonction....
 
 - rewrite comments in code
 - readme
 - do all community standards
 
-- fonction différenciel de string && buffer ?
-- asserts normalisé ?

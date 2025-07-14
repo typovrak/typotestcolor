@@ -33,12 +33,22 @@ func HandleLineType(
 	*line = bytes.Replace(*line, defaultTitleType, []byte(lineType.Title.Prefix), 1)
 }
 
+func HandleAggregationCount(aggregationCount AggregationCount, aggregationType AggregationType) {
+	if aggregationCount.Type != aggregationType {
+		aggregationCount.Type = aggregationType
+		aggregationCount.Value = 0
+	}
+
+	aggregationCount.Value++
+}
+
 func FormatTestLine(
 	opts Opts,
 	line []byte,
 	errorBefore *bool,
 	stdout io.Writer,
 	lineSummary *LineSummary,
+	aggregationCount AggregationCount,
 ) []byte {
 	var formattedLine []byte
 
@@ -55,6 +65,8 @@ func FormatTestLine(
 				return []byte("")
 			}
 
+			HandleAggregationCount(aggregationCount, AggregationTypeRun)
+
 			if !opts.Run.Summary.Hide {
 				lineSummary.Run++
 			}
@@ -66,6 +78,8 @@ func FormatTestLine(
 			if opts.Fail.Title.Hide {
 				return []byte("")
 			}
+
+			HandleAggregationCount(aggregationCount, AggregationTypeFail)
 
 			if !opts.Fail.Summary.Hide {
 				lineSummary.Fail++
@@ -79,6 +93,8 @@ func FormatTestLine(
 				return []byte("")
 			}
 
+			HandleAggregationCount(aggregationCount, AggregationTypePass)
+
 			if !opts.Pass.Summary.Hide {
 				lineSummary.Pass++
 			}
@@ -91,6 +107,8 @@ func FormatTestLine(
 				return []byte("")
 			}
 
+			HandleAggregationCount(aggregationCount, AggregationTypeSkip)
+
 			if !opts.Skip.Summary.Hide {
 				lineSummary.Skip++
 			}
@@ -102,6 +120,10 @@ func FormatTestLine(
 			if opts.Failed.Title.Hide {
 				return []byte("")
 			}
+
+			// INFO: no aggregation for this line type
+			aggregationCount.Type = AggregationTypeNone
+			aggregationCount.Value = 0
 
 			if !opts.Failed.Summary.Hide {
 				lineSummary.Failed++
@@ -116,6 +138,10 @@ func FormatTestLine(
 				return []byte("")
 			}
 
+			// INFO: no aggregation for this line type
+			aggregationCount.Type = AggregationTypeNone
+			aggregationCount.Value = 0
+
 			if !opts.Ok.Summary.Hide {
 				lineSummary.Ok++
 			}
@@ -128,6 +154,10 @@ func FormatTestLine(
 			if opts.ErrorThrown.Title.Hide {
 				return []byte("")
 			}
+
+			// INFO: no aggregation for this line type
+			aggregationCount.Type = AggregationTypeNone
+			aggregationCount.Value = 0
 
 			if !opts.ErrorThrown.Summary.Hide {
 				lineSummary.ErrorThrown++

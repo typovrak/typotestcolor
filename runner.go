@@ -52,10 +52,14 @@ func RunTestColor(m *testing.M, opts Opts) int {
 		errorBefore := false
 		var lineSummary LineSummary
 
+		var aggregationCount AggregationCount
+		aggregationCount.Type = AggregationTypeNone
+		aggregationCount.Value = 0
+
 		for scanner.Scan() {
 			line := scanner.Bytes()
 
-			formattedLine := FormatTestLine(opts, line, &errorBefore, w, &lineSummary)
+			formattedLine := FormatTestLine(opts, line, &errorBefore, w, &lineSummary, aggregationCount)
 			fmt.Fprint(stdout, string(formattedLine))
 		}
 
