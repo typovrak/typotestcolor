@@ -72,7 +72,9 @@ func RunTestColor(m *testing.M, opts Opts) int {
 
 		if aggregationCount.Type != AggregationTypeNone {
 			var aggregationLines []byte
-			PrintAggregation(&aggregationCount, &aggregationLines)
+
+			optsTypeTitleAggregation := GetOptsTypeTitleAggregationFromAggregationCountType(opts, &aggregationCount)
+			PrintAggregation(optsTypeTitleAggregation, &aggregationCount, &aggregationLines)
 
 			if len(aggregationLines) > 0 {
 				fmt.Fprintf(stdout, string(aggregationLines))

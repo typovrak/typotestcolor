@@ -17,10 +17,10 @@ type LineType struct {
 }
 
 type LineTypeTitle struct {
-	Colors    ANSIConfig
-	Prefix    string
-	Hide      bool
-	Aggregate bool
+	Colors      ANSIConfig
+	Prefix      string
+	Hide        bool
+	Aggregation LineTypeTitleAggregation
 }
 
 type LineTypeSummary struct {
@@ -58,6 +58,14 @@ type AggregationCount = struct {
 	Lines [][]byte
 }
 
+type LineTypeTitleAggregation = struct {
+	Activate  bool
+	Colors    ANSIConfig
+	Prefix    string
+	Suffix    string
+	Threshold int
+}
+
 func NewDefaultOpts() Opts {
 	return Opts{
 		Run: LineType{
@@ -67,9 +75,19 @@ func NewDefaultOpts() Opts {
 					Foreground: ColorANSIForeground[ANSIForegroundCyan],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
-				Prefix:    "\t=== RUN:",
-				Hide:      false,
-				Aggregate: true,
+				Prefix: "\t=== RUN:",
+				Hide:   false,
+				Aggregation: LineTypeTitleAggregation{
+					Activate: true,
+					Colors: ANSIConfig{
+						Style:      ColorANSISTyle[ANSIStyleBold],
+						Foreground: ColorANSIForeground[ANSIForegroundCyan],
+						Background: ColorANSIBackground[ANSIBackgroundNone],
+					},
+					Prefix:    "\t[",
+					Suffix:    "]",
+					Threshold: 4,
+				},
 			},
 			Summary: LineTypeSummary{
 				Colors: ANSIConfig{
@@ -88,9 +106,19 @@ func NewDefaultOpts() Opts {
 					Foreground: ColorANSIForeground[ANSIForegroundRed],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
-				Prefix:    "\t--- FAIL:",
-				Hide:      false,
-				Aggregate: true,
+				Prefix: "\t--- FAIL:",
+				Hide:   false,
+				Aggregation: LineTypeTitleAggregation{
+					Activate: true,
+					Colors: ANSIConfig{
+						Style:      ColorANSISTyle[ANSIStyleNormal],
+						Foreground: ColorANSIForeground[ANSIForegroundRed],
+						Background: ColorANSIBackground[ANSIBackgroundNone],
+					},
+					Prefix:    "\t[",
+					Suffix:    "]",
+					Threshold: 4,
+				},
 			},
 			Summary: LineTypeSummary{
 				Colors: ANSIConfig{
@@ -109,9 +137,19 @@ func NewDefaultOpts() Opts {
 					Foreground: ColorANSIForeground[ANSIForegroundGreen],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
-				Prefix:    "\t--- PASS:",
-				Hide:      false,
-				Aggregate: true,
+				Prefix: "\t--- PASS:",
+				Hide:   false,
+				Aggregation: LineTypeTitleAggregation{
+					Activate: true,
+					Colors: ANSIConfig{
+						Style:      ColorANSISTyle[ANSIStyleNormal],
+						Foreground: ColorANSIForeground[ANSIForegroundGreen],
+						Background: ColorANSIBackground[ANSIBackgroundNone],
+					},
+					Prefix:    "\t[",
+					Suffix:    "]",
+					Threshold: 4,
+				},
 			},
 			Summary: LineTypeSummary{
 				Colors: ANSIConfig{
@@ -130,9 +168,19 @@ func NewDefaultOpts() Opts {
 					Foreground: ColorANSIForeground[ANSIForegroundYellow],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
-				Prefix:    "\t--- SKIP:",
-				Hide:      false,
-				Aggregate: true,
+				Prefix: "\t--- SKIP:",
+				Hide:   false,
+				Aggregation: LineTypeTitleAggregation{
+					Activate: true,
+					Colors: ANSIConfig{
+						Style:      ColorANSISTyle[ANSIStyleNormal],
+						Foreground: ColorANSIForeground[ANSIForegroundYellow],
+						Background: ColorANSIBackground[ANSIBackgroundNone],
+					},
+					Prefix:    "\t[",
+					Suffix:    "]",
+					Threshold: 4,
+				},
 			},
 			Summary: LineTypeSummary{
 				Colors: ANSIConfig{
@@ -151,9 +199,19 @@ func NewDefaultOpts() Opts {
 					Foreground: ColorANSIForeground[ANSIForegroundBlack],
 					Background: ColorANSIBackground[ANSIBackgroundRed],
 				},
-				Prefix:    "FAIL",
-				Hide:      false,
-				Aggregate: false,
+				Prefix: "FAIL",
+				Hide:   false,
+				Aggregation: LineTypeTitleAggregation{
+					Activate: false,
+					Colors: ANSIConfig{
+						Style:      ColorANSISTyle[ANSIStyleBold],
+						Foreground: ColorANSIForeground[ANSIForegroundBlack],
+						Background: ColorANSIBackground[ANSIBackgroundRed],
+					},
+					Prefix:    "\t[",
+					Suffix:    "]",
+					Threshold: 0,
+				},
 			},
 			Summary: LineTypeSummary{
 				Colors: ANSIConfig{
@@ -172,9 +230,19 @@ func NewDefaultOpts() Opts {
 					Foreground: ColorANSIForeground[ANSIForegroundBlack],
 					Background: ColorANSIBackground[ANSIBackgroundGreen],
 				},
-				Prefix:    "PASS",
-				Hide:      false,
-				Aggregate: false,
+				Prefix: "PASS",
+				Hide:   false,
+				Aggregation: LineTypeTitleAggregation{
+					Activate: false,
+					Colors: ANSIConfig{
+						Style:      ColorANSISTyle[ANSIStyleBold],
+						Foreground: ColorANSIForeground[ANSIForegroundBlack],
+						Background: ColorANSIBackground[ANSIBackgroundGreen],
+					},
+					Prefix:    "\t[",
+					Suffix:    "]",
+					Threshold: 0,
+				},
 			},
 			Summary: LineTypeSummary{
 				Colors: ANSIConfig{
@@ -194,9 +262,19 @@ func NewDefaultOpts() Opts {
 					Foreground: ColorANSIForeground[ANSIForegroundWhite],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
-				Prefix:    "",
-				Hide:      false,
-				Aggregate: false,
+				Prefix: "",
+				Hide:   false,
+				Aggregation: LineTypeTitleAggregation{
+					Activate: false,
+					Colors: ANSIConfig{
+						Style:      ColorANSISTyle[ANSIStyleNormal],
+						Foreground: ColorANSIForeground[ANSIForegroundWhite],
+						Background: ColorANSIBackground[ANSIBackgroundNone],
+					},
+					Prefix:    "\t[",
+					Suffix:    "]",
+					Threshold: 0,
+				},
 			},
 			Summary: LineTypeSummary{
 				Colors: ANSIConfig{
