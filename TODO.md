@@ -25,9 +25,6 @@ typotestcolor.Println et .Print pour avoir un print et type différent dans le r
 -------
 EASY:
 
-- faire en sorte que les préfix n'ajoutent pas d'espace non enlevable
-- ajouter des prefix partout !
-
 
 - faire en sorte que les datas apres le suffix puissent être aligner?
 
