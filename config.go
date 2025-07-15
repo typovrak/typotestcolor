@@ -1,5 +1,18 @@
 package typotestcolor
 
+type LineTypeEnum int
+
+const (
+	LineTypeEnumNone LineTypeEnum = iota
+	LineTypeEnumRun
+	LineTypeEnumFail
+	LineTypeEnumPass
+	LineTypeEnumSkip
+	LineTypeEnumFailed
+	LineTypeEnumOk
+	LineTypeEnumErrorThrown
+)
+
 type Opts struct {
 	Run         LineType
 	Fail        LineType
@@ -263,6 +276,7 @@ func NewDefaultOpts() Opts {
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
 			},
+			AlignResults: true,
 		},
 	}
 }

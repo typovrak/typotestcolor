@@ -53,7 +53,7 @@ func RunTestColor(m *testing.M, opts Opts) int {
 		var lineSummary LineSummary
 
 		var aggregationCount AggregationCount
-		aggregationCount.Type = AggregationTypeNone
+		aggregationCount.Type = LineTypeEnumNone
 		aggregationCount.Value = 0
 
 		for scanner.Scan() {
@@ -70,7 +70,7 @@ func RunTestColor(m *testing.M, opts Opts) int {
 			}
 		}
 
-		if aggregationCount.Type != AggregationTypeNone {
+		if aggregationCount.Type != LineTypeEnumNone {
 			var aggregationLines []byte
 
 			optsTypeTitleAggregation := GetOptsTypeTitleAggregationFromAggregationCountType(opts, &aggregationCount)
