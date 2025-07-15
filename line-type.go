@@ -88,7 +88,7 @@ func FormatTestLine(
 
 			FormatTestEndLine(line, &formattedLine, color)
 
-			HandleAggregation(opts, opts.Run, aggregationCount, AggregationTypeRun, &aggregationLines, &formattedLine)
+			HandleAggregation(opts, opts.Run, aggregationCount, LineTypeEnumRun, &aggregationLines, &formattedLine)
 			return formattedLine, aggregationLines
 
 			// INFO: --- FAIL:
@@ -105,7 +105,7 @@ func FormatTestLine(
 
 			FormatTestEndLine(line, &formattedLine, color)
 
-			HandleAggregation(opts, opts.Fail, aggregationCount, AggregationTypeFail, &aggregationLines, &formattedLine)
+			HandleAggregation(opts, opts.Fail, aggregationCount, LineTypeEnumFail, &aggregationLines, &formattedLine)
 			return formattedLine, aggregationLines
 
 			// INFO: --- PASS:
@@ -122,7 +122,7 @@ func FormatTestLine(
 
 			FormatTestEndLine(line, &formattedLine, color)
 
-			HandleAggregation(opts, opts.Pass, aggregationCount, AggregationTypePass, &aggregationLines, &formattedLine)
+			HandleAggregation(opts, opts.Pass, aggregationCount, LineTypeEnumPass, &aggregationLines, &formattedLine)
 			return formattedLine, aggregationLines
 
 			// INFO: --- SKIP:
@@ -139,7 +139,7 @@ func FormatTestLine(
 
 			FormatTestEndLine(line, &formattedLine, color)
 
-			HandleAggregation(opts, opts.Skip, aggregationCount, AggregationTypeSkip, &aggregationLines, &formattedLine)
+			HandleAggregation(opts, opts.Skip, aggregationCount, LineTypeEnumSkip, &aggregationLines, &formattedLine)
 			return formattedLine, aggregationLines
 
 			// INFO: FAIL
@@ -156,7 +156,7 @@ func FormatTestLine(
 
 			FormatTestEndLine(line, &formattedLine, color)
 
-			HandleAggregation(opts, opts.Failed, aggregationCount, AggregationTypeFailed, &aggregationLines, &formattedLine)
+			HandleAggregation(opts, opts.Failed, aggregationCount, LineTypeEnumFailed, &aggregationLines, &formattedLine)
 			return formattedLine, aggregationLines
 
 			// INFO: ok
@@ -173,7 +173,7 @@ func FormatTestLine(
 
 			FormatTestEndLine(line, &formattedLine, color)
 
-			HandleAggregation(opts, opts.Ok, aggregationCount, AggregationTypeOk, &aggregationLines, &formattedLine)
+			HandleAggregation(opts, opts.Ok, aggregationCount, LineTypeEnumOk, &aggregationLines, &formattedLine)
 			return formattedLine, aggregationLines
 
 			// INFO: error thrown
@@ -190,7 +190,7 @@ func FormatTestLine(
 
 			FormatTestEndLine(line, &formattedLine, color)
 
-			HandleAggregation(opts, opts.ErrorThrown, aggregationCount, AggregationTypeErrorThrown, &aggregationLines, &formattedLine)
+			HandleAggregation(opts, opts.ErrorThrown, aggregationCount, LineTypeEnumErrorThrown, &aggregationLines, &formattedLine)
 			return formattedLine, aggregationLines
 		}
 	}

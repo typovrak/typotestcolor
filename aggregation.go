@@ -5,21 +5,8 @@ import (
 	"strconv"
 )
 
-type AggregationType int
-
-const (
-	AggregationTypeNone AggregationType = iota
-	AggregationTypeRun
-	AggregationTypeFail
-	AggregationTypePass
-	AggregationTypeSkip
-	AggregationTypeFailed
-	AggregationTypeOk
-	AggregationTypeErrorThrown
-)
-
 type AggregationCount = struct {
-	Type  AggregationType
+	Type  LineTypeEnum
 	Value int
 	Lines [][]byte
 }
@@ -68,31 +55,31 @@ func PrintAggregation(opts Opts, optsTypeTitleAggregation LineTypeTitleAggregati
 func GetOptsTypeTitleAggregationFromAggregationCountType(opts Opts, aggregationCount *AggregationCount) LineTypeTitleAggregation {
 	switch aggregationCount.Type {
 	// run
-	case AggregationTypeRun:
+	case LineTypeEnumRun:
 		return opts.Run.Title.Aggregation
 
 	// fail
-	case AggregationTypeFail:
+	case LineTypeEnumFail:
 		return opts.Fail.Title.Aggregation
 
 	// pass
-	case AggregationTypePass:
+	case LineTypeEnumPass:
 		return opts.Pass.Title.Aggregation
 
 	// skip
-	case AggregationTypeSkip:
+	case LineTypeEnumSkip:
 		return opts.Skip.Title.Aggregation
 
 	// failed
-	case AggregationTypeFailed:
+	case LineTypeEnumFailed:
 		return opts.Failed.Title.Aggregation
 
 	// ok
-	case AggregationTypeOk:
+	case LineTypeEnumOk:
 		return opts.Ok.Title.Aggregation
 
 	// error thrown
-	case AggregationTypeErrorThrown:
+	case LineTypeEnumErrorThrown:
 		return opts.ErrorThrown.Title.Aggregation
 
 	default:
@@ -100,7 +87,7 @@ func GetOptsTypeTitleAggregationFromAggregationCountType(opts Opts, aggregationC
 	}
 }
 
-func HandleAggregation(opts Opts, lineType LineType, aggregationCount *AggregationCount, aggregationType AggregationType, aggregationLines *[]byte, formattedLine *[]byte) {
+func HandleAggregation(opts Opts, lineType LineType, aggregationCount *AggregationCount, aggregationType LineTypeEnum, aggregationLines *[]byte, formattedLine *[]byte) {
 	if aggregationCount.Type != aggregationType {
 		optsTypeTitleAggregation := GetOptsTypeTitleAggregationFromAggregationCountType(opts, aggregationCount)
 		PrintAggregation(opts, optsTypeTitleAggregation, aggregationCount, aggregationLines)
@@ -121,8 +108,8 @@ func HandleAggregation(opts Opts, lineType LineType, aggregationCount *Aggregati
 	}
 
 	// no aggregation
-	if aggregationCount.Type != AggregationTypeNone {
-		aggregationCount.Type = AggregationTypeNone
+	if aggregationCount.Type != LineTypeEnumNone {
+		aggregationCount.Type = LineTypeEnumNone
 		aggregationCount.Value = 0
 		aggregationCount.Lines = [][]byte{}
 	}

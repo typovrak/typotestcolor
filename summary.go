@@ -20,8 +20,9 @@ type LineSummary = struct {
 }
 
 type SummaryConfig = struct {
-	Header SummaryConfigTitle
-	Footer SummaryConfigTitle
+	Header       SummaryConfigTitle
+	Footer       SummaryConfigTitle
+	AlignResults bool
 }
 
 type SummaryConfigTitle = struct {
@@ -49,7 +50,15 @@ func AddPrintLineSummary(print *[]byte, opts Opts, summary LineTypeSummary, valu
 	*print = append(*print, []byte("\n")...)
 }
 
+type SummaryData = struct {
+	Type   int
+	Prefix string
+	Value  int
+	Suffix string
+}
+
 func PrintLineSummary(opts Opts, lineSummary LineSummary) []byte {
+	//	var data SummaryData
 	var print []byte
 
 	if !opts.Run.Summary.Hide {
