@@ -421,6 +421,7 @@ func NewDefaultOpts() Opts {
 				Hide: false,
 			},
 			AlignResults: true,
+			Hide:         false,
 		},
 	}
 }

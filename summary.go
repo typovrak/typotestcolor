@@ -23,6 +23,7 @@ type SummaryConfig = struct {
 	Header       SummaryConfigTitle
 	Footer       SummaryConfigTitle
 	AlignResults bool
+	Hide         bool
 }
 
 type SummaryConfigTitle = struct {
@@ -83,6 +84,10 @@ type SummaryData = struct {
 }
 
 func PrintLineSummary(opts Opts, lineSummary LineSummary) []byte {
+	if opts.Summary.Hide {
+		return nil
+	}
+
 	var data []SummaryData
 	maxPrefixLen := 0
 
@@ -112,6 +117,10 @@ func PrintLineSummary(opts Opts, lineSummary LineSummary) []byte {
 
 	if !opts.ErrorThrown.Summary.Hide {
 		AddSummaryData(opts, &data, &maxPrefixLen, LineTypeEnumErrorThrown, opts.ErrorThrown.Summary, lineSummary.ErrorThrown)
+	}
+
+	if len(data) == 0 {
+		return nil
 	}
 
 	// build summary

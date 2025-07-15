@@ -23,8 +23,6 @@ typotestcolor.Println et .Print pour avoir un print et type différent dans le r
 
 -------
 EASY:
-- mettre un param pour hide tout le summary et mettre en sorte que summary si 0 ligne (tous hide) pas affiché
-
 - mettre en place un paramètre pour séparer tout par un retour à la ligne?
 
 
