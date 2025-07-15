@@ -61,20 +61,20 @@ func NewDefaultOpts() Opts {
 			},
 			Section: LineTypeSection{
 				Header: LineTypeSectionTitle{
-					Title: "--- HEADER RUN ---",
+					Title: "\t RUN section start ",
 					Colors: ANSIConfig{
 						Style:      ColorANSISTyle[ANSIStyleBold],
-						Foreground: ColorANSIForeground[ANSIForegroundCyan],
-						Background: ColorANSIBackground[ANSIBackgroundNone],
+						Foreground: ColorANSIForeground[ANSIForegroundBlack],
+						Background: ColorANSIBackground[ANSIBackgroundCyan],
 					},
 					Hide: false,
 				},
 				Footer: LineTypeSectionTitle{
-					Title: "--- FOOTER RUN ---",
+					Title: "\t RUN section end ",
 					Colors: ANSIConfig{
 						Style:      ColorANSISTyle[ANSIStyleBold],
-						Foreground: ColorANSIForeground[ANSIForegroundCyan],
-						Background: ColorANSIBackground[ANSIBackgroundNone],
+						Foreground: ColorANSIForeground[ANSIForegroundBlack],
+						Background: ColorANSIBackground[ANSIBackgroundCyan],
 					},
 					Hide: false,
 				},
@@ -114,20 +114,20 @@ func NewDefaultOpts() Opts {
 			},
 			Section: LineTypeSection{
 				Header: LineTypeSectionTitle{
-					Title: "--- HEADER FAIL ---",
+					Title: "\t FAIL section start ",
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleNormal],
-						Foreground: ColorANSIForeground[ANSIForegroundRed],
-						Background: ColorANSIBackground[ANSIBackgroundNone],
+						Style:      ColorANSISTyle[ANSIStyleBold],
+						Foreground: ColorANSIForeground[ANSIForegroundBlack],
+						Background: ColorANSIBackground[ANSIBackgroundRed],
 					},
 					Hide: false,
 				},
 				Footer: LineTypeSectionTitle{
-					Title: "--- FOOTER FAIL ---",
+					Title: "\t FAIL section end ",
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleNormal],
-						Foreground: ColorANSIForeground[ANSIForegroundRed],
-						Background: ColorANSIBackground[ANSIBackgroundNone],
+						Style:      ColorANSISTyle[ANSIStyleBold],
+						Foreground: ColorANSIForeground[ANSIForegroundBlack],
+						Background: ColorANSIBackground[ANSIBackgroundRed],
 					},
 					Hide: false,
 				},
@@ -167,20 +167,20 @@ func NewDefaultOpts() Opts {
 			},
 			Section: LineTypeSection{
 				Header: LineTypeSectionTitle{
-					Title: "--- HEADER PASS ---",
+					Title: "\t PASS section start ",
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleNormal],
-						Foreground: ColorANSIForeground[ANSIForegroundGreen],
-						Background: ColorANSIBackground[ANSIBackgroundNone],
+						Style:      ColorANSISTyle[ANSIStyleBold],
+						Foreground: ColorANSIForeground[ANSIForegroundBlack],
+						Background: ColorANSIBackground[ANSIBackgroundGreen],
 					},
 					Hide: false,
 				},
 				Footer: LineTypeSectionTitle{
-					Title: "--- FOOTER PASS ---",
+					Title: "\t PASS section end ",
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleNormal],
-						Foreground: ColorANSIForeground[ANSIForegroundGreen],
-						Background: ColorANSIBackground[ANSIBackgroundNone],
+						Style:      ColorANSISTyle[ANSIStyleBold],
+						Foreground: ColorANSIForeground[ANSIForegroundBlack],
+						Background: ColorANSIBackground[ANSIBackgroundGreen],
 					},
 					Hide: false,
 				},
@@ -220,20 +220,20 @@ func NewDefaultOpts() Opts {
 			},
 			Section: LineTypeSection{
 				Header: LineTypeSectionTitle{
-					Title: "--- HEADER SKIP ---",
+					Title: "\t SKIP section start ",
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleNormal],
-						Foreground: ColorANSIForeground[ANSIForegroundYellow],
-						Background: ColorANSIBackground[ANSIBackgroundNone],
+						Style:      ColorANSISTyle[ANSIStyleBold],
+						Foreground: ColorANSIForeground[ANSIForegroundBlack],
+						Background: ColorANSIBackground[ANSIBackgroundYellow],
 					},
 					Hide: false,
 				},
 				Footer: LineTypeSectionTitle{
-					Title: "--- FOOTER SKIP ---",
+					Title: "\t SKIP section end ",
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleNormal],
-						Foreground: ColorANSIForeground[ANSIForegroundYellow],
-						Background: ColorANSIBackground[ANSIBackgroundNone],
+						Style:      ColorANSISTyle[ANSIStyleBold],
+						Foreground: ColorANSIForeground[ANSIForegroundBlack],
+						Background: ColorANSIBackground[ANSIBackgroundYellow],
 					},
 					Hide: false,
 				},
@@ -273,7 +273,7 @@ func NewDefaultOpts() Opts {
 			},
 			Section: LineTypeSection{
 				Header: LineTypeSectionTitle{
-					Title: "--- HEADER FAILED ---",
+					Title: "\t FAILED section start ",
 					Colors: ANSIConfig{
 						Style:      ColorANSISTyle[ANSIStyleBold],
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
@@ -282,7 +282,7 @@ func NewDefaultOpts() Opts {
 					Hide: false,
 				},
 				Footer: LineTypeSectionTitle{
-					Title: "--- FOOTER FAILED ---",
+					Title: "\t FAILED section end ",
 					Colors: ANSIConfig{
 						Style:      ColorANSISTyle[ANSIStyleBold],
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
@@ -326,7 +326,7 @@ func NewDefaultOpts() Opts {
 			},
 			Section: LineTypeSection{
 				Header: LineTypeSectionTitle{
-					Title: "--- HEADER OK ---",
+					Title: "\t OK section start ",
 					Colors: ANSIConfig{
 						Style:      ColorANSISTyle[ANSIStyleBold],
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
@@ -335,7 +335,7 @@ func NewDefaultOpts() Opts {
 					Hide: false,
 				},
 				Footer: LineTypeSectionTitle{
-					Title: "--- FOOTER OK ---",
+					Title: "\t OK section end ",
 					Colors: ANSIConfig{
 						Style:      ColorANSISTyle[ANSIStyleBold],
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
@@ -379,20 +379,20 @@ func NewDefaultOpts() Opts {
 			},
 			Section: LineTypeSection{
 				Header: LineTypeSectionTitle{
-					Title: "--- HEADER ERROR THROWN ---",
+					Title: "\t ERROR THROWN section start ",
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleNormal],
-						Foreground: ColorANSIForeground[ANSIForegroundWhite],
-						Background: ColorANSIBackground[ANSIBackgroundNone],
+						Style:      ColorANSISTyle[ANSIStyleBold],
+						Foreground: ColorANSIForeground[ANSIForegroundBlack],
+						Background: ColorANSIBackground[ANSIBackgroundWhite],
 					},
 					Hide: false,
 				},
 				Footer: LineTypeSectionTitle{
-					Title: "--- FOOTER ERROR THROWN ---",
+					Title: "\t ERROR THROWN section end ",
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleNormal],
-						Foreground: ColorANSIForeground[ANSIForegroundWhite],
-						Background: ColorANSIBackground[ANSIBackgroundNone],
+						Style:      ColorANSISTyle[ANSIStyleBold],
+						Foreground: ColorANSIForeground[ANSIForegroundBlack],
+						Background: ColorANSIBackground[ANSIBackgroundWhite],
 					},
 					Hide: false,
 				},
