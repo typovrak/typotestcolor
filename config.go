@@ -30,7 +30,7 @@ func NewDefaultOpts() Opts {
 		Run: LineType{
 			Title: LineTypeTitle{
 				Colors: ANSIConfig{
-					Style:      ColorANSISTyle[ANSIStyleBold],
+					Style:      ColorANSISTyle[ANSIStyleNormal],
 					Foreground: ColorANSIForeground[ANSIForegroundCyan],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
@@ -246,7 +246,7 @@ func NewDefaultOpts() Opts {
 					Foreground: ColorANSIForeground[ANSIForegroundBlack],
 					Background: ColorANSIBackground[ANSIBackgroundRed],
 				},
-				Prefix: "\nFAIL",
+				Prefix: "\n\n Tests result: FAIL\n",
 				Suffix: "",
 				Hide:   false,
 				Aggregation: LineTypeTitleAggregation{
@@ -279,8 +279,9 @@ func NewDefaultOpts() Opts {
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundRed],
 					},
-					Hide: false,
+					Hide: true,
 				},
+				// INFO: can't be displayed (and useless)
 				Footer: LineTypeSectionTitle{
 					Title: "\t FAILED section end ",
 					Colors: ANSIConfig{
@@ -288,7 +289,7 @@ func NewDefaultOpts() Opts {
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundRed],
 					},
-					Hide: false,
+					Hide: true,
 				},
 			},
 		},
@@ -299,7 +300,7 @@ func NewDefaultOpts() Opts {
 					Foreground: ColorANSIForeground[ANSIForegroundBlack],
 					Background: ColorANSIBackground[ANSIBackgroundGreen],
 				},
-				Prefix: "\nPASS",
+				Prefix: "\n\n Tests result: PASS\n",
 				Suffix: "",
 				Hide:   false,
 				Aggregation: LineTypeTitleAggregation{
@@ -332,8 +333,9 @@ func NewDefaultOpts() Opts {
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundGreen],
 					},
-					Hide: false,
+					Hide: true,
 				},
+				// INFO: can't be displayed (and useless)
 				Footer: LineTypeSectionTitle{
 					Title: "\t OK section end ",
 					Colors: ANSIConfig{
@@ -341,7 +343,7 @@ func NewDefaultOpts() Opts {
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundGreen],
 					},
-					Hide: false,
+					Hide: true,
 				},
 			},
 		},
@@ -401,20 +403,22 @@ func NewDefaultOpts() Opts {
 		Debug: false,
 		Summary: SummaryConfig{
 			Header: SummaryConfigTitle{
-				Title: "\n-----> TESTS SUMMARY <-----",
+				Title: " TESTS SUMMARY ",
 				Colors: ANSIConfig{
 					Style:      ColorANSISTyle[ANSIStyleBold],
-					Foreground: ColorANSIForeground[ANSIForegroundPurple],
-					Background: ColorANSIBackground[ANSIBackgroundNone],
+					Foreground: ColorANSIForeground[ANSIForegroundBlack],
+					Background: ColorANSIBackground[ANSIBackgroundPurple],
 				},
+				Hide: false,
 			},
 			Footer: SummaryConfigTitle{
-				Title: "-----> Made with <3 by Typovrak <-----\n",
+				Title: "\n Made with <3 by Typovrak ",
 				Colors: ANSIConfig{
 					Style:      ColorANSISTyle[ANSIStyleBold],
-					Foreground: ColorANSIForeground[ANSIForegroundPurple],
-					Background: ColorANSIBackground[ANSIBackgroundNone],
+					Foreground: ColorANSIForeground[ANSIForegroundBlack],
+					Background: ColorANSIBackground[ANSIBackgroundBlue],
 				},
+				Hide: false,
 			},
 			AlignResults: true,
 		},
