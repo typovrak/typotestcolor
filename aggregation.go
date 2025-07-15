@@ -35,7 +35,7 @@ func PrintAggregation(opts Opts, optsTypeTitleAggregation LineTypeTitleAggregati
 
 		// aggregation suffix
 		*aggregationLines = append(*aggregationLines, []byte(optsTypeTitleAggregation.Suffix)...)
-		*aggregationLines = append(*aggregationLines, []byte("\n")...)
+		*aggregationLines = append(*aggregationLines, '\n')
 
 		// reset aggregation color
 		*aggregationLines = append(*aggregationLines, ColorReset...)

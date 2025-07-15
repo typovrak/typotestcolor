@@ -8,6 +8,7 @@ import (
 type LineType struct {
 	Title   LineTypeTitle
 	Summary LineTypeSummary
+	Section LineTypeSection
 }
 
 type LineTypeTitle struct {
@@ -18,14 +19,23 @@ type LineTypeTitle struct {
 	Aggregation LineTypeTitleAggregation
 }
 
-func AddLineFeedBetweenErrorThrown(opts Opts, w io.Writer, errorBefore *bool, isError bool) {
+type LineTypeSection struct {
+	Header LineTypeSectionTitle
+	Footer LineTypeSectionTitle
+}
+
+type LineTypeSectionTitle struct {
+	Title  string
+	Colors ANSIConfig
+	Hide   bool
+}
+
+func AddLineFeedBetweenErrorThrown(opts Opts, w io.Writer, lineTypeBefore *LineTypeEnum, isError bool) {
 	Debug(opts, "AddLineFeedBetweenErrorThrown")
 
-	if (!isError && *errorBefore) || (isError && !*errorBefore) {
+	if (!isError && *lineTypeBefore == LineTypeEnumErrorThrown) || (isError && *lineTypeBefore != LineTypeEnumErrorThrown) {
 		w.Write([]byte("\n"))
 	}
-
-	*errorBefore = isError
 }
 
 func HandleLineType(
@@ -35,13 +45,13 @@ func HandleLineType(
 	defaultTitleType []byte,
 	color *[]byte,
 	w io.Writer,
-	errorBefore *bool,
+	lineTypeBefore *LineTypeEnum,
 	isError bool,
 ) {
 	Debug(opts, "HandleLineType")
 
 	*color = ColorANSI(opts, lineType.Title.Colors)
-	AddLineFeedBetweenErrorThrown(opts, w, errorBefore, isError)
+	AddLineFeedBetweenErrorThrown(opts, w, lineTypeBefore, isError)
 	*line = bytes.Replace(*line, defaultTitleType, []byte(lineType.Title.Prefix), 1)
 	*line = append(*line, []byte(lineType.Title.Suffix)...)
 }
@@ -53,13 +63,71 @@ func FormatTestEndLine(line []byte, formattedLine *[]byte, color []byte) {
 
 	*formattedLine = append(*formattedLine, line...)
 	*formattedLine = append(*formattedLine, ColorReset...)
-	*formattedLine = append(*formattedLine, []byte("\n")...)
+	*formattedLine = append(*formattedLine, '\n')
+}
+
+func HandleSectionHeader(opts Opts, lineType LineType, formattedLine *[]byte, lineTypeBefore *LineTypeEnum, lineTypeCurrent LineTypeEnum) {
+	if lineType.Section.Header.Hide ||
+		*lineTypeBefore == lineTypeCurrent {
+		return
+	}
+
+	*formattedLine = append(*formattedLine, ColorANSI(opts, lineType.Section.Header.Colors)...)
+	*formattedLine = append(*formattedLine, []byte(lineType.Section.Header.Title)...)
+	*formattedLine = append(*formattedLine, ColorReset...)
+	*formattedLine = append(*formattedLine, '\n')
+}
+
+func HandleSectionFooter(opts Opts, formattedLine *[]byte, lineTypeBefore *LineTypeEnum, lineTypeCurrent LineTypeEnum) {
+	var previousLineType LineType
+
+	switch *lineTypeBefore {
+	// run
+	case LineTypeEnumRun:
+		previousLineType = opts.Run
+
+		// fail
+	case LineTypeEnumFail:
+		previousLineType = opts.Fail
+
+		// pass
+	case LineTypeEnumPass:
+		previousLineType = opts.Pass
+
+		// skip
+	case LineTypeEnumSkip:
+		previousLineType = opts.Skip
+
+		// failed
+	case LineTypeEnumFailed:
+		previousLineType = opts.Failed
+
+		// ok
+	case LineTypeEnumOk:
+		previousLineType = opts.Ok
+
+		// error thrown
+	case LineTypeEnumErrorThrown:
+		previousLineType = opts.ErrorThrown
+
+	}
+
+	if previousLineType.Section.Footer.Hide ||
+		*lineTypeBefore == LineTypeEnumNone ||
+		*lineTypeBefore == lineTypeCurrent {
+		return
+	}
+
+	*formattedLine = append(*formattedLine, ColorANSI(opts, previousLineType.Section.Footer.Colors)...)
+	*formattedLine = append(*formattedLine, []byte(previousLineType.Section.Footer.Title)...)
+	*formattedLine = append(*formattedLine, ColorReset...)
+	*formattedLine = append(*formattedLine, '\n')
 }
 
 func FormatTestLine(
 	opts Opts,
 	line []byte,
-	errorBefore *bool,
+	lineTypeBefore *LineTypeEnum,
 	stdout io.Writer,
 	lineSummary *LineSummary,
 	aggregationCount *AggregationCount,
@@ -84,12 +152,14 @@ func FormatTestLine(
 				lineSummary.Run++
 			}
 
-			HandleLineType(opts, &line, opts.Run, DefaultTitle.Run, &color, stdout, errorBefore, false)
+			HandleSectionFooter(opts, &formattedLine, lineTypeBefore, LineTypeEnumRun)
+			HandleSectionHeader(opts, opts.Run, &formattedLine, lineTypeBefore, LineTypeEnumRun)
 
+			HandleLineType(opts, &line, opts.Run, DefaultTitle.Run, &color, stdout, lineTypeBefore, false)
 			FormatTestEndLine(line, &formattedLine, color)
-
 			HandleAggregation(opts, opts.Run, aggregationCount, LineTypeEnumRun, &aggregationLines, &formattedLine)
-			return formattedLine, aggregationLines
+
+			*lineTypeBefore = LineTypeEnumRun
 
 			// INFO: --- FAIL:
 		} else if bytes.Contains(line, DefaultTitle.Fail) {
@@ -101,12 +171,14 @@ func FormatTestLine(
 				lineSummary.Fail++
 			}
 
-			HandleLineType(opts, &line, opts.Fail, DefaultTitle.Fail, &color, stdout, errorBefore, false)
+			HandleSectionFooter(opts, &formattedLine, lineTypeBefore, LineTypeEnumFail)
+			HandleSectionHeader(opts, opts.Fail, &formattedLine, lineTypeBefore, LineTypeEnumFail)
 
+			HandleLineType(opts, &line, opts.Fail, DefaultTitle.Fail, &color, stdout, lineTypeBefore, false)
 			FormatTestEndLine(line, &formattedLine, color)
-
 			HandleAggregation(opts, opts.Fail, aggregationCount, LineTypeEnumFail, &aggregationLines, &formattedLine)
-			return formattedLine, aggregationLines
+
+			*lineTypeBefore = LineTypeEnumFail
 
 			// INFO: --- PASS:
 		} else if bytes.Contains(line, DefaultTitle.Pass) {
@@ -118,12 +190,14 @@ func FormatTestLine(
 				lineSummary.Pass++
 			}
 
-			HandleLineType(opts, &line, opts.Pass, DefaultTitle.Pass, &color, stdout, errorBefore, false)
+			HandleSectionFooter(opts, &formattedLine, lineTypeBefore, LineTypeEnumPass)
+			HandleSectionHeader(opts, opts.Pass, &formattedLine, lineTypeBefore, LineTypeEnumPass)
 
+			HandleLineType(opts, &line, opts.Pass, DefaultTitle.Pass, &color, stdout, lineTypeBefore, false)
 			FormatTestEndLine(line, &formattedLine, color)
-
 			HandleAggregation(opts, opts.Pass, aggregationCount, LineTypeEnumPass, &aggregationLines, &formattedLine)
-			return formattedLine, aggregationLines
+
+			*lineTypeBefore = LineTypeEnumPass
 
 			// INFO: --- SKIP:
 		} else if bytes.Contains(line, DefaultTitle.Skip) {
@@ -135,12 +209,14 @@ func FormatTestLine(
 				lineSummary.Skip++
 			}
 
-			HandleLineType(opts, &line, opts.Skip, DefaultTitle.Skip, &color, stdout, errorBefore, false)
+			HandleSectionFooter(opts, &formattedLine, lineTypeBefore, LineTypeEnumSkip)
+			HandleSectionHeader(opts, opts.Skip, &formattedLine, lineTypeBefore, LineTypeEnumSkip)
 
+			HandleLineType(opts, &line, opts.Skip, DefaultTitle.Skip, &color, stdout, lineTypeBefore, false)
 			FormatTestEndLine(line, &formattedLine, color)
-
 			HandleAggregation(opts, opts.Skip, aggregationCount, LineTypeEnumSkip, &aggregationLines, &formattedLine)
-			return formattedLine, aggregationLines
+
+			*lineTypeBefore = LineTypeEnumSkip
 
 			// INFO: FAIL
 		} else if bytes.Equal(line, DefaultTitle.Failed) {
@@ -152,12 +228,14 @@ func FormatTestLine(
 				lineSummary.Failed++
 			}
 
-			HandleLineType(opts, &line, opts.Failed, DefaultTitle.Failed, &color, stdout, errorBefore, false)
+			HandleSectionFooter(opts, &formattedLine, lineTypeBefore, LineTypeEnumFailed)
+			HandleSectionHeader(opts, opts.Failed, &formattedLine, lineTypeBefore, LineTypeEnumFailed)
 
+			HandleLineType(opts, &line, opts.Failed, DefaultTitle.Failed, &color, stdout, lineTypeBefore, false)
 			FormatTestEndLine(line, &formattedLine, color)
-
 			HandleAggregation(opts, opts.Failed, aggregationCount, LineTypeEnumFailed, &aggregationLines, &formattedLine)
-			return formattedLine, aggregationLines
+
+			*lineTypeBefore = LineTypeEnumFailed
 
 			// INFO: ok
 		} else if bytes.Equal(line, DefaultTitle.Ok) {
@@ -169,12 +247,14 @@ func FormatTestLine(
 				lineSummary.Ok++
 			}
 
-			HandleLineType(opts, &line, opts.Ok, DefaultTitle.Ok, &color, stdout, errorBefore, false)
+			HandleSectionFooter(opts, &formattedLine, lineTypeBefore, LineTypeEnumOk)
+			HandleSectionHeader(opts, opts.Ok, &formattedLine, lineTypeBefore, LineTypeEnumOk)
 
+			HandleLineType(opts, &line, opts.Ok, DefaultTitle.Ok, &color, stdout, lineTypeBefore, false)
 			FormatTestEndLine(line, &formattedLine, color)
-
 			HandleAggregation(opts, opts.Ok, aggregationCount, LineTypeEnumOk, &aggregationLines, &formattedLine)
-			return formattedLine, aggregationLines
+
+			*lineTypeBefore = LineTypeEnumOk
 
 			// INFO: error thrown
 		} else {
@@ -186,14 +266,16 @@ func FormatTestLine(
 				lineSummary.ErrorThrown++
 			}
 
-			HandleLineType(opts, &line, opts.ErrorThrown, DefaultTitle.ErrorThrown, &color, stdout, errorBefore, true)
+			HandleSectionFooter(opts, &formattedLine, lineTypeBefore, LineTypeEnumErrorThrown)
+			HandleSectionHeader(opts, opts.ErrorThrown, &formattedLine, lineTypeBefore, LineTypeEnumErrorThrown)
 
+			HandleLineType(opts, &line, opts.ErrorThrown, DefaultTitle.ErrorThrown, &color, stdout, lineTypeBefore, true)
 			FormatTestEndLine(line, &formattedLine, color)
-
 			HandleAggregation(opts, opts.ErrorThrown, aggregationCount, LineTypeEnumErrorThrown, &aggregationLines, &formattedLine)
-			return formattedLine, aggregationLines
+
+			*lineTypeBefore = LineTypeEnumErrorThrown
 		}
 	}
 
-	return nil, nil
+	return formattedLine, aggregationLines
 }
