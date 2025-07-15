@@ -35,14 +35,14 @@ func AddPrintLineSummaryHeader(print *[]byte, opts Opts) {
 	*print = append(*print, ColorANSI(opts, opts.Summary.Header.Colors)...)
 	*print = append(*print, []byte(opts.Summary.Header.Title)...)
 	*print = append(*print, ColorReset...)
-	*print = append(*print, []byte("\n")...)
+	*print = append(*print, '\n')
 }
 
 func AddPrintLineSummaryFooter(print *[]byte, opts Opts) {
 	*print = append(*print, ColorANSI(opts, opts.Summary.Footer.Colors)...)
 	*print = append(*print, []byte(opts.Summary.Footer.Title)...)
 	*print = append(*print, ColorReset...)
-	*print = append(*print, []byte("\n")...)
+	*print = append(*print, '\n')
 }
 
 func AddPrintLineSummary(print *[]byte, opts Opts, data SummaryData, maxPrefixLen int) {
@@ -62,7 +62,7 @@ func AddPrintLineSummary(print *[]byte, opts Opts, data SummaryData, maxPrefixLe
 
 	// manage end of line
 	*print = append(*print, ColorReset...)
-	*print = append(*print, []byte("\n")...)
+	*print = append(*print, '\n')
 }
 
 type SummaryData = struct {

@@ -49,17 +49,14 @@ func RunTestColor(m *testing.M, opts Opts) int {
 	done := make(chan struct{})
 	go func() {
 		scanner := bufio.NewScanner(r)
-		errorBefore := false
+		lineTypeBefore := LineTypeEnumNone
 		var lineSummary LineSummary
-
 		var aggregationCount AggregationCount
-		aggregationCount.Type = LineTypeEnumNone
-		aggregationCount.Value = 0
 
 		for scanner.Scan() {
 			line := scanner.Bytes()
 
-			formattedLine, aggregationLines := FormatTestLine(opts, line, &errorBefore, w, &lineSummary, &aggregationCount)
+			formattedLine, aggregationLines := FormatTestLine(opts, line, &lineTypeBefore, w, &lineSummary, &aggregationCount)
 
 			if len(aggregationLines) > 0 {
 				fmt.Fprintf(stdout, string(aggregationLines))

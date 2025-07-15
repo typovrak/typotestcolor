@@ -59,6 +59,26 @@ func NewDefaultOpts() Opts {
 				Suffix: "",
 				Hide:   false,
 			},
+			Section: LineTypeSection{
+				Header: LineTypeSectionTitle{
+					Title: "--- HEADER RUN ---",
+					Colors: ANSIConfig{
+						Style:      ColorANSISTyle[ANSIStyleBold],
+						Foreground: ColorANSIForeground[ANSIForegroundCyan],
+						Background: ColorANSIBackground[ANSIBackgroundNone],
+					},
+					Hide: false,
+				},
+				Footer: LineTypeSectionTitle{
+					Title: "--- FOOTER RUN ---",
+					Colors: ANSIConfig{
+						Style:      ColorANSISTyle[ANSIStyleBold],
+						Foreground: ColorANSIForeground[ANSIForegroundCyan],
+						Background: ColorANSIBackground[ANSIBackgroundNone],
+					},
+					Hide: false,
+				},
+			},
 		},
 		Fail: LineType{
 			Title: LineTypeTitle{
@@ -91,6 +111,26 @@ func NewDefaultOpts() Opts {
 				Prefix: "Fail: ",
 				Suffix: " ✗",
 				Hide:   false,
+			},
+			Section: LineTypeSection{
+				Header: LineTypeSectionTitle{
+					Title: "--- HEADER FAIL ---",
+					Colors: ANSIConfig{
+						Style:      ColorANSISTyle[ANSIStyleNormal],
+						Foreground: ColorANSIForeground[ANSIForegroundRed],
+						Background: ColorANSIBackground[ANSIBackgroundNone],
+					},
+					Hide: false,
+				},
+				Footer: LineTypeSectionTitle{
+					Title: "--- FOOTER FAIL ---",
+					Colors: ANSIConfig{
+						Style:      ColorANSISTyle[ANSIStyleNormal],
+						Foreground: ColorANSIForeground[ANSIForegroundRed],
+						Background: ColorANSIBackground[ANSIBackgroundNone],
+					},
+					Hide: false,
+				},
 			},
 		},
 		Pass: LineType{
@@ -125,6 +165,26 @@ func NewDefaultOpts() Opts {
 				Suffix: " ✓",
 				Hide:   false,
 			},
+			Section: LineTypeSection{
+				Header: LineTypeSectionTitle{
+					Title: "--- HEADER PASS ---",
+					Colors: ANSIConfig{
+						Style:      ColorANSISTyle[ANSIStyleNormal],
+						Foreground: ColorANSIForeground[ANSIForegroundGreen],
+						Background: ColorANSIBackground[ANSIBackgroundNone],
+					},
+					Hide: false,
+				},
+				Footer: LineTypeSectionTitle{
+					Title: "--- FOOTER PASS ---",
+					Colors: ANSIConfig{
+						Style:      ColorANSISTyle[ANSIStyleNormal],
+						Foreground: ColorANSIForeground[ANSIForegroundGreen],
+						Background: ColorANSIBackground[ANSIBackgroundNone],
+					},
+					Hide: false,
+				},
+			},
 		},
 		Skip: LineType{
 			Title: LineTypeTitle{
@@ -157,6 +217,26 @@ func NewDefaultOpts() Opts {
 				Prefix: "Skip: ",
 				Suffix: " ~",
 				Hide:   false,
+			},
+			Section: LineTypeSection{
+				Header: LineTypeSectionTitle{
+					Title: "--- HEADER SKIP ---",
+					Colors: ANSIConfig{
+						Style:      ColorANSISTyle[ANSIStyleNormal],
+						Foreground: ColorANSIForeground[ANSIForegroundYellow],
+						Background: ColorANSIBackground[ANSIBackgroundNone],
+					},
+					Hide: false,
+				},
+				Footer: LineTypeSectionTitle{
+					Title: "--- FOOTER SKIP ---",
+					Colors: ANSIConfig{
+						Style:      ColorANSISTyle[ANSIStyleNormal],
+						Foreground: ColorANSIForeground[ANSIForegroundYellow],
+						Background: ColorANSIBackground[ANSIBackgroundNone],
+					},
+					Hide: false,
+				},
 			},
 		},
 		Failed: LineType{
@@ -191,6 +271,26 @@ func NewDefaultOpts() Opts {
 				Suffix: " ✗",
 				Hide:   true,
 			},
+			Section: LineTypeSection{
+				Header: LineTypeSectionTitle{
+					Title: "--- HEADER FAILED ---",
+					Colors: ANSIConfig{
+						Style:      ColorANSISTyle[ANSIStyleBold],
+						Foreground: ColorANSIForeground[ANSIForegroundBlack],
+						Background: ColorANSIBackground[ANSIBackgroundRed],
+					},
+					Hide: false,
+				},
+				Footer: LineTypeSectionTitle{
+					Title: "--- FOOTER FAILED ---",
+					Colors: ANSIConfig{
+						Style:      ColorANSISTyle[ANSIStyleBold],
+						Foreground: ColorANSIForeground[ANSIForegroundBlack],
+						Background: ColorANSIBackground[ANSIBackgroundRed],
+					},
+					Hide: false,
+				},
+			},
 		},
 		Ok: LineType{
 			Title: LineTypeTitle{
@@ -224,6 +324,26 @@ func NewDefaultOpts() Opts {
 				Suffix: " ✓",
 				Hide:   true,
 			},
+			Section: LineTypeSection{
+				Header: LineTypeSectionTitle{
+					Title: "--- HEADER OK ---",
+					Colors: ANSIConfig{
+						Style:      ColorANSISTyle[ANSIStyleBold],
+						Foreground: ColorANSIForeground[ANSIForegroundBlack],
+						Background: ColorANSIBackground[ANSIBackgroundGreen],
+					},
+					Hide: false,
+				},
+				Footer: LineTypeSectionTitle{
+					Title: "--- FOOTER OK ---",
+					Colors: ANSIConfig{
+						Style:      ColorANSISTyle[ANSIStyleBold],
+						Foreground: ColorANSIForeground[ANSIForegroundBlack],
+						Background: ColorANSIBackground[ANSIBackgroundGreen],
+					},
+					Hide: false,
+				},
+			},
 		},
 		ErrorThrown: LineType{
 			Title: LineTypeTitle{
@@ -256,6 +376,26 @@ func NewDefaultOpts() Opts {
 				Prefix: "Error thrown: ",
 				Suffix: " !",
 				Hide:   false,
+			},
+			Section: LineTypeSection{
+				Header: LineTypeSectionTitle{
+					Title: "--- HEADER ERROR THROWN ---",
+					Colors: ANSIConfig{
+						Style:      ColorANSISTyle[ANSIStyleNormal],
+						Foreground: ColorANSIForeground[ANSIForegroundWhite],
+						Background: ColorANSIBackground[ANSIBackgroundNone],
+					},
+					Hide: false,
+				},
+				Footer: LineTypeSectionTitle{
+					Title: "--- FOOTER ERROR THROWN ---",
+					Colors: ANSIConfig{
+						Style:      ColorANSISTyle[ANSIStyleNormal],
+						Foreground: ColorANSIForeground[ANSIForegroundWhite],
+						Background: ColorANSIBackground[ANSIBackgroundNone],
+					},
+					Hide: false,
+				},
 			},
 		},
 		Debug: false,
