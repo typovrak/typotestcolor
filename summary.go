@@ -30,20 +30,35 @@ type SummaryConfigTitle = struct {
 	Colors ANSIConfig
 }
 
-func AddPrintLineSummary(print *[]byte, opts Opts, summary LineTypeSummary, value int) {
-	if len(*print) == 0 {
-		// manage header summary
-		*print = append(*print, ColorANSI(opts, opts.Summary.Header.Colors)...)
-		*print = append(*print, []byte(opts.Summary.Header.Title)...)
-		*print = append(*print, ColorReset...)
-		*print = append(*print, []byte("\n")...)
+func AddPrintLineSummaryHeader(print *[]byte, opts Opts) {
+	// manage header summary
+	*print = append(*print, ColorANSI(opts, opts.Summary.Header.Colors)...)
+	*print = append(*print, []byte(opts.Summary.Header.Title)...)
+	*print = append(*print, ColorReset...)
+	*print = append(*print, []byte("\n")...)
+}
+
+func AddPrintLineSummaryFooter(print *[]byte, opts Opts) {
+	*print = append(*print, ColorANSI(opts, opts.Summary.Footer.Colors)...)
+	*print = append(*print, []byte(opts.Summary.Footer.Title)...)
+	*print = append(*print, ColorReset...)
+	*print = append(*print, []byte("\n")...)
+}
+
+func AddPrintLineSummary(print *[]byte, opts Opts, data SummaryData, maxPrefixLen int) {
+	// manage summary content
+	*print = append(*print, ColorANSI(opts, data.Colors)...)
+	*print = append(*print, []byte(data.Prefix)...)
+
+	// align results
+	if opts.Summary.AlignResults && len(data.Prefix) < maxPrefixLen {
+		for i := 0; i < maxPrefixLen-len(data.Prefix); i++ {
+			*print = append(*print, ' ')
+		}
 	}
 
-	// manage summary content
-	*print = append(*print, ColorANSI(opts, summary.Colors)...)
-	*print = append(*print, []byte(summary.Prefix)...)
-	*print = append(*print, []byte(strconv.Itoa(value))...)
-	*print = append(*print, []byte(summary.Suffix)...)
+	*print = append(*print, []byte(strconv.Itoa(data.Value))...)
+	*print = append(*print, []byte(data.Suffix)...)
 
 	// manage end of line
 	*print = append(*print, ColorReset...)
@@ -51,51 +66,72 @@ func AddPrintLineSummary(print *[]byte, opts Opts, summary LineTypeSummary, valu
 }
 
 type SummaryData = struct {
-	Type   int
+	Type   LineTypeEnum
+	Colors ANSIConfig
 	Prefix string
 	Value  int
 	Suffix string
 }
 
 func PrintLineSummary(opts Opts, lineSummary LineSummary) []byte {
-	//	var data SummaryData
-	var print []byte
+	var data []SummaryData
+	maxPrefixLen := 0
 
 	if !opts.Run.Summary.Hide {
-		AddPrintLineSummary(&print, opts, opts.Run.Summary, lineSummary.Run)
+		AddSummaryData(opts, &data, &maxPrefixLen, LineTypeEnumRun, opts.Run.Summary, lineSummary.Run)
 	}
 
 	if !opts.Fail.Summary.Hide {
-		AddPrintLineSummary(&print, opts, opts.Fail.Summary, lineSummary.Fail)
+		AddSummaryData(opts, &data, &maxPrefixLen, LineTypeEnumFail, opts.Fail.Summary, lineSummary.Fail)
 	}
 
 	if !opts.Pass.Summary.Hide {
-		AddPrintLineSummary(&print, opts, opts.Pass.Summary, lineSummary.Pass)
+		AddSummaryData(opts, &data, &maxPrefixLen, LineTypeEnumPass, opts.Pass.Summary, lineSummary.Pass)
 	}
 
 	if !opts.Skip.Summary.Hide {
-		AddPrintLineSummary(&print, opts, opts.Skip.Summary, lineSummary.Skip)
+		AddSummaryData(opts, &data, &maxPrefixLen, LineTypeEnumSkip, opts.Skip.Summary, lineSummary.Skip)
 	}
 
 	if !opts.Failed.Summary.Hide {
-		AddPrintLineSummary(&print, opts, opts.Failed.Summary, lineSummary.Failed)
+		AddSummaryData(opts, &data, &maxPrefixLen, LineTypeEnumFailed, opts.Failed.Summary, lineSummary.Failed)
 	}
 
 	if !opts.Ok.Summary.Hide {
-		AddPrintLineSummary(&print, opts, opts.Ok.Summary, lineSummary.Ok)
+		AddSummaryData(opts, &data, &maxPrefixLen, LineTypeEnumOk, opts.Ok.Summary, lineSummary.Ok)
 	}
 
 	if !opts.ErrorThrown.Summary.Hide {
-		AddPrintLineSummary(&print, opts, opts.ErrorThrown.Summary, lineSummary.ErrorThrown)
+		AddSummaryData(opts, &data, &maxPrefixLen, LineTypeEnumErrorThrown, opts.ErrorThrown.Summary, lineSummary.ErrorThrown)
 	}
 
-	if len(print) > 0 {
-		print = append(print, ColorANSI(opts, opts.Summary.Footer.Colors)...)
-		print = append(print, []byte(opts.Summary.Footer.Title)...)
-		print = append(print, ColorReset...)
-		print = append(print, []byte("\n")...)
-		return print
+	// build summary
+	var print []byte
+	// header
+	AddPrintLineSummaryHeader(&print, opts)
+
+	// content
+	for i := 0; i < len(data); i++ {
+		AddPrintLineSummary(&print, opts, data[i], maxPrefixLen)
 	}
 
-	return nil
+	// footer
+	AddPrintLineSummaryFooter(&print, opts)
+
+	return print
+}
+
+func AddSummaryData(opts Opts, data *[]SummaryData, maxPrefixLen *int, summaryType LineTypeEnum, summary LineTypeSummary, value int) {
+	var currentData SummaryData
+	currentData.Type = summaryType
+	currentData.Colors = summary.Colors
+	currentData.Prefix = summary.Prefix
+	currentData.Value = value
+	currentData.Suffix = summary.Suffix
+
+	if *maxPrefixLen < len(currentData.Prefix) {
+		*maxPrefixLen = len(currentData.Prefix)
+	}
+
+	*data = append(*data, currentData)
 }
