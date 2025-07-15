@@ -13,7 +13,6 @@ typotestcolor.Println et .Print pour avoir un print et type différent dans le r
 
 - fonction différenciel de string && buffer ?
 
-
 - asserts normalisé ?
 
 

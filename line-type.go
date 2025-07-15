@@ -235,6 +235,7 @@ func FormatTestLine(
 			FormatTestEndLine(line, &formattedLine, color)
 			HandleAggregation(opts, opts.Failed, aggregationCount, LineTypeEnumFailed, &aggregationLines, &formattedLine)
 
+			formattedLine = append(formattedLine, '\n')
 			*lineTypeBefore = LineTypeEnumFailed
 
 			// INFO: ok
@@ -254,6 +255,7 @@ func FormatTestLine(
 			FormatTestEndLine(line, &formattedLine, color)
 			HandleAggregation(opts, opts.Ok, aggregationCount, LineTypeEnumOk, &aggregationLines, &formattedLine)
 
+			formattedLine = append(formattedLine, '\n')
 			*lineTypeBefore = LineTypeEnumOk
 
 			// INFO: error thrown

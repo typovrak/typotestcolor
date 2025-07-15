@@ -28,9 +28,14 @@ type SummaryConfig = struct {
 type SummaryConfigTitle = struct {
 	Title  string
 	Colors ANSIConfig
+	Hide   bool
 }
 
 func AddPrintLineSummaryHeader(print *[]byte, opts Opts) {
+	if opts.Summary.Header.Hide {
+		return
+	}
+
 	// manage header summary
 	*print = append(*print, ColorANSI(opts, opts.Summary.Header.Colors)...)
 	*print = append(*print, []byte(opts.Summary.Header.Title)...)
@@ -39,6 +44,10 @@ func AddPrintLineSummaryHeader(print *[]byte, opts Opts) {
 }
 
 func AddPrintLineSummaryFooter(print *[]byte, opts Opts) {
+	if opts.Summary.Footer.Hide {
+		return
+	}
+
 	*print = append(*print, ColorANSI(opts, opts.Summary.Footer.Colors)...)
 	*print = append(*print, []byte(opts.Summary.Footer.Title)...)
 	*print = append(*print, ColorReset...)
@@ -118,6 +127,7 @@ func PrintLineSummary(opts Opts, lineSummary LineSummary) []byte {
 	// footer
 	AddPrintLineSummaryFooter(&print, opts)
 
+	print = append(print, '\n')
 	return print
 }
 
