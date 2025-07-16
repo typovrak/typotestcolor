@@ -1,18 +1,5 @@
 package typotestcolor
 
-type LineTypeEnum int
-
-const (
-	LineTypeEnumNone LineTypeEnum = iota
-	LineTypeEnumRun
-	LineTypeEnumFail
-	LineTypeEnumPass
-	LineTypeEnumSkip
-	LineTypeEnumFailed
-	LineTypeEnumOk
-	LineTypeEnumErrorThrown
-)
-
 type Opts struct {
 	Run         LineType
 	Fail        LineType
@@ -67,7 +54,8 @@ func NewDefaultOpts() Opts {
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundCyan],
 					},
-					Hide: false,
+					Hide:             false,
+					AddEmptyLineFeed: true,
 				},
 				Footer: LineTypeSectionTitle{
 					Title: "\t RUN section end ",
@@ -76,7 +64,8 @@ func NewDefaultOpts() Opts {
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundCyan],
 					},
-					Hide: false,
+					Hide:             false,
+					AddEmptyLineFeed: true,
 				},
 			},
 		},
@@ -120,7 +109,8 @@ func NewDefaultOpts() Opts {
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundRed],
 					},
-					Hide: false,
+					Hide:             false,
+					AddEmptyLineFeed: true,
 				},
 				Footer: LineTypeSectionTitle{
 					Title: "\t FAIL section end ",
@@ -129,7 +119,8 @@ func NewDefaultOpts() Opts {
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundRed],
 					},
-					Hide: false,
+					Hide:             false,
+					AddEmptyLineFeed: true,
 				},
 			},
 		},
@@ -173,7 +164,8 @@ func NewDefaultOpts() Opts {
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundGreen],
 					},
-					Hide: false,
+					Hide:             false,
+					AddEmptyLineFeed: true,
 				},
 				Footer: LineTypeSectionTitle{
 					Title: "\t PASS section end ",
@@ -182,7 +174,8 @@ func NewDefaultOpts() Opts {
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundGreen],
 					},
-					Hide: false,
+					Hide:             false,
+					AddEmptyLineFeed: true,
 				},
 			},
 		},
@@ -226,7 +219,8 @@ func NewDefaultOpts() Opts {
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundYellow],
 					},
-					Hide: false,
+					Hide:             false,
+					AddEmptyLineFeed: true,
 				},
 				Footer: LineTypeSectionTitle{
 					Title: "\t SKIP section end ",
@@ -235,7 +229,8 @@ func NewDefaultOpts() Opts {
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundYellow],
 					},
-					Hide: false,
+					Hide:             false,
+					AddEmptyLineFeed: true,
 				},
 			},
 		},
@@ -279,7 +274,8 @@ func NewDefaultOpts() Opts {
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundRed],
 					},
-					Hide: true,
+					Hide:             true,
+					AddEmptyLineFeed: true,
 				},
 				// INFO: can't be displayed (and useless)
 				Footer: LineTypeSectionTitle{
@@ -289,7 +285,8 @@ func NewDefaultOpts() Opts {
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundRed],
 					},
-					Hide: true,
+					Hide:             true,
+					AddEmptyLineFeed: true,
 				},
 			},
 		},
@@ -333,7 +330,8 @@ func NewDefaultOpts() Opts {
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundGreen],
 					},
-					Hide: true,
+					Hide:             true,
+					AddEmptyLineFeed: true,
 				},
 				// INFO: can't be displayed (and useless)
 				Footer: LineTypeSectionTitle{
@@ -343,7 +341,8 @@ func NewDefaultOpts() Opts {
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundGreen],
 					},
-					Hide: true,
+					Hide:             true,
+					AddEmptyLineFeed: true,
 				},
 			},
 		},
@@ -387,7 +386,8 @@ func NewDefaultOpts() Opts {
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundWhite],
 					},
-					Hide: false,
+					Hide:             false,
+					AddEmptyLineFeed: true,
 				},
 				Footer: LineTypeSectionTitle{
 					Title: "\t ERROR THROWN section end ",
@@ -396,7 +396,8 @@ func NewDefaultOpts() Opts {
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundWhite],
 					},
-					Hide: false,
+					Hide:             false,
+					AddEmptyLineFeed: true,
 				},
 			},
 		},
