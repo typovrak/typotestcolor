@@ -21,13 +21,6 @@ typotestcolor.Println et .Print pour avoir un print et type différent dans le r
 
 
 
--------
-EASY:
-- mettre en place un paramètre pour séparer tout par un retour à la ligne?
-
-
-
-
 
 
 
