@@ -1,15 +1,22 @@
 package typotestcolor
 
 type Opts struct {
-	Run         LineType
-	Fail        LineType
-	Pass        LineType
-	Skip        LineType
-	Failed      LineType
-	Ok          LineType
-	ErrorThrown LineType
-	Debug       bool
-	Summary     SummaryConfig
+	Run                  LineType
+	Fail                 LineType
+	Pass                 LineType
+	Skip                 LineType
+	Failed               LineType
+	Ok                   LineType
+	ErrorThrown          LineType
+	Debug                bool
+	Summary              SummaryConfig
+	SeparateEverySection SeparateEverySectionStruct
+}
+
+type SeparateEverySectionStruct = struct {
+	Colors ANSIConfig
+	Title  string
+	Hide   bool
 }
 
 func NewDefaultOpts() Opts {
@@ -17,7 +24,7 @@ func NewDefaultOpts() Opts {
 		Run: LineType{
 			Title: LineTypeTitle{
 				Colors: ANSIConfig{
-					Style:      ColorANSISTyle[ANSIStyleNormal],
+					Style:      ColorANSIStyle[ANSIStyleNormal],
 					Foreground: ColorANSIForeground[ANSIForegroundCyan],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
@@ -27,7 +34,7 @@ func NewDefaultOpts() Opts {
 				Aggregation: LineTypeTitleAggregation{
 					Activate: true,
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleNormal],
+						Style:      ColorANSIStyle[ANSIStyleNormal],
 						Foreground: ColorANSIForeground[ANSIForegroundCyan],
 						Background: ColorANSIBackground[ANSIBackgroundNone],
 					},
@@ -38,7 +45,7 @@ func NewDefaultOpts() Opts {
 			},
 			Summary: LineTypeSummary{
 				Colors: ANSIConfig{
-					Style:      ColorANSISTyle[ANSIStyleNormal],
+					Style:      ColorANSIStyle[ANSIStyleNormal],
 					Foreground: ColorANSIForeground[ANSIForegroundCyan],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
@@ -50,7 +57,7 @@ func NewDefaultOpts() Opts {
 				Header: LineTypeSectionTitle{
 					Title: "\t RUN section start ",
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleBold],
+						Style:      ColorANSIStyle[ANSIStyleBold],
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundCyan],
 					},
@@ -60,7 +67,7 @@ func NewDefaultOpts() Opts {
 				Footer: LineTypeSectionTitle{
 					Title: "\t RUN section end ",
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleBold],
+						Style:      ColorANSIStyle[ANSIStyleBold],
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundCyan],
 					},
@@ -72,7 +79,7 @@ func NewDefaultOpts() Opts {
 		Fail: LineType{
 			Title: LineTypeTitle{
 				Colors: ANSIConfig{
-					Style:      ColorANSISTyle[ANSIStyleNormal],
+					Style:      ColorANSIStyle[ANSIStyleNormal],
 					Foreground: ColorANSIForeground[ANSIForegroundRed],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
@@ -83,7 +90,7 @@ func NewDefaultOpts() Opts {
 					// INFO: important to see every fail case
 					Activate: false,
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleNormal],
+						Style:      ColorANSIStyle[ANSIStyleNormal],
 						Foreground: ColorANSIForeground[ANSIForegroundRed],
 						Background: ColorANSIBackground[ANSIBackgroundNone],
 					},
@@ -94,7 +101,7 @@ func NewDefaultOpts() Opts {
 			},
 			Summary: LineTypeSummary{
 				Colors: ANSIConfig{
-					Style:      ColorANSISTyle[ANSIStyleNormal],
+					Style:      ColorANSIStyle[ANSIStyleNormal],
 					Foreground: ColorANSIForeground[ANSIForegroundRed],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
@@ -106,7 +113,7 @@ func NewDefaultOpts() Opts {
 				Header: LineTypeSectionTitle{
 					Title: "\t FAIL section start ",
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleBold],
+						Style:      ColorANSIStyle[ANSIStyleBold],
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundRed],
 					},
@@ -116,7 +123,7 @@ func NewDefaultOpts() Opts {
 				Footer: LineTypeSectionTitle{
 					Title: "\t FAIL section end ",
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleBold],
+						Style:      ColorANSIStyle[ANSIStyleBold],
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundRed],
 					},
@@ -128,7 +135,7 @@ func NewDefaultOpts() Opts {
 		Pass: LineType{
 			Title: LineTypeTitle{
 				Colors: ANSIConfig{
-					Style:      ColorANSISTyle[ANSIStyleNormal],
+					Style:      ColorANSIStyle[ANSIStyleNormal],
 					Foreground: ColorANSIForeground[ANSIForegroundGreen],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
@@ -138,7 +145,7 @@ func NewDefaultOpts() Opts {
 				Aggregation: LineTypeTitleAggregation{
 					Activate: true,
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleNormal],
+						Style:      ColorANSIStyle[ANSIStyleNormal],
 						Foreground: ColorANSIForeground[ANSIForegroundGreen],
 						Background: ColorANSIBackground[ANSIBackgroundNone],
 					},
@@ -149,7 +156,7 @@ func NewDefaultOpts() Opts {
 			},
 			Summary: LineTypeSummary{
 				Colors: ANSIConfig{
-					Style:      ColorANSISTyle[ANSIStyleNormal],
+					Style:      ColorANSIStyle[ANSIStyleNormal],
 					Foreground: ColorANSIForeground[ANSIForegroundGreen],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
@@ -161,7 +168,7 @@ func NewDefaultOpts() Opts {
 				Header: LineTypeSectionTitle{
 					Title: "\t PASS section start ",
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleBold],
+						Style:      ColorANSIStyle[ANSIStyleBold],
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundGreen],
 					},
@@ -171,7 +178,7 @@ func NewDefaultOpts() Opts {
 				Footer: LineTypeSectionTitle{
 					Title: "\t PASS section end ",
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleBold],
+						Style:      ColorANSIStyle[ANSIStyleBold],
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundGreen],
 					},
@@ -183,7 +190,7 @@ func NewDefaultOpts() Opts {
 		Skip: LineType{
 			Title: LineTypeTitle{
 				Colors: ANSIConfig{
-					Style:      ColorANSISTyle[ANSIStyleNormal],
+					Style:      ColorANSIStyle[ANSIStyleNormal],
 					Foreground: ColorANSIForeground[ANSIForegroundYellow],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
@@ -193,7 +200,7 @@ func NewDefaultOpts() Opts {
 				Aggregation: LineTypeTitleAggregation{
 					Activate: true,
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleNormal],
+						Style:      ColorANSIStyle[ANSIStyleNormal],
 						Foreground: ColorANSIForeground[ANSIForegroundYellow],
 						Background: ColorANSIBackground[ANSIBackgroundNone],
 					},
@@ -204,7 +211,7 @@ func NewDefaultOpts() Opts {
 			},
 			Summary: LineTypeSummary{
 				Colors: ANSIConfig{
-					Style:      ColorANSISTyle[ANSIStyleNormal],
+					Style:      ColorANSIStyle[ANSIStyleNormal],
 					Foreground: ColorANSIForeground[ANSIForegroundYellow],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
@@ -216,7 +223,7 @@ func NewDefaultOpts() Opts {
 				Header: LineTypeSectionTitle{
 					Title: "\t SKIP section start ",
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleBold],
+						Style:      ColorANSIStyle[ANSIStyleBold],
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundYellow],
 					},
@@ -226,7 +233,7 @@ func NewDefaultOpts() Opts {
 				Footer: LineTypeSectionTitle{
 					Title: "\t SKIP section end ",
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleBold],
+						Style:      ColorANSIStyle[ANSIStyleBold],
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundYellow],
 					},
@@ -238,7 +245,7 @@ func NewDefaultOpts() Opts {
 		Failed: LineType{
 			Title: LineTypeTitle{
 				Colors: ANSIConfig{
-					Style:      ColorANSISTyle[ANSIStyleBold],
+					Style:      ColorANSIStyle[ANSIStyleBold],
 					Foreground: ColorANSIForeground[ANSIForegroundBlack],
 					Background: ColorANSIBackground[ANSIBackgroundRed],
 				},
@@ -248,7 +255,7 @@ func NewDefaultOpts() Opts {
 				Aggregation: LineTypeTitleAggregation{
 					Activate: false,
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleBold],
+						Style:      ColorANSIStyle[ANSIStyleBold],
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundRed],
 					},
@@ -259,7 +266,7 @@ func NewDefaultOpts() Opts {
 			},
 			Summary: LineTypeSummary{
 				Colors: ANSIConfig{
-					Style:      ColorANSISTyle[ANSIStyleNormal],
+					Style:      ColorANSIStyle[ANSIStyleNormal],
 					Foreground: ColorANSIForeground[ANSIForegroundRed],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
@@ -271,7 +278,7 @@ func NewDefaultOpts() Opts {
 				Header: LineTypeSectionTitle{
 					Title: "\t FAILED section start ",
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleBold],
+						Style:      ColorANSIStyle[ANSIStyleBold],
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundRed],
 					},
@@ -282,7 +289,7 @@ func NewDefaultOpts() Opts {
 				Footer: LineTypeSectionTitle{
 					Title: "\t FAILED section end ",
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleBold],
+						Style:      ColorANSIStyle[ANSIStyleBold],
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundRed],
 					},
@@ -294,7 +301,7 @@ func NewDefaultOpts() Opts {
 		Ok: LineType{
 			Title: LineTypeTitle{
 				Colors: ANSIConfig{
-					Style:      ColorANSISTyle[ANSIStyleBold],
+					Style:      ColorANSIStyle[ANSIStyleBold],
 					Foreground: ColorANSIForeground[ANSIForegroundBlack],
 					Background: ColorANSIBackground[ANSIBackgroundGreen],
 				},
@@ -304,7 +311,7 @@ func NewDefaultOpts() Opts {
 				Aggregation: LineTypeTitleAggregation{
 					Activate: false,
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleBold],
+						Style:      ColorANSIStyle[ANSIStyleBold],
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundGreen],
 					},
@@ -315,7 +322,7 @@ func NewDefaultOpts() Opts {
 			},
 			Summary: LineTypeSummary{
 				Colors: ANSIConfig{
-					Style:      ColorANSISTyle[ANSIStyleNormal],
+					Style:      ColorANSIStyle[ANSIStyleNormal],
 					Foreground: ColorANSIForeground[ANSIForegroundGreen],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
@@ -327,7 +334,7 @@ func NewDefaultOpts() Opts {
 				Header: LineTypeSectionTitle{
 					Title: "\t OK section start ",
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleBold],
+						Style:      ColorANSIStyle[ANSIStyleBold],
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundGreen],
 					},
@@ -338,7 +345,7 @@ func NewDefaultOpts() Opts {
 				Footer: LineTypeSectionTitle{
 					Title: "\t OK section end ",
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleBold],
+						Style:      ColorANSIStyle[ANSIStyleBold],
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundGreen],
 					},
@@ -350,7 +357,7 @@ func NewDefaultOpts() Opts {
 		ErrorThrown: LineType{
 			Title: LineTypeTitle{
 				Colors: ANSIConfig{
-					Style:      ColorANSISTyle[ANSIStyleNormal],
+					Style:      ColorANSIStyle[ANSIStyleNormal],
 					Foreground: ColorANSIForeground[ANSIForegroundWhite],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
@@ -360,7 +367,7 @@ func NewDefaultOpts() Opts {
 				Aggregation: LineTypeTitleAggregation{
 					Activate: false,
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleNormal],
+						Style:      ColorANSIStyle[ANSIStyleNormal],
 						Foreground: ColorANSIForeground[ANSIForegroundWhite],
 						Background: ColorANSIBackground[ANSIBackgroundNone],
 					},
@@ -371,7 +378,7 @@ func NewDefaultOpts() Opts {
 			},
 			Summary: LineTypeSummary{
 				Colors: ANSIConfig{
-					Style:      ColorANSISTyle[ANSIStyleNormal],
+					Style:      ColorANSIStyle[ANSIStyleNormal],
 					Foreground: ColorANSIForeground[ANSIForegroundWhite],
 					Background: ColorANSIBackground[ANSIBackgroundNone],
 				},
@@ -383,7 +390,7 @@ func NewDefaultOpts() Opts {
 				Header: LineTypeSectionTitle{
 					Title: "\t ERROR THROWN section start ",
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleBold],
+						Style:      ColorANSIStyle[ANSIStyleBold],
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundWhite],
 					},
@@ -393,7 +400,7 @@ func NewDefaultOpts() Opts {
 				Footer: LineTypeSectionTitle{
 					Title: "\t ERROR THROWN section end ",
 					Colors: ANSIConfig{
-						Style:      ColorANSISTyle[ANSIStyleBold],
+						Style:      ColorANSIStyle[ANSIStyleBold],
 						Foreground: ColorANSIForeground[ANSIForegroundBlack],
 						Background: ColorANSIBackground[ANSIBackgroundWhite],
 					},
@@ -407,7 +414,7 @@ func NewDefaultOpts() Opts {
 			Header: SummaryConfigTitle{
 				Title: " TESTS SUMMARY ",
 				Colors: ANSIConfig{
-					Style:      ColorANSISTyle[ANSIStyleBold],
+					Style:      ColorANSIStyle[ANSIStyleBold],
 					Foreground: ColorANSIForeground[ANSIForegroundBlack],
 					Background: ColorANSIBackground[ANSIBackgroundPurple],
 				},
@@ -416,7 +423,7 @@ func NewDefaultOpts() Opts {
 			Footer: SummaryConfigTitle{
 				Title: "\n Made with <3 by Typovrak ",
 				Colors: ANSIConfig{
-					Style:      ColorANSISTyle[ANSIStyleBold],
+					Style:      ColorANSIStyle[ANSIStyleBold],
 					Foreground: ColorANSIForeground[ANSIForegroundBlack],
 					Background: ColorANSIBackground[ANSIBackgroundBlue],
 				},
@@ -424,6 +431,15 @@ func NewDefaultOpts() Opts {
 			},
 			AlignResults: true,
 			Hide:         false,
+		},
+		SeparateEverySection: SeparateEverySectionStruct{
+			Colors: ANSIConfig{
+				Style:      ColorANSIStyle[ANSIStyleNormal],
+				Foreground: ColorANSIForeground[ANSIForegroundNone],
+				Background: ColorANSIBackground[ANSIBackgroundNone],
+			},
+			Title: "\n",
+			Hide:  false,
 		},
 	}
 }

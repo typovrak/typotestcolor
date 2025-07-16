@@ -16,7 +16,7 @@ const (
 	ANSIStyleNormal
 )
 
-var ColorANSISTyle = map[ANSIStyle]int{
+var ColorANSIStyle = map[ANSIStyle]int{
 	ANSIStyleReset:     0,
 	ANSIStyleBold:      1,
 	ANSIStyleDim:       2,
