@@ -67,13 +67,25 @@ func FormatTestEndLine(line []byte, formattedLine *[]byte, color []byte) {
 	*formattedLine = append(*formattedLine, '\n')
 }
 
+func HandleSeparateEverySection(opts Opts, formattedLine *[]byte) {
+	*formattedLine = append(*formattedLine, ColorANSI(opts, opts.SeparateEverySection.Colors)...)
+	*formattedLine = append(*formattedLine, []byte(opts.SeparateEverySection.Title)...)
+	*formattedLine = append(*formattedLine, ColorReset...)
+}
+
 func HandleSectionHeader(opts Opts, lineType LineType, formattedLine *[]byte, lineTypeBefore *LineTypeEnum, lineTypeCurrent LineTypeEnum) {
 	if *lineTypeBefore == lineTypeCurrent {
 		return
 	}
 
-	if lineType.Section.Header.Hide {
+	if !opts.SeparateEverySection.Hide &&
+		*lineTypeBefore != LineTypeEnumNone &&
+		lineTypeCurrent != LineTypeEnumOk &&
+		lineTypeCurrent != LineTypeEnumFailed {
+		HandleSeparateEverySection(opts, formattedLine)
+	}
 
+	if lineType.Section.Header.Hide {
 		// add new line after header
 		if lineType.Section.Header.AddEmptyLineFeed {
 			*formattedLine = append(*formattedLine, '\n')

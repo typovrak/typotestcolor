@@ -24,8 +24,6 @@ typotestcolor.Println et .Print pour avoir un print et type différent dans le r
 -------
 EASY:
 - mettre en place un paramètre pour séparer tout par un retour à la ligne?
-- le retour à la ligne pour séparer le errorThrown ne marche plus
-- aggregate en bold pour run, modifier en normal font
 
 
 
