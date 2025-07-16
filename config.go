@@ -439,7 +439,7 @@ func NewDefaultOpts() Opts {
 				Background: ColorANSIBackground[ANSIBackgroundNone],
 			},
 			Title: "\n",
-			Hide:  false,
+			Hide:  true,
 		},
 	}
 }
