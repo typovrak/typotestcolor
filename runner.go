@@ -56,7 +56,7 @@ func RunTestColor(m *testing.M, opts Opts) int {
 		for scanner.Scan() {
 			line := scanner.Bytes()
 
-			formattedLine, aggregationLines := FormatTestLine(opts, line, &lineTypeBefore, w, &lineSummary, &aggregationCount)
+			formattedLine, aggregationLines := FormatTestLine(opts, line, &lineTypeBefore, &lineSummary, &aggregationCount)
 
 			if len(aggregationLines) > 0 {
 				fmt.Fprintf(stdout, string(aggregationLines))
