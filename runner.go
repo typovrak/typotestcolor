@@ -48,6 +48,11 @@ func RunTestColor(m *testing.M, opts Opts) int {
 
 	done := make(chan struct{})
 	go func() {
+		// INFO: pointers are safe to use unless you declare a nil pointer
+		// var print []byte -> *print is always safe
+		// var print *[]byte -> print is a nil pointer, this will panic the program
+		// so pointer are safe unless you declare it as a pointer already.
+
 		scanner := bufio.NewScanner(r)
 		lineTypeBefore := LineTypeEnumNone
 		var lineSummary LineSummary
@@ -55,7 +60,6 @@ func RunTestColor(m *testing.M, opts Opts) int {
 
 		for scanner.Scan() {
 			line := scanner.Bytes()
-
 			formattedLine, aggregationLines := FormatTestLine(opts, line, &lineTypeBefore, &lineSummary, &aggregationCount)
 
 			if len(aggregationLines) > 0 {

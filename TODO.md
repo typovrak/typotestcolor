@@ -1,7 +1,5 @@
 DIFFICULT:
 
-- vérifier que les pointeurs sont bien référencés
-
 - Rewrite ErrorThrown into something else ? Like Logs?
 typotestcolor.Println et .Print pour avoir un print et type différent dans le rendu des tests
 (créer un nouveau type que errorThrown pour les logs de debbogage?)
@@ -23,8 +21,6 @@ typotestcolor.Println et .Print pour avoir un print et type différent dans le r
 
 
 
-
-
 --------------------------------
 AT THE END:
 
@@ -33,4 +29,5 @@ AT THE END:
 - rewrite comments in code
 - readme
 - do all community standards
+
 

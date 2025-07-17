@@ -36,4 +36,28 @@ func TestDiff(t *testing.T) {
 		got := "test"
 		typotestcolor.TestDiffString(t, expected, got)
 	})
+
+	t.Run("5", func(t *testing.T) {
+		expected := "est 1"
+		got := "test 1"
+		typotestcolor.TestDiffString(t, expected, got)
+	})
+
+	t.Run("6", func(t *testing.T) {
+		expected := "test 1"
+		got := "Test 1"
+		typotestcolor.TestDiffString(t, expected, got)
+	})
+
+	t.Run("7", func(t *testing.T) {
+		expected := "  test 1"
+		got := "test 1"
+		typotestcolor.TestDiffString(t, expected, got)
+	})
+
+	t.Run("4", func(t *testing.T) {
+		expected := "xx test"
+		got := "test"
+		typotestcolor.TestDiffString(t, expected, got)
+	})
 }

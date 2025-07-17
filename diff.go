@@ -2,6 +2,7 @@ package typotestcolor
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 )
 
@@ -46,10 +47,21 @@ func DiffPrintColor(color ANSIForeground, highlight bool) []byte {
 	return print
 }
 
+func AddStringInSlice(slice string, i int, string string) string {
+	// prevent slice overflow
+	if i < 0 || i > len(slice) {
+		return slice
+	}
+
+	return slice[:i] + string + slice[i:]
+}
+
 func TestDiffString(t *testing.T, expected string, got string) {
 	if expected == got {
 		return
 	}
+
+	var print strings.Builder
 
 	expectedPrefix := fmt.Sprintf("expected (length: %d): ", len(expected))
 	gotPrefix := fmt.Sprintf("got (length: %d): ", len(got))
@@ -67,23 +79,62 @@ func TestDiffString(t *testing.T, expected string, got string) {
 		}
 	}
 
-	//for i := 0; i < min(expectedLen, gotLen); i++ {
-	//	if expected[i] != got[i] {
-	//		// diff
-	//	}
-	//}
+	expectedLen := len(expected)
+	gotLen := len(got)
 
-	t.Errorf(
-		"\n%s%s%s%s\n%s%s%s%s",
-		expectedPrefix,
-		DiffPrintColor(ANSIForegroundGreen, false),
-		expected,
-		ColorReset,
-		gotPrefix,
-		DiffPrintColor(ANSIForegroundRed, false),
-		got,
-		ColorReset,
-	)
+	gotErrorBefore := false
+
+	var gotSlices []string
+	lastAddedIndex := 0
+
+	for i := 0; i < gotLen; i++ {
+		// diff
+		// got[i] and expected[i] are always defined
+		if i >= expectedLen || expected[i] != got[i] {
+
+			if !gotErrorBefore {
+				gotSlices = append(gotSlices, got[lastAddedIndex:i])
+				gotSlices = append(gotSlices, string(DiffPrintColor(ANSIForegroundRed, true)))
+
+				gotErrorBefore = true
+				lastAddedIndex = i
+			}
+
+			continue
+		}
+
+		// same
+		if gotErrorBefore {
+			gotSlices = append(gotSlices, got[lastAddedIndex:i])
+			gotSlices = append(gotSlices, string(ColorReset))
+			gotSlices = append(gotSlices, string(DiffPrintColor(ANSIForegroundRed, false)))
+
+			gotErrorBefore = false
+			lastAddedIndex = i
+		}
+
+	}
+
+	if lastAddedIndex != gotLen {
+		gotSlices = append(gotSlices, got[lastAddedIndex:gotLen])
+	}
+
+	print.WriteByte('\n')
+
+	// expected part
+	print.WriteString(expectedPrefix)
+	print.Write(DiffPrintColor(ANSIForegroundGreen, false))
+	print.WriteString(expected)
+	print.WriteByte('\n')
+
+	// got part
+	print.WriteString(gotPrefix)
+	print.Write(DiffPrintColor(ANSIForegroundRed, false))
+	print.WriteString(strings.Join(gotSlices, ""))
+	print.WriteByte('\n')
+
+	t.Error(print.String())
+	// t.Error(strconv.QuoteToASCII(print.String()))
 }
 
 // mettre expected en full vert
