@@ -1,10 +1,13 @@
 package typotestcolor
 
 import (
+	"bytes"
+	"encoding/json"
+	"errors"
 	"fmt"
+	"reflect"
 	"strconv"
 	"strings"
-	"testing"
 )
 
 func DiffPrintColor(color ANSIForeground, highlight bool, opts Opts) []byte {
@@ -50,6 +53,96 @@ func DiffPrintColor(color ANSIForeground, highlight bool, opts Opts) []byte {
 	return print
 }
 
+func ToBytes(value any) ([]byte, error) {
+	reflectValue := reflect.ValueOf(value)
+	if reflectValue.Kind() == reflect.Func && reflectValue.Type().NumIn() == 0 {
+		results := reflectValue.Call(nil)
+
+		if len(results) > 0 {
+			return ToBytes(results[0].Interface())
+		}
+	}
+
+	switch valueTyped := value.(type) {
+
+	case []byte:
+		return valueTyped, nil
+
+	case string:
+		return []byte(valueTyped), nil
+
+	case int, int8, int16, int32, int64:
+		return fmt.Appendf(nil, "%d", valueTyped), nil
+
+	case uint, uint8, uint16, uint32, uint64:
+		return fmt.Appendf(nil, "%d", valueTyped), nil
+
+	case float32, float64:
+		return fmt.Appendf(nil, "%g", valueTyped), nil
+
+	case bool:
+		return []byte(strconv.FormatBool(valueTyped)), nil
+
+	case nil:
+		return []byte("nil"), nil
+
+	case fmt.Stringer:
+		return []byte(valueTyped.String()), nil
+
+	case func() []byte:
+		return valueTyped(), nil
+
+	case func() string:
+		return []byte(valueTyped()), nil
+
+	// INFO: cannot aggregate func() type
+	case func() int:
+		return fmt.Appendf(nil, "%d", valueTyped()), nil
+	case func() int8:
+		return fmt.Appendf(nil, "%d", valueTyped()), nil
+	case func() int16:
+		return fmt.Appendf(nil, "%d", valueTyped()), nil
+	case func() int32:
+		return fmt.Appendf(nil, "%d", valueTyped()), nil
+	case func() int64:
+		return fmt.Appendf(nil, "%d", valueTyped()), nil
+
+	case func() uint:
+		return fmt.Appendf(nil, "%d", valueTyped()), nil
+	case func() uint8:
+		return fmt.Appendf(nil, "%d", valueTyped()), nil
+	case func() uint16:
+		return fmt.Appendf(nil, "%d", valueTyped()), nil
+	case func() uint32:
+		return fmt.Appendf(nil, "%d", valueTyped()), nil
+	case func() uint64:
+		return fmt.Appendf(nil, "%d", valueTyped()), nil
+
+	case func() float32:
+		return fmt.Appendf(nil, "%g", valueTyped()), nil
+	case func() float64:
+		return fmt.Appendf(nil, "%g", valueTyped()), nil
+
+	case func() bool:
+		return []byte(strconv.FormatBool(valueTyped())), nil
+
+	case func():
+		return []byte("nil"), nil
+
+	case func() fmt.Stringer:
+		return []byte(valueTyped().String()), nil
+
+	default:
+		// fallback JSON (struct, map, slice, etc.)
+		json, err := json.Marshal(valueTyped)
+		if err != nil {
+			return nil, fmt.Errorf("cannot convert %T to []byte: %w", valueTyped, err)
+		}
+
+		return json, nil
+	}
+}
+
 type TestDiffOpts = struct {
 	opts         Opts
 	printToASCII bool
@@ -62,19 +155,33 @@ func TestDiffNewDefaultOpts() TestDiffOpts {
 	}
 }
 
-func TestDiffStringDefault(t *testing.T, expected string, got string) {
-	TestDiffString(t, expected, got, TestDiffNewDefaultOpts())
+func TestDiffDefault(expected any, got any) error {
+	return TestDiff(expected, got, TestDiffNewDefaultOpts())
 }
 
-func TestDiffString(t *testing.T, expected string, got string, opts TestDiffOpts) {
-	if expected == got {
-		return
+func TestDiff(expected any, got any, opts TestDiffOpts) error {
+	expectedBytes, err := ToBytes(expected)
+	if err != nil {
+		return err
+	}
+
+	gotBytes, err := ToBytes(got)
+	if err != nil {
+		return err
+	}
+
+	// everything is fine
+	if bytes.Equal(expectedBytes, gotBytes) {
+		return nil
 	}
 
 	var print strings.Builder
 
-	expectedPrefix := fmt.Sprintf("expected (length: %d): ", len(expected))
-	gotPrefix := fmt.Sprintf("got (length: %d): ", len(got))
+	expectedLen := len(expectedBytes)
+	gotLen := len(gotBytes)
+
+	expectedPrefix := fmt.Sprintf("expected (length: %d): ", expectedLen)
+	gotPrefix := fmt.Sprintf("got (length: %d): ", gotLen)
 
 	expectedPrefixLen := len(expectedPrefix)
 	gotPrefixLen := len(gotPrefix)
@@ -95,22 +202,19 @@ func TestDiffString(t *testing.T, expected string, got string, opts TestDiffOpts
 	// expected part
 	print.WriteString(expectedPrefix)
 	print.Write(DiffPrintColor(ANSIForegroundGreen, false, opts.opts))
-	print.WriteString(expected)
+	print.Write(expectedBytes)
 	print.WriteByte('\n')
 
 	// got part
 	print.WriteString(gotPrefix)
 	print.Write(DiffPrintColor(ANSIForegroundRed, false, opts.opts))
 
-	expectedLen := len(expected)
-	gotLen := len(got)
-
 	errorBefore := false
 
 	// build got print
 	for i := 0; i < min(expectedLen, gotLen); i++ {
 		// same
-		if expected[i] == got[i] {
+		if expectedBytes[i] == gotBytes[i] {
 			// remove error highlight
 			if errorBefore {
 				print.Write(DiffPrintColor(ANSIForegroundRed, false, opts.opts))
@@ -126,7 +230,17 @@ func TestDiffString(t *testing.T, expected string, got string, opts TestDiffOpts
 			}
 		}
 
-		print.WriteByte(got[i])
+		print.WriteByte(gotBytes[i])
+	}
+
+	// add got trailing bytes
+	if expectedLen < gotLen {
+		if !errorBefore {
+			print.Write(DiffPrintColor(ANSIForegroundRed, true, opts.opts))
+			errorBefore = true
+		}
+
+		print.Write(gotBytes[expectedLen:])
 	}
 
 	// reset ANSI styles
@@ -134,8 +248,8 @@ func TestDiffString(t *testing.T, expected string, got string, opts TestDiffOpts
 	print.WriteByte('\n')
 
 	if opts.printToASCII {
-		t.Error(strconv.QuoteToASCII(print.String()))
+		return errors.New(strconv.QuoteToASCII(print.String()))
 	} else {
-		t.Error(print.String())
+		return errors.New(print.String())
 	}
 }
