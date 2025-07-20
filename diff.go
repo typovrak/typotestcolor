@@ -2,13 +2,13 @@ package typotestcolor
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 	"testing"
 )
 
-func DiffPrintColor(color ANSIForeground, highlight bool) []byte {
+func DiffPrintColor(color ANSIForeground, highlight bool, opts Opts) []byte {
 	var (
-		opts           = NewDefaultOpts()
 		print          []byte
 		ansiConfig     ANSIConfig
 		ansiForeground ANSIForeground
@@ -41,22 +41,32 @@ func DiffPrintColor(color ANSIForeground, highlight bool) []byte {
 			Foreground: ColorANSIForeground[ansiForeground],
 			Background: ColorANSIBackground[ANSIBackgroundNone],
 		}
+
+		// INFO: need to reset for ANSIBackgroundNone to works
+		print = append(print, ColorReset...)
 	}
 
 	print = append(print, ColorANSI(opts, ansiConfig)...)
 	return print
 }
 
-func AddStringInSlice(slice string, i int, string string) string {
-	// prevent slice overflow
-	if i < 0 || i > len(slice) {
-		return slice
-	}
-
-	return slice[:i] + string + slice[i:]
+type TestDiffOpts = struct {
+	opts         Opts
+	printToASCII bool
 }
 
-func TestDiffString(t *testing.T, expected string, got string) {
+func TestDiffNewDefaultOpts() TestDiffOpts {
+	return TestDiffOpts{
+		opts:         NewDefaultOpts(),
+		printToASCII: false,
+	}
+}
+
+func TestDiffStringDefault(t *testing.T, expected string, got string) {
+	TestDiffString(t, expected, got, TestDiffNewDefaultOpts())
+}
+
+func TestDiffString(t *testing.T, expected string, got string, opts TestDiffOpts) {
 	if expected == got {
 		return
 	}
@@ -79,72 +89,53 @@ func TestDiffString(t *testing.T, expected string, got string) {
 		}
 	}
 
-	expectedLen := len(expected)
-	gotLen := len(got)
-
-	gotErrorBefore := false
-
-	var gotSlices []string
-	lastAddedIndex := 0
-
-	for i := 0; i < gotLen; i++ {
-		// diff
-		// got[i] and expected[i] are always defined
-		if i >= expectedLen || expected[i] != got[i] {
-
-			if !gotErrorBefore {
-				gotSlices = append(gotSlices, got[lastAddedIndex:i])
-				gotSlices = append(gotSlices, string(DiffPrintColor(ANSIForegroundRed, true)))
-
-				gotErrorBefore = true
-				lastAddedIndex = i
-			}
-
-			continue
-		}
-
-		// same
-		if gotErrorBefore {
-			gotSlices = append(gotSlices, got[lastAddedIndex:i])
-			gotSlices = append(gotSlices, string(ColorReset))
-			gotSlices = append(gotSlices, string(DiffPrintColor(ANSIForegroundRed, false)))
-
-			gotErrorBefore = false
-			lastAddedIndex = i
-		}
-
-	}
-
-	if lastAddedIndex != gotLen {
-		gotSlices = append(gotSlices, got[lastAddedIndex:gotLen])
-	}
-
+	// start header print
 	print.WriteByte('\n')
 
 	// expected part
 	print.WriteString(expectedPrefix)
-	print.Write(DiffPrintColor(ANSIForegroundGreen, false))
+	print.Write(DiffPrintColor(ANSIForegroundGreen, false, opts.opts))
 	print.WriteString(expected)
 	print.WriteByte('\n')
 
 	// got part
 	print.WriteString(gotPrefix)
-	print.Write(DiffPrintColor(ANSIForegroundRed, false))
-	print.WriteString(strings.Join(gotSlices, ""))
+	print.Write(DiffPrintColor(ANSIForegroundRed, false, opts.opts))
+
+	expectedLen := len(expected)
+	gotLen := len(got)
+
+	errorBefore := false
+
+	// build got print
+	for i := 0; i < min(expectedLen, gotLen); i++ {
+		// same
+		if expected[i] == got[i] {
+			// remove error highlight
+			if errorBefore {
+				print.Write(DiffPrintColor(ANSIForegroundRed, false, opts.opts))
+				errorBefore = false
+			}
+
+			// diff
+		} else {
+			// add error highlight
+			if !errorBefore {
+				print.Write(DiffPrintColor(ANSIForegroundRed, true, opts.opts))
+				errorBefore = true
+			}
+		}
+
+		print.WriteByte(got[i])
+	}
+
+	// reset ANSI styles
+	print.Write(ColorReset)
 	print.WriteByte('\n')
 
-	t.Error(print.String())
-	// t.Error(strconv.QuoteToASCII(print.String()))
+	if opts.printToASCII {
+		t.Error(strconv.QuoteToASCII(print.String()))
+	} else {
+		t.Error(print.String())
+	}
 }
-
-// mettre expected en full vert
-// mettre got en full rouge
-
-// expected: test 2
-// got: test \1\
-
-// expected: t 2
-// got: t\est\ 2
-
-// expected: t/est/ 2
-// got: t 2
