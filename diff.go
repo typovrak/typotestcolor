@@ -1,6 +1,8 @@
 package typotestcolor
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"strconv"
 	"strings"
@@ -50,6 +52,44 @@ func DiffPrintColor(color ANSIForeground, highlight bool, opts Opts) []byte {
 	return print
 }
 
+func ToBytes(value any) ([]byte, error) {
+	switch valueTyped := value.(type) {
+
+	case []byte:
+		return valueTyped, nil
+
+	case string:
+		return []byte(valueTyped), nil
+
+	case int, int8, int16, int32, int64:
+		return fmt.Appendf(nil, "%d", valueTyped), nil
+
+	case uint, uint8, uint16, uint32, uint64:
+		return fmt.Appendf(nil, "%d", valueTyped), nil
+
+	case float32, float64:
+		return fmt.Appendf(nil, "%g", valueTyped), nil
+
+	case bool:
+		return []byte(strconv.FormatBool(valueTyped)), nil
+
+	case nil:
+		return []byte("nil"), nil
+
+	case fmt.Stringer:
+		return []byte(valueTyped.String()), nil
+
+	default:
+		// fallback JSON (struct, map, slice, etc.)
+		json, err := json.Marshal(valueTyped)
+		if err != nil {
+			return nil, fmt.Errorf("cannot convert %T to []byte: %w", valueTyped, err)
+		}
+
+		return json, nil
+	}
+}
+
 type TestDiffOpts = struct {
 	opts         Opts
 	printToASCII bool
@@ -62,19 +102,34 @@ func TestDiffNewDefaultOpts() TestDiffOpts {
 	}
 }
 
-func TestDiffStringDefault(t *testing.T, expected string, got string) {
-	TestDiffString(t, expected, got, TestDiffNewDefaultOpts())
+func TestDiffDefault(t *testing.T, expected any, got any) {
+	TestDiff(t, expected, got, TestDiffNewDefaultOpts())
 }
 
-func TestDiffString(t *testing.T, expected string, got string, opts TestDiffOpts) {
-	if expected == got {
+func TestDiff(t *testing.T, expected any, got any, opts TestDiffOpts) {
+	expectedBytes, err := ToBytes(expected)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	gotBytes, err := ToBytes(got)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	if bytes.Equal(expectedBytes, gotBytes) {
 		return
 	}
 
 	var print strings.Builder
 
-	expectedPrefix := fmt.Sprintf("expected (length: %d): ", len(expected))
-	gotPrefix := fmt.Sprintf("got (length: %d): ", len(got))
+	expectedLen := len(expectedBytes)
+	gotLen := len(gotBytes)
+
+	expectedPrefix := fmt.Sprintf("expected (length: %d): ", expectedLen)
+	gotPrefix := fmt.Sprintf("got (length: %d): ", gotLen)
 
 	expectedPrefixLen := len(expectedPrefix)
 	gotPrefixLen := len(gotPrefix)
@@ -95,22 +150,19 @@ func TestDiffString(t *testing.T, expected string, got string, opts TestDiffOpts
 	// expected part
 	print.WriteString(expectedPrefix)
 	print.Write(DiffPrintColor(ANSIForegroundGreen, false, opts.opts))
-	print.WriteString(expected)
+	print.Write(expectedBytes)
 	print.WriteByte('\n')
 
 	// got part
 	print.WriteString(gotPrefix)
 	print.Write(DiffPrintColor(ANSIForegroundRed, false, opts.opts))
 
-	expectedLen := len(expected)
-	gotLen := len(got)
-
 	errorBefore := false
 
 	// build got print
 	for i := 0; i < min(expectedLen, gotLen); i++ {
 		// same
-		if expected[i] == got[i] {
+		if expectedBytes[i] == gotBytes[i] {
 			// remove error highlight
 			if errorBefore {
 				print.Write(DiffPrintColor(ANSIForegroundRed, false, opts.opts))
@@ -126,7 +178,17 @@ func TestDiffString(t *testing.T, expected string, got string, opts TestDiffOpts
 			}
 		}
 
-		print.WriteByte(got[i])
+		print.WriteByte(gotBytes[i])
+	}
+
+	// add got trailing bytes
+	if expectedLen < gotLen {
+		if !errorBefore {
+			print.Write(DiffPrintColor(ANSIForegroundRed, true, opts.opts))
+			errorBefore = true
+		}
+
+		print.Write(gotBytes[expectedLen:])
 	}
 
 	// reset ANSI styles
