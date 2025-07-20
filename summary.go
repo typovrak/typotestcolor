@@ -1,6 +1,8 @@
 package typotestcolor
 
-import "strconv"
+import (
+	"strconv"
+)
 
 type LineTypeSummary struct {
 	Colors ANSIConfig
@@ -125,6 +127,7 @@ func PrintLineSummary(opts Opts, lineSummary LineSummary) []byte {
 
 	// build summary
 	var print []byte
+
 	// header
 	AddPrintLineSummaryHeader(&print, opts)
 
