@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"reflect"
 	"strconv"
 	"strings"
 	"testing"
@@ -53,6 +54,15 @@ func DiffPrintColor(color ANSIForeground, highlight bool, opts Opts) []byte {
 }
 
 func ToBytes(value any) ([]byte, error) {
+	reflectValue := reflect.ValueOf(value)
+	if reflectValue.Kind() == reflect.Func && reflectValue.Type().NumIn() == 0 {
+		results := reflectValue.Call(nil)
+
+		if len(results) > 0 {
+			return ToBytes(results[0].Interface())
+		}
+	}
+
 	switch valueTyped := value.(type) {
 
 	case []byte:
@@ -79,7 +89,51 @@ func ToBytes(value any) ([]byte, error) {
 	case fmt.Stringer:
 		return []byte(valueTyped.String()), nil
 
+	case func() []byte:
+		return valueTyped(), nil
+
+	case func() string:
+		return []byte(valueTyped()), nil
+
+	// INFO: cannot aggregate func() type
+	case func() int:
+		return fmt.Appendf(nil, "%d", valueTyped()), nil
+	case func() int8:
+		return fmt.Appendf(nil, "%d", valueTyped()), nil
+	case func() int16:
+		return fmt.Appendf(nil, "%d", valueTyped()), nil
+	case func() int32:
+		return fmt.Appendf(nil, "%d", valueTyped()), nil
+	case func() int64:
+		return fmt.Appendf(nil, "%d", valueTyped()), nil
+
+	case func() uint:
+		return fmt.Appendf(nil, "%d", valueTyped()), nil
+	case func() uint8:
+		return fmt.Appendf(nil, "%d", valueTyped()), nil
+	case func() uint16:
+		return fmt.Appendf(nil, "%d", valueTyped()), nil
+	case func() uint32:
+		return fmt.Appendf(nil, "%d", valueTyped()), nil
+	case func() uint64:
+		return fmt.Appendf(nil, "%d", valueTyped()), nil
+
+	case func() float32:
+		return fmt.Appendf(nil, "%g", valueTyped()), nil
+	case func() float64:
+		return fmt.Appendf(nil, "%g", valueTyped()), nil
+
+	case func() bool:
+		return []byte(strconv.FormatBool(valueTyped())), nil
+
+	case func():
+		return []byte("nil"), nil
+
+	case func() fmt.Stringer:
+		return []byte(valueTyped().String()), nil
+
 	default:
+		fmt.Println("in default")
 		// fallback JSON (struct, map, slice, etc.)
 		json, err := json.Marshal(valueTyped)
 		if err != nil {
