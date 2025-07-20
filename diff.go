@@ -3,11 +3,11 @@ package typotestcolor
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"reflect"
 	"strconv"
 	"strings"
-	"testing"
 )
 
 func DiffPrintColor(color ANSIForeground, highlight bool, opts Opts) []byte {
@@ -133,7 +133,6 @@ func ToBytes(value any) ([]byte, error) {
 		return []byte(valueTyped().String()), nil
 
 	default:
-		fmt.Println("in default")
 		// fallback JSON (struct, map, slice, etc.)
 		json, err := json.Marshal(valueTyped)
 		if err != nil {
@@ -156,25 +155,24 @@ func TestDiffNewDefaultOpts() TestDiffOpts {
 	}
 }
 
-func TestDiffDefault(t *testing.T, expected any, got any) {
-	TestDiff(t, expected, got, TestDiffNewDefaultOpts())
+func TestDiffDefault(expected any, got any) error {
+	return TestDiff(expected, got, TestDiffNewDefaultOpts())
 }
 
-func TestDiff(t *testing.T, expected any, got any, opts TestDiffOpts) {
+func TestDiff(expected any, got any, opts TestDiffOpts) error {
 	expectedBytes, err := ToBytes(expected)
 	if err != nil {
-		t.Error(err)
-		return
+		return err
 	}
 
 	gotBytes, err := ToBytes(got)
 	if err != nil {
-		t.Error(err)
-		return
+		return err
 	}
 
+	// everything is fine
 	if bytes.Equal(expectedBytes, gotBytes) {
-		return
+		return nil
 	}
 
 	var print strings.Builder
@@ -250,8 +248,8 @@ func TestDiff(t *testing.T, expected any, got any, opts TestDiffOpts) {
 	print.WriteByte('\n')
 
 	if opts.printToASCII {
-		t.Error(strconv.QuoteToASCII(print.String()))
+		return errors.New(strconv.QuoteToASCII(print.String()))
 	} else {
-		t.Error(print.String())
+		return errors.New(print.String())
 	}
 }
