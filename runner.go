@@ -28,8 +28,6 @@ var DefaultTitle = struct {
 
 // return exitCode
 func RunTestColor(m *testing.M, opts Opts) int {
-	Debug(opts, "RunTestColor")
-
 	// create a pipe
 	r, w, _ := os.Pipe()
 
@@ -75,7 +73,7 @@ func RunTestColor(m *testing.M, opts Opts) int {
 			var aggregationLines []byte
 
 			optsTypeTitleAggregation := GetOptsTypeTitleAggregationFromAggregationCountType(opts, &aggregationCount)
-			PrintAggregation(opts, optsTypeTitleAggregation, &aggregationCount, &aggregationLines)
+			PrintAggregation(optsTypeTitleAggregation, &aggregationCount, &aggregationLines)
 
 			if len(aggregationLines) > 0 {
 				fmt.Fprintf(stdout, string(aggregationLines))

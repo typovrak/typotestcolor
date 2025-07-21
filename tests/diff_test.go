@@ -285,18 +285,13 @@ func TestDiff(t *testing.T) {
 		typotestcolor.AssertError(t, err)
 	})
 
-	// TODO: mettre en place un contains pour le assert error afin que cela soit la bonne erreur
-	// ou une autre fonction
-
-	// TODO: mettre un paramètre pour que les 2 types doivent être égaux???
-	// -> TestDiffStrict()
-
 	t.Run(typotestcolor.RunTitle(&index, "bools are equal"), func(t *testing.T) {
 		expected := testBool1()
 		got := testBool1()
 
 		err := typotestcolor.TestDiffDefault(expected, got)
 		typotestcolor.AssertNoError(t, err)
+		typotestcolor.AssertSameType(t, expected, got)
 	})
 
 	t.Run(typotestcolor.RunTitle(&index, "bools are different"), func(t *testing.T) {
@@ -538,6 +533,8 @@ func TestDiff(t *testing.T) {
 
 		err := typotestcolor.TestDiffDefault(expected, got)
 		typotestcolor.AssertNoError(t, err)
+		// INFO: this is for testing AssertSameType function
+		// typotestcolor.AssertSameType(t, expected, got)
 	})
 
 	t.Run(typotestcolor.RunTitle(&index, "func() ints slices are equal"), func(t *testing.T) {

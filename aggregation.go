@@ -19,13 +19,13 @@ type LineTypeTitleAggregation = struct {
 	Threshold int
 }
 
-func PrintAggregation(opts Opts, optsTypeTitleAggregation LineTypeTitleAggregation, aggregationCount *AggregationCount, aggregationLines *[]byte) {
+func PrintAggregation(optsTypeTitleAggregation LineTypeTitleAggregation, aggregationCount *AggregationCount, aggregationLines *[]byte) {
 	if aggregationCount.Value >= optsTypeTitleAggregation.Threshold && len(aggregationCount.Lines) > 2 {
 		// first line
 		*aggregationLines = append(*aggregationLines, aggregationCount.Lines[0]...)
 
 		// setup aggregation color
-		*aggregationLines = append(*aggregationLines, ColorANSI(opts, optsTypeTitleAggregation.Colors)...)
+		*aggregationLines = append(*aggregationLines, ColorANSI(optsTypeTitleAggregation.Colors)...)
 
 		// aggregation prefix
 		*aggregationLines = append(*aggregationLines, []byte(optsTypeTitleAggregation.Prefix)...)
@@ -90,7 +90,7 @@ func GetOptsTypeTitleAggregationFromAggregationCountType(opts Opts, aggregationC
 func HandleAggregation(opts Opts, lineType LineType, aggregationCount *AggregationCount, aggregationType LineTypeEnum, aggregationLines *[]byte, formattedLine *[]byte) {
 	if aggregationCount.Type != aggregationType {
 		optsTypeTitleAggregation := GetOptsTypeTitleAggregationFromAggregationCountType(opts, aggregationCount)
-		PrintAggregation(opts, optsTypeTitleAggregation, aggregationCount, aggregationLines)
+		PrintAggregation(optsTypeTitleAggregation, aggregationCount, aggregationLines)
 	}
 
 	if lineType.Title.Aggregation.Activate {

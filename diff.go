@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-func DiffPrintColor(color ANSIForeground, highlight bool, opts Opts) []byte {
+func DiffPrintColor(color ANSIForeground, highlight bool) []byte {
 	var (
 		print          []byte
 		ansiConfig     ANSIConfig
@@ -49,7 +49,7 @@ func DiffPrintColor(color ANSIForeground, highlight bool, opts Opts) []byte {
 		print = append(print, ColorReset...)
 	}
 
-	print = append(print, ColorANSI(opts, ansiConfig)...)
+	print = append(print, ColorANSI(ansiConfig)...)
 	return print
 }
 
@@ -201,13 +201,13 @@ func TestDiff(expected any, got any, opts TestDiffOpts) error {
 
 	// expected part
 	print.WriteString(expectedPrefix)
-	print.Write(DiffPrintColor(ANSIForegroundGreen, false, opts.opts))
+	print.Write(DiffPrintColor(ANSIForegroundGreen, false))
 	print.Write(expectedBytes)
 	print.WriteByte('\n')
 
 	// got part
 	print.WriteString(gotPrefix)
-	print.Write(DiffPrintColor(ANSIForegroundRed, false, opts.opts))
+	print.Write(DiffPrintColor(ANSIForegroundRed, false))
 
 	errorBefore := false
 
@@ -217,7 +217,7 @@ func TestDiff(expected any, got any, opts TestDiffOpts) error {
 		if expectedBytes[i] == gotBytes[i] {
 			// remove error highlight
 			if errorBefore {
-				print.Write(DiffPrintColor(ANSIForegroundRed, false, opts.opts))
+				print.Write(DiffPrintColor(ANSIForegroundRed, false))
 				errorBefore = false
 			}
 
@@ -225,7 +225,7 @@ func TestDiff(expected any, got any, opts TestDiffOpts) error {
 		} else {
 			// add error highlight
 			if !errorBefore {
-				print.Write(DiffPrintColor(ANSIForegroundRed, true, opts.opts))
+				print.Write(DiffPrintColor(ANSIForegroundRed, true))
 				errorBefore = true
 			}
 		}
@@ -236,7 +236,7 @@ func TestDiff(expected any, got any, opts TestDiffOpts) error {
 	// add got trailing bytes
 	if expectedLen < gotLen {
 		if !errorBefore {
-			print.Write(DiffPrintColor(ANSIForegroundRed, true, opts.opts))
+			print.Write(DiffPrintColor(ANSIForegroundRed, true))
 			errorBefore = true
 		}
 

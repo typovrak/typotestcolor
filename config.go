@@ -8,7 +8,6 @@ type Opts struct {
 	Failed               LineType
 	Ok                   LineType
 	ErrorThrown          LineType
-	Debug                bool
 	Summary              SummaryConfig
 	SeparateEverySection SeparateEverySectionStruct
 }
@@ -409,7 +408,6 @@ func NewDefaultOpts() Opts {
 				},
 			},
 		},
-		Debug: false,
 		Summary: SummaryConfig{
 			Header: SummaryConfigTitle{
 				Title: " TESTS SUMMARY ",
