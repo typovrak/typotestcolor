@@ -1,6 +1,8 @@
 package tests
 
 import (
+	"fmt"
+	"log"
 	"testing"
 
 	"github.com/typovrak/typotestcolor"
@@ -536,7 +538,7 @@ func TestDiff(t *testing.T) {
 		typotestcolor.AssertNoError(t, err)
 		// INFO: this is for testing AssertSameType function
 		// typotestcolor.AssertSameType(t, expected, got)
-		typotestcolor.AssertDifferentType(t, expected, got)
+		typotestcolor.AssertDifferentTypes(t, expected, got)
 	})
 
 	t.Run(typotestcolor.RunTitle(&index, "func() ints slices are equal"), func(t *testing.T) {
@@ -630,6 +632,19 @@ func TestDiff(t *testing.T) {
 	t.Run(typotestcolor.RunTitle(&index, "func() any are different, nil and string"), func(t *testing.T) {
 		expected := testAny1
 		got := testAny3
+
+		fmt.Print("fmt.Print")
+		fmt.Println("fmt.Println")
+		fmt.Println(fmt.Errorf("fmt.Errorf: %s", "testing"))
+		fmt.Println(fmt.Sprint("fmt.Sprint:", "testing"))
+		fmt.Println(fmt.Sprintln("fmt.Sprintln"))
+		fmt.Printf(fmt.Sprintf("fmt.Sprintf: %s", "testing\n"))
+
+		// log.Fatal("log.Fatal")
+		log.Print("log.Print")
+		log.Println("log.Println")
+		log.Printf("log.Printf")
+		log.Printf("log.Printf")
 
 		err := typotestcolor.TestDiffDefault(expected, got)
 		typotestcolor.AssertError(t, err)

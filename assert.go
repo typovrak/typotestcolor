@@ -17,7 +17,7 @@ func AssertSameType(t *testing.T, expected any, got any) {
 	}
 }
 
-func AssertDifferentType(t *testing.T, expected any, got any) {
+func AssertDifferentTypes(t *testing.T, expected any, got any) {
 	t.Helper()
 
 	if reflect.TypeOf(expected) == reflect.TypeOf(got) {
