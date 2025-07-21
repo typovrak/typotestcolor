@@ -161,7 +161,8 @@ func TestDiff(t *testing.T) {
 		got := testString2()
 
 		err := typotestcolor.TestDiffDefault(expected, got)
-		typotestcolor.AssertError(t, err)
+		// INFO: be careful, ANSI code breaks Strict here because of the highlight
+		typotestcolor.AssertErrorStrict(t, err, "test 1")
 	})
 
 	t.Run(typotestcolor.RunTitle(&index, "last character is different, reversed"), func(t *testing.T) {
