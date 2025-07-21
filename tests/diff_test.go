@@ -525,6 +525,7 @@ func TestDiff(t *testing.T) {
 
 		err := typotestcolor.TestDiffDefault(expected, got)
 		typotestcolor.AssertNoError(t, err)
+		typotestcolor.AssertSameType(t, expected, got)
 	})
 
 	t.Run(typotestcolor.RunTitle(&index, "func() nil and \"nil\" bytes slices are equal"), func(t *testing.T) {
@@ -535,6 +536,7 @@ func TestDiff(t *testing.T) {
 		typotestcolor.AssertNoError(t, err)
 		// INFO: this is for testing AssertSameType function
 		// typotestcolor.AssertSameType(t, expected, got)
+		typotestcolor.AssertDifferentType(t, expected, got)
 	})
 
 	t.Run(typotestcolor.RunTitle(&index, "func() ints slices are equal"), func(t *testing.T) {

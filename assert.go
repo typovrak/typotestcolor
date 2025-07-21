@@ -13,7 +13,15 @@ func AssertSameType(t *testing.T, expected any, got any) {
 	gotType := reflect.TypeOf(got)
 
 	if expectedType != gotType {
-		t.Errorf("expected: %s, got: %s", expectedType.String(), gotType.String())
+		t.Errorf("expected: two variables of the same type, got: %T and %T", expected, got)
+	}
+}
+
+func AssertDifferentType(t *testing.T, expected any, got any) {
+	t.Helper()
+
+	if reflect.TypeOf(expected) == reflect.TypeOf(got) {
+		t.Errorf("expected: two variables of different types, got: %T", expected)
 	}
 }
 
