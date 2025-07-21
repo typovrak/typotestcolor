@@ -87,9 +87,7 @@ type ANSIConfig struct {
 	Background int
 }
 
-func ColorANSI(opts Opts, config ANSIConfig) []byte {
-	Debug(opts, "ColorANSI")
-
+func ColorANSI(config ANSIConfig) []byte {
 	color := []byte("\033[")
 
 	color = append(color, []byte(strconv.Itoa(config.Style))...)

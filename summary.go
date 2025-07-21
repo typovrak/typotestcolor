@@ -40,7 +40,7 @@ func AddPrintLineSummaryHeader(print *[]byte, opts Opts) {
 	}
 
 	// manage header summary
-	*print = append(*print, ColorANSI(opts, opts.Summary.Header.Colors)...)
+	*print = append(*print, ColorANSI(opts.Summary.Header.Colors)...)
 	*print = append(*print, []byte(opts.Summary.Header.Title)...)
 	*print = append(*print, ColorReset...)
 	*print = append(*print, '\n')
@@ -51,7 +51,7 @@ func AddPrintLineSummaryFooter(print *[]byte, opts Opts) {
 		return
 	}
 
-	*print = append(*print, ColorANSI(opts, opts.Summary.Footer.Colors)...)
+	*print = append(*print, ColorANSI(opts.Summary.Footer.Colors)...)
 	*print = append(*print, []byte(opts.Summary.Footer.Title)...)
 	*print = append(*print, ColorReset...)
 	*print = append(*print, '\n')
@@ -59,7 +59,7 @@ func AddPrintLineSummaryFooter(print *[]byte, opts Opts) {
 
 func AddPrintLineSummary(print *[]byte, opts Opts, data SummaryData, maxPrefixLen int) {
 	// manage summary content
-	*print = append(*print, ColorANSI(opts, data.Colors)...)
+	*print = append(*print, ColorANSI(data.Colors)...)
 	*print = append(*print, []byte(data.Prefix)...)
 
 	// align results
@@ -94,31 +94,31 @@ func PrintLineSummary(opts Opts, lineSummary LineSummary) []byte {
 	maxPrefixLen := 0
 
 	if !opts.Run.Summary.Hide {
-		AddSummaryData(opts, &data, &maxPrefixLen, LineTypeEnumRun, opts.Run.Summary, lineSummary.Run)
+		AddSummaryData(&data, &maxPrefixLen, LineTypeEnumRun, opts.Run.Summary, lineSummary.Run)
 	}
 
 	if !opts.Fail.Summary.Hide {
-		AddSummaryData(opts, &data, &maxPrefixLen, LineTypeEnumFail, opts.Fail.Summary, lineSummary.Fail)
+		AddSummaryData(&data, &maxPrefixLen, LineTypeEnumFail, opts.Fail.Summary, lineSummary.Fail)
 	}
 
 	if !opts.Pass.Summary.Hide {
-		AddSummaryData(opts, &data, &maxPrefixLen, LineTypeEnumPass, opts.Pass.Summary, lineSummary.Pass)
+		AddSummaryData(&data, &maxPrefixLen, LineTypeEnumPass, opts.Pass.Summary, lineSummary.Pass)
 	}
 
 	if !opts.Skip.Summary.Hide {
-		AddSummaryData(opts, &data, &maxPrefixLen, LineTypeEnumSkip, opts.Skip.Summary, lineSummary.Skip)
+		AddSummaryData(&data, &maxPrefixLen, LineTypeEnumSkip, opts.Skip.Summary, lineSummary.Skip)
 	}
 
 	if !opts.Failed.Summary.Hide {
-		AddSummaryData(opts, &data, &maxPrefixLen, LineTypeEnumFailed, opts.Failed.Summary, lineSummary.Failed)
+		AddSummaryData(&data, &maxPrefixLen, LineTypeEnumFailed, opts.Failed.Summary, lineSummary.Failed)
 	}
 
 	if !opts.Ok.Summary.Hide {
-		AddSummaryData(opts, &data, &maxPrefixLen, LineTypeEnumOk, opts.Ok.Summary, lineSummary.Ok)
+		AddSummaryData(&data, &maxPrefixLen, LineTypeEnumOk, opts.Ok.Summary, lineSummary.Ok)
 	}
 
 	if !opts.ErrorThrown.Summary.Hide {
-		AddSummaryData(opts, &data, &maxPrefixLen, LineTypeEnumErrorThrown, opts.ErrorThrown.Summary, lineSummary.ErrorThrown)
+		AddSummaryData(&data, &maxPrefixLen, LineTypeEnumErrorThrown, opts.ErrorThrown.Summary, lineSummary.ErrorThrown)
 	}
 
 	if len(data) == 0 {
@@ -143,7 +143,7 @@ func PrintLineSummary(opts Opts, lineSummary LineSummary) []byte {
 	return print
 }
 
-func AddSummaryData(opts Opts, data *[]SummaryData, maxPrefixLen *int, summaryType LineTypeEnum, summary LineTypeSummary, value int) {
+func AddSummaryData(data *[]SummaryData, maxPrefixLen *int, summaryType LineTypeEnum, summary LineTypeSummary, value int) {
 	var currentData SummaryData
 	currentData.Type = summaryType
 	currentData.Colors = summary.Colors

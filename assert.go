@@ -1,15 +1,35 @@
 package typotestcolor
 
 import (
+	"reflect"
 	"strings"
 	"testing"
 )
+
+func AssertSameType(t *testing.T, expected any, got any) {
+	t.Helper()
+
+	expectedType := reflect.TypeOf(expected)
+	gotType := reflect.TypeOf(got)
+
+	if expectedType != gotType {
+		t.Errorf("expected: two variables of the same type, got: %T and %T", expected, got)
+	}
+}
+
+func AssertDifferentTypes(t *testing.T, expected any, got any) {
+	t.Helper()
+
+	if reflect.TypeOf(expected) == reflect.TypeOf(got) {
+		t.Errorf("expected: two variables of different types, got: %T", expected)
+	}
+}
 
 func AssertError(t *testing.T, err error) {
 	t.Helper()
 
 	if err == nil {
-		t.Error("expected an error, got no error")
+		t.Error("expected: an error, got: no error")
 	}
 }
 

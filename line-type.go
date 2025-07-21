@@ -44,15 +44,12 @@ const (
 )
 
 func HandleLineType(
-	opts Opts,
 	line *[]byte,
 	lineType LineType,
 	defaultTitleType []byte,
 	color *[]byte,
 ) {
-	Debug(opts, "HandleLineType")
-
-	*color = ColorANSI(opts, lineType.Title.Colors)
+	*color = ColorANSI(lineType.Title.Colors)
 	*line = bytes.Replace(*line, defaultTitleType, []byte(lineType.Title.Prefix), 1)
 	*line = append(*line, []byte(lineType.Title.Suffix)...)
 }
@@ -68,7 +65,7 @@ func FormatTestEndLine(line []byte, formattedLine *[]byte, color []byte) {
 }
 
 func HandleSeparateEverySection(opts Opts, formattedLine *[]byte) {
-	*formattedLine = append(*formattedLine, ColorANSI(opts, opts.SeparateEverySection.Colors)...)
+	*formattedLine = append(*formattedLine, ColorANSI(opts.SeparateEverySection.Colors)...)
 	*formattedLine = append(*formattedLine, []byte(opts.SeparateEverySection.Title)...)
 	*formattedLine = append(*formattedLine, ColorReset...)
 }
@@ -93,7 +90,7 @@ func HandleSectionHeader(opts Opts, lineType LineType, formattedLine *[]byte, li
 		return
 	}
 
-	*formattedLine = append(*formattedLine, ColorANSI(opts, lineType.Section.Header.Colors)...)
+	*formattedLine = append(*formattedLine, ColorANSI(lineType.Section.Header.Colors)...)
 	*formattedLine = append(*formattedLine, []byte(lineType.Section.Header.Title)...)
 	*formattedLine = append(*formattedLine, ColorReset...)
 	*formattedLine = append(*formattedLine, '\n')
@@ -152,7 +149,7 @@ func HandleSectionFooter(opts Opts, formattedLine *[]byte, lineTypeBefore *LineT
 		return
 	}
 
-	*formattedLine = append(*formattedLine, ColorANSI(opts, previousLineType.Section.Footer.Colors)...)
+	*formattedLine = append(*formattedLine, ColorANSI(previousLineType.Section.Footer.Colors)...)
 	*formattedLine = append(*formattedLine, []byte(previousLineType.Section.Footer.Title)...)
 	*formattedLine = append(*formattedLine, ColorReset...)
 	*formattedLine = append(*formattedLine, '\n')
@@ -188,7 +185,7 @@ func FormatTestLine(
 			HandleSectionFooter(opts, &formattedLine, lineTypeBefore, LineTypeEnumRun)
 			HandleSectionHeader(opts, opts.Run, &formattedLine, lineTypeBefore, LineTypeEnumRun)
 
-			HandleLineType(opts, &line, opts.Run, DefaultTitle.Run, &color)
+			HandleLineType(&line, opts.Run, DefaultTitle.Run, &color)
 			FormatTestEndLine(line, &formattedLine, color)
 			HandleAggregation(opts, opts.Run, aggregationCount, LineTypeEnumRun, &aggregationLines, &formattedLine)
 
@@ -207,7 +204,7 @@ func FormatTestLine(
 			HandleSectionFooter(opts, &formattedLine, lineTypeBefore, LineTypeEnumFail)
 			HandleSectionHeader(opts, opts.Fail, &formattedLine, lineTypeBefore, LineTypeEnumFail)
 
-			HandleLineType(opts, &line, opts.Fail, DefaultTitle.Fail, &color)
+			HandleLineType(&line, opts.Fail, DefaultTitle.Fail, &color)
 			FormatTestEndLine(line, &formattedLine, color)
 			HandleAggregation(opts, opts.Fail, aggregationCount, LineTypeEnumFail, &aggregationLines, &formattedLine)
 
@@ -226,7 +223,7 @@ func FormatTestLine(
 			HandleSectionFooter(opts, &formattedLine, lineTypeBefore, LineTypeEnumPass)
 			HandleSectionHeader(opts, opts.Pass, &formattedLine, lineTypeBefore, LineTypeEnumPass)
 
-			HandleLineType(opts, &line, opts.Pass, DefaultTitle.Pass, &color)
+			HandleLineType(&line, opts.Pass, DefaultTitle.Pass, &color)
 			FormatTestEndLine(line, &formattedLine, color)
 			HandleAggregation(opts, opts.Pass, aggregationCount, LineTypeEnumPass, &aggregationLines, &formattedLine)
 
@@ -245,7 +242,7 @@ func FormatTestLine(
 			HandleSectionFooter(opts, &formattedLine, lineTypeBefore, LineTypeEnumSkip)
 			HandleSectionHeader(opts, opts.Skip, &formattedLine, lineTypeBefore, LineTypeEnumSkip)
 
-			HandleLineType(opts, &line, opts.Skip, DefaultTitle.Skip, &color)
+			HandleLineType(&line, opts.Skip, DefaultTitle.Skip, &color)
 			FormatTestEndLine(line, &formattedLine, color)
 			HandleAggregation(opts, opts.Skip, aggregationCount, LineTypeEnumSkip, &aggregationLines, &formattedLine)
 
@@ -264,7 +261,7 @@ func FormatTestLine(
 			HandleSectionFooter(opts, &formattedLine, lineTypeBefore, LineTypeEnumFailed)
 			HandleSectionHeader(opts, opts.Failed, &formattedLine, lineTypeBefore, LineTypeEnumFailed)
 
-			HandleLineType(opts, &line, opts.Failed, DefaultTitle.Failed, &color)
+			HandleLineType(&line, opts.Failed, DefaultTitle.Failed, &color)
 			FormatTestEndLine(line, &formattedLine, color)
 			HandleAggregation(opts, opts.Failed, aggregationCount, LineTypeEnumFailed, &aggregationLines, &formattedLine)
 
@@ -284,7 +281,7 @@ func FormatTestLine(
 			HandleSectionFooter(opts, &formattedLine, lineTypeBefore, LineTypeEnumOk)
 			HandleSectionHeader(opts, opts.Ok, &formattedLine, lineTypeBefore, LineTypeEnumOk)
 
-			HandleLineType(opts, &line, opts.Ok, DefaultTitle.Ok, &color)
+			HandleLineType(&line, opts.Ok, DefaultTitle.Ok, &color)
 			FormatTestEndLine(line, &formattedLine, color)
 			HandleAggregation(opts, opts.Ok, aggregationCount, LineTypeEnumOk, &aggregationLines, &formattedLine)
 
@@ -304,7 +301,7 @@ func FormatTestLine(
 			HandleSectionFooter(opts, &formattedLine, lineTypeBefore, LineTypeEnumErrorThrown)
 			HandleSectionHeader(opts, opts.ErrorThrown, &formattedLine, lineTypeBefore, LineTypeEnumErrorThrown)
 
-			HandleLineType(opts, &line, opts.ErrorThrown, DefaultTitle.ErrorThrown, &color)
+			HandleLineType(&line, opts.ErrorThrown, DefaultTitle.ErrorThrown, &color)
 			FormatTestEndLine(line, &formattedLine, color)
 			HandleAggregation(opts, opts.ErrorThrown, aggregationCount, LineTypeEnumErrorThrown, &aggregationLines, &formattedLine)
 
