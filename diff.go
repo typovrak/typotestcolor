@@ -161,6 +161,8 @@ func TestDiffDefault(expected any, got any) error {
 	return TestDiff(expected, got, TestDiffNewDefaultOpts())
 }
 
+// TODO: colorier la valeur length et mettre en highlight la différence
+
 func TestDiff(expected any, got any, opts TestDiffOpts) error {
 	expectedBytes, err := ToBytes(expected)
 	if err != nil {
