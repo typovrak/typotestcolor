@@ -6,3 +6,5 @@ AT THE END:
 
 - mettre des couleurs sur la différence de length
 - ajouter une ligne bleu pour afficher la valeur raw, avant transformation en got
+
+- log.Fatal ne print aucun résultat
