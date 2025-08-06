@@ -87,7 +87,7 @@ Dans le fichier `main_test.go` ou votre fichier qui contient la ligne `m.Run()`
 package tests
 
 import (
-    // "os"
+    // os
     "testing"
 
     "github.com/typovrak/typotestcolor"
@@ -152,7 +152,119 @@ Il suffit donc d'exécuter la commande `make test` ou `go test ./tests/... -v` a
 
 ### 4. (Bonus) Mise en place d'asserts pour valider les tests
 
+Ajouter cette fonction pour afficher une erreur normalisé en cas d'erreur
+```go
+typotestcolor.AssertNoError(t, err)
+```
+
+Cette fonction prend en paramètre :
+- `t`: *testing.T, le paramètre des fonctions de tests.
+- `err`: une erreur qui à soit la valeur `Error` ou `nil`
+
+Voici un exemple d'utilisation de la fonction typotestcolor.AssertNoError
+```go
+package tests
+
+import (
+    "errors"
+    "testing"
+
+    "github.com/typovrak/typotestcolor"
+)
+
+func TestTypotestcolorAssertNoError(t *testing.T) {
+    t.Run("test typotestcolor.AssertNoError, must return an error", func(t *testing.T) {
+        foo := "foo"
+        bar := "bar"
+        var err error = nil
+
+        if foo != bar {
+            err = errors.New("foo does not equal bar")
+        }
+
+        typotestcolor.AssertNoError(t, err)
+    })
+
+    t.Run("test typotestcolor.AssertNoError, must return nothing", func(t *testing.T) {
+        foo := "foo"
+        bar := foo
+        var err error = nil
+
+        if foo != bar {
+            err = errors.New("foo does not equal bar")
+        }
+
+        typotestcolor.AssertNoError(t, err)
+    })
+}
+```
+
+Ce code, une fois lancé, retournera le rendu suivant :
+_(TODO: mettre le rendu des 2 tests de démonstration)_
+
+Il existe d'autres fonctions d'asserts, fonctionnant sur le même principe que celle-ci avec des objectifs différents. Pour en savoir plus, voir la [documentation technique avancée](#)
+
 ### 5. (Bonus) Utilisation de la fonction différentielle pour voir les erreurs dans des strings
+
+Le module contient une fonction différentielle permettant de donner en cas de non équivalence de 2 variables, pouvant avoir des types différents, une erreur normalisé et optimisé pour être comprise en un clin d'oeil
+```go
+err := typotestcolor.TestDiff(string1, string2, typotestcolor.TestDiffNewDefaultOpts())
+```
+
+En cas de non différence, `err == nil`, sinon `err` contient le message d'erreur avec un surlignage voyant de la différence entre les 2 variables.
+_(TODO: mettre le rendu des 2 tests de démonstration)_
+
+Voici un exemple d'utilisation de la fonction typotestcolor.TestDiff, version amélioré de l'exemple précedent
+```go
+package tests
+
+import (
+    "errors"
+    "testing"
+
+    "github.com/typovrak/typotestcolor"
+)
+
+func TestTypotestcolorAssertNoError(t *testing.T) {
+    t.Run("test typotestcolor.TestDiff function, must return an error, for demonstration purpose", func(t *testing.T) {
+        foo := "foo"
+        bar := "bar"
+        err := typotestcolor.TestDiff(foo, bar, typotestcolor.TestDiffNewDefaultOpts())
+
+        typotestcolor.AssertNoError(t, err)
+    })
+
+    t.Run("test typotestcolor.TestDiff function, must return nothing, for demonstration purpose", func(t *testing.T) {
+        foo := "foo"
+        bar := foo
+        err := typotestcolor.TestDiff(foo, bar, typotestcolor.TestDiffNewDefaultOpts())
+
+        typotestcolor.AssertNoError(t, err)
+    })
+}
+```
+
+Voir le rendu final de ce code:
+_(TODO: mettre le rendu des 2 tests de démonstration)_
+
+Avec cette fonction, on vient de remplacer ceci
+```go
+var err error = nil
+
+if foo != bar {
+    err = errors.New("foo does not equal bar")
+}
+```
+par une seule ligne avec une erreur normalisée et possédant un surlignement par défaut rouge vif sur chaque différence entre les 2 variables
+```go
+err := typotestcolor.TestDiff(foo, bar, typotestcolor.TestDiffNewDefaultOpts())
+```
+
+Pour un savoir plus sur les types supportées de cette fonction, voir [cette partie](#) de la documentation technique avancée.
+
+
+
+
 
 
 
@@ -193,6 +305,7 @@ Il suffit donc d'exécuter la commande `make test` ou `go test ./tests/... -v` a
 ---
 
 <p align="center"><i>Made with 💜 by <a href="https://typovrak.tv">typovrak</a></i></p>
+
 
 
 
