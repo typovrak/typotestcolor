@@ -1,3 +1,4 @@
+TODO: tester les éè etc car transformation en []byte de string, idem pou \n...
 AT THE END:
 
 - rewrite comments in code

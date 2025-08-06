@@ -156,6 +156,7 @@ func TestDiffNewDefaultOpts() TestDiffOpts {
 }
 
 // TODO: mettre printToASCII dans la configuration globale pour simplifier le tout.
+// TODO: créer une fonction qui me permet de passer mon propre opts
 
 func TestDiffDefault(expected any, got any) error {
 	return TestDiff(expected, got, TestDiffNewDefaultOpts())
