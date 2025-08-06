@@ -274,18 +274,81 @@ Pour un savoir plus sur les types supportées de cette fonction, voir [cette par
 
 
 
+
 ## Customisation
+
+_(TODO: la plus grosse partie de cette documentation)_
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Tests/coverage du module
 
+Voir le détail du coverage du module sur [Codecov](https://app.codecov.io/gh/typovrak/typotestcolor)
+
+Chaque fonction est testé ou est en cours d'évolution sur cette partie afin de garantir un module stable, robuste pour permettre une productivité maximal de vos applications Golang.
+
+
+
+
+
+
+
+
+
+
+
+
 ## Directives pour l'open source
+
+Dire que j'accepte les issues, avec une description précise + screen ou repo de reproduction minimale. Par contre, je n'accepte pas pour le moment les pull requests, je compte développer moi-même les nouvelles fonctionnalités, améliorations, fix nécessaire à l'évolution du module.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Évolutions futures
 
+### Nouvelles fonctionnalités
+- [ ] Mettre des couleurs sur la différence de length
+- [ ] ajouter une ligne bleu pour afficher la valeur raw, avant transformation en got
+- [ ] Ajouter une option pour afficher les tests d'un fichier du X au Y ème
+- [ ] Créer une fonction qui me permet de passer mon propre opts dans TestDiff, faire comme pour RunTestColor
 
+### Améliorations et tests
+- [ ] Améliorer le makefile afin que le dossier contenant tous les tests soit une variable
+- [ ] Tester tous les caractères non ASCII dans chaque fonction (TestDiff, Assert, rendu final)
+- [ ] Améliorer les commentaires dans le code
+- [ ] log.Fatal ne print aucun résultat, est-ce que cela est corrigeable ou ajouter un paramètre pour annuler les log.Fatal au besoin
+- [ ] Mettre printToASCII dans la configuration globale pour simplifier le tout dans l'utilisation de TestDiff
+- [ ] Colorier la valeur length et mettre en highlight la différence
+- [ ] Tester les groupes de test en Golang, ajouter cela dans le makefile
 
-
-
+### Communitation et communauté
+- [ ] Valider la documentation auprès de plusieurs développeurs, Golang comme développeur non Golang
+- [ ] Faire tous les standards communautaires GitHub
 
 
 
@@ -305,7 +368,3 @@ Pour un savoir plus sur les types supportées de cette fonction, voir [cette par
 ---
 
 <p align="center"><i>Made with 💜 by <a href="https://typovrak.tv">typovrak</a></i></p>
-
-
-
-
